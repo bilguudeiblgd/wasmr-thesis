@@ -1,5 +1,6 @@
 
-\chapter{Language Design}
+\chapter{Language Design and Mappings}
+In this chapter, we'll design a subset of R with types and see how types and their operations could map to WASM generation.
 \section{Design Goals}
 To design typed R, I tried to be as close as possible to R semantics to easily compile available R codes with wasmR. Although there are obviously inherent limitations compiling dynamic language to statically typed bytecode. Issues include mutability, typing, reflections. For example, how do we deal with
 
@@ -40,6 +41,16 @@ The design philosophy emphasizes a familiar R-like syntax while ensuring type sa
 
 The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. This section describes the core syntactic constructs.
 
+\begin{align*}
+e ::= & \; x && \text{(variable)} \\
+    | & \; n && \text{(literal)} \\
+    | & \; e_1 \; \textit{op} \; e_2 && \text{(binary operation)} \\
+    | & \; \textit{op} \; e_1 && \text{(unary operation)} \\
+    | & \; \texttt{if} \; e_1 \; \texttt{then} \; e_2 \; \texttt{else} \; e_3 && \text{(conditional)} \\
+    | & \; \texttt{fun}(x : \tau) \to e && \text{(function)} \\
+    | & \; e_1(e_2) && \text{(application)}
+\end{align*}
+
 \subsection{Lexical Elements}
 
 The language uses the following lexical tokens:
@@ -75,11 +86,39 @@ x <- 10
 # Assignment with explicit type annotation
 y: int <- 20
 
-# String assignment
-name: string <- "Hello"
-
 # Vector assignment
 vec <- c(1, 2, 3)
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Variable assignment in WAT}]
+(module
+  ;; Define array type for vectors
+  (type $vec_i32 (array (mut i32)))
+  
+  (func $main
+    (local $x i32)
+    (local $y i32)
+    (local $vec (ref null $vec_i32))
+    
+    ;; x <- 10
+    i32.const 10
+    local.set $x
+    
+    ;; y: int <- 20
+    i32.const 20
+    local.set $y
+    
+    ;; vec <- c(1, 2, 3)
+    i32.const 1
+    i32.const 2
+    i32.const 3
+    i32.const 3
+    array.new_fixed $vec_i32 3
+    local.set $vec
+  )
+  
+  (start $main)
+)
 \end{lstlisting}
 
 The super-assignment operator \texttt{<<-} modifies variables in enclosing function scopes:
@@ -94,13 +133,15 @@ outer <- function() {
     return(x)  # Returns 10
 }
 \end{lstlisting}
+\textit{This takes certain workaround to compile it in WASM. We'll talk about its 
+compilation in further chapters.}
 
 
 \subsection{Function Definitions}
 
 Functions are first-class values defined using the \texttt{function} keyword:
 
-\begin{lstlisting}[language=R, caption={Function definition examples}]
+\begin{lstlisting}[language=R, caption={Function definition examples in typed R}]
 # Simple function with type annotations
 add <- function(a: int, b: int): int {
     return(a + b)
@@ -116,10 +157,31 @@ apply_twice <- function(f: int -> int, x: int): int {
     return(f(f(x)))
 }
 
-# Function with default parameters
-greet <- function(name: string, prefix: string = "Hello"): string {
-    return(prefix)  # Simplified example
-}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Function definition examples in WAT}]
+(module
+  ;; Define array type for double vectors
+  (type $vec_f64 (array (mut f64)))
+  
+  ;; add <- function(a: int, b: int): int
+  (func $add (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.add
+  )
+  
+  ;; create_vector <- function(): vector<double>
+  (func $create_vector (result (ref $vec_f64))
+    f64.const 1.0
+    f64.const 2.0
+    f64.const 3.0
+    i32.const 3
+    array.new_fixed $vec_f64 3
+  )
+  ;; apply_twice is not shown here.
+  
+)
 \end{lstlisting}
 
 Function types use arrow notation: \texttt{param\_types -> return\_type}. Multiple parameters are comma-separated, and parentheses group complex function types when used as parameters.
@@ -130,7 +192,7 @@ Function types use arrow notation: \texttt{param\_types -> return\_type}. Multip
 
 The language supports \texttt{if-else} statements and expressions:
 
-\begin{lstlisting}[language=R, caption={Conditional examples}]
+\begin{lstlisting}[language=R, caption={Conditional examples in typed R}]
 # If statement
 if (x > 0) {
     print(x)
@@ -145,6 +207,45 @@ if (x > 0) {
 
 # If expression (returns value)
 result <- if (x > 0) { 1 } else { -1 }
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Conditional examples in WAT}]
+(module
+  ;; Import print function from host environment
+  (import "env" "print" (func $print (param i32)))
+  
+  (func $main
+    (local $x i32)
+    (local $y i32)
+    
+    ;; Set x to some value for demonstration
+    i32.const 5
+    local.set $x
+    
+    ;; if (x > 0) { print(x) }
+    local.get $x
+    i32.const 0
+    i32.gt_s              ;; x > 0 (signed comparison)
+    if
+      local.get $x
+      call $print
+    end
+    
+    ;; if (x > 0) { y <- 1 } else { y <- -1 }
+    local.get $x
+    i32.const 0
+    i32.gt_s              ;; x > 0
+    if
+      i32.const 1
+      local.set $y
+    else
+      i32.const -1
+      local.set $y
+    end
+  )
+  
+  (start $main)
+)
 \end{lstlisting}
 
 \subsubsection{Loops}
@@ -170,6 +271,52 @@ while (i <= 5) {
     sum <- sum + i
     i <- i + 1
 }
+\end{lstlisting}
+
+\begin{lstlisting}[caption={While loop examples in WAT}]
+(module
+  (func $main
+    (local $i i32)
+    (local $sum i32)
+    
+    ;; i <- 1
+    i32.const 1
+    local.set $i
+    
+    ;; sum <- 0
+    i32.const 0
+    local.set $sum
+    
+    ;; while (i <= 5) { ... }
+    (block $break
+      (loop $continue
+        ;; Check condition: i <= 5
+        local.get $i
+        i32.const 5
+        i32.le_s            ;; i <= 5 (signed comparison)
+        i32.eqz             ;; negate: if NOT (i <= 5)
+        br_if $break        ;; break if condition is false
+        
+        ;; sum <- sum + i
+        local.get $sum
+        local.get $i
+        i32.add
+        local.set $sum
+        
+        ;; i <- i + 1
+        local.get $i
+        i32.const 1
+        i32.add
+        local.set $i
+        
+        ;; Continue loop
+        br $continue
+      )
+    )
+  )
+  
+  (start $main)
+)
 \end{lstlisting}
 
 \subsection{Expressions}
@@ -208,6 +355,13 @@ The type system ensures type safety through static analysis while supporting typ
 Though it's important to note that there are many programs where type inference will fail to identify the type and our
 compiler won't work due to lack of type information. (reference needed as to why type inference is hard)
 
+\begin{align*}
+\tau ::= & \; num \mid \texttt{void} && \text{(base type)} \\
+       | & \; \tau\texttt{[]} && \text{(vector type)} \\
+       | & \; (\tau_1, \ldots, \tau_n) \to \tau && \text{(function type)} \\[0.5em]
+num    ::= & \; \texttt{int} \mid \texttt{double} \mid \texttt{bool} && \text{(numeric types)}
+\end{align*}
+
 \subsection{Primitive Types}
 
 The language provides the following primitive types:
@@ -218,6 +372,8 @@ The language provides the following primitive types:
     \item \texttt{logical}: Boolean values (\texttt{TRUE} or \texttt{FALSE})
     \item \texttt{void}: Absence of value (used for functions with no return)
 \end{itemize}
+\paragraph{Logical}
+Logicals will be represented as \texttt{int32} in WebAssembly, as it doesn't provide explicit type for logicals there.
 
 
 \subsection{Composite Types}
