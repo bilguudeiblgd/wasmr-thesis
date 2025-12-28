@@ -1,273 +1,32 @@
 \chapter{Introduction}
 The R programming language is ubiquitous for statistical computing and data analysis, offering powerful abstraction for data manipulation and visualization. Inspired by S-Language, the R language has been important part for industries working with statistics and been pioneer for introducing widespread tools currently used by the community such as DataFrame.
 
-(probably reformat, explain how R is compiled and what web assembly is shortly)
-The thesis, wasmR, presents compilation of typed R-like language that compiles to WebAssembly directly. The reason choosing for R-like language, instead of plain R language is that dynamic languages are known to be notoriously hard to compile to a typed bytecode(reference needed). R programs are traditionally in the bucket of interpreted languages where types are only known runtime, and not in compile-time. However, compiling to typed bytecode requires full information of the types(why exactly, what are the reasons?), unless the architect is ready to face trade-off of writing generic functions that dispatches on runtime time. 
+Traditionally, R is an interpretered language that runs on most major operating systems.
+By interpretered language, we mean that the language source code is not translated to certain binary to be executed by processor 
+like compiled languages. Instead interpreter is a program, usually written in low-level languages such as C, C++  or Rust, which 
+takes the source code, does lexing and parsing to get AST and directly executes the program from its AST representation by evaluating 
+from top node\cite{crafting_interpreters}. Figure~\ref{r-being-interpretted} shows overview of R code being interpretted.
 
-An example below to show how the bytecode for generic functions would look like in arbitrary typed bytecode. How would we compile untyped code for?
+\begin{figure}[h!]
+    \includegraphics[width=370px]{images/r-ast-eval-process.png}
+    \caption{Overview. \href{https://coolbutuseless.github.io/book/rbytecodebook/05-how-r-executes-code.html}{Taken from R Bytecode Book website}}
+    \label{r-being-interpretted}
+\end{figure}
 
+Nowadays, the industry has been expanding the environments where we can run our programs. 
+The interpreter program we discussed about, is compiled to bytecode, and then binary that 
+the processor can execute. However, with invention of WebAssembly, we can take this interpreter
+and compile it to so-called WASM bytecode, and run it on web. This is exactly what webR\cite{webR} did.
+This way, R code we write, can seamlessly run on the web environment on most browsers.
 
-1. The high level code
-\begin{verbatim}
-    c = a + b
-\end{verbatim}
+Compiling the interpreter to WASM introduces certain challenges. 
+Since the interpreter consists of a substantial amount of code, 
+every R program executed in the browser must include the entire interpreter compiled to WASM. 
+This increases the overall memory footprint and can negatively impact performance, 
+particularly in resource-constrained environments.
 
-2. Every value is a boxed value.
-\begin{verbatim}
-    Value {
-      tag : TypeTag
-      payload : union {
-        int64
-        float64
-        pointer
-        object_ref
-      }
-    }
-
-    TypeTags :== INT | FLOAT | STRING | OBJECT | ...
-\end{verbatim}
-
-3. Load variable and call the generic function (simplified instruction)
-\begin{verbatim}
-    LOAD_LOCAL   a
-    LOAD_LOCAL   b
-    ADD_GENERIC
-    STORE_LOCAL  c
-\end{verbatim}
-
-4. What ADD\_GENERIC have to do?
-\begin{verbatim}
-    b = pop()
-    a = pop()
-    
-    if a.tag == INT and b.tag == INT:
-        push(int_add(a, b))
-    elif a.tag == FLOAT and b.tag == FLOAT:
-        push(float_add(a, b))
-    elif a.tag == STRING and b.tag == STRING:
-        push(string_concat(a, b))
-    elif a.tag == OBJECT:
-        call a.__add__(b)
-    else:
-        runtime_type_error()
-\end{verbatim}
-
-Remember, this is optimistic scenario. What happens when we have on LHS(left-hand side) an INT and on RHS(right-hand side) FLOAT? Moreover what if one of them is composite types? As one can see this dispatcher function for every operation combinated with every type will be a huge overhead. 
-
-\section{Motivation}
-One main motivation for the thesis is WebAssembly as a compilation target. There's no work currently exactly mapping R to WebAssembly. Moreover, the recent WebAssembly GC proposal enables more convenient and efficient implementation of high-level language features including function references, closures, and composite data structures such as arrays and structs.
+Thus, this thesis explores direct compilation of R-like language to WebAssembly. I create
+subset of R with type annotations, in order to make compilation possible to WASM, as it needs static typing. Then
+explore the challenges of mapping a dynamic high-level language to WASM, and finally evaluate the performance and correctness of my compiler.
 
 
-\chapter{Background}
-
-\section{The R Programming Language}
-
-\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
-
-\subsection{Key Characteristics}
-
-\begin{itemize}
-  \item \textbf{Dynamic typing:} Variables have no declared types; types are determined at runtime. This enables rapid prototyping but prevents static verification and certain compiler optimizations.
-
-  \item \textbf{Vectorization:} Operations apply element-wise to vectors, matrices, and arrays. For example,
-  \[
-    \texttt{c(1,2,3) + c(4,5,6)} \;\Rightarrow\; \texttt{c(5,7,9)}
-  \]
-  without the need for explicit loops.
-
-  \item \textbf{Lexical scoping:} R uses lexical (static) scoping with closures. Functions capture their defining environment, enabling functional programming patterns and higher-order abstractions.
-
-  \item \textbf{Lazy evaluation:} Function arguments are evaluated lazily (call-by-need), allowing non-standard evaluation mechanisms that support domain-specific sublanguages.
-
-  \item \textbf{Copy-on-modify semantics:} R employs implicit copying to preserve referential transparency. While this simplifies reasoning about programs, it may introduce performance overhead in memory-intensive workloads.
-\end{itemize}
-
-\subsection{Assignment Operators}
-
-R provides multiple assignment operators with distinct scoping behavior:
-
-\begin{itemize}
-  \item \texttt{\textless{}-}: Regular assignment in the current environment.
-  \item \texttt{\textless{}\textless{}-}: Superassignment, which modifies the nearest existing binding in an enclosing environment.
-\end{itemize}
-
-\subsection{Type System}
-R employs a dynamic type system with several foundational types, all of which are first-class objects. Unlike statically-typed languages, type information is associated with values at runtime rather than with variable declarations.
-Atomic Types
-R provides six atomic vector types:
-\begin{itemize}
-\item \textbf{Logical:} Boolean values \texttt{TRUE}, \texttt{FALSE}, and \texttt{NA} (missing).
-\begin{verbatim}
-x <- TRUE
-typeof(x)      # returns "logical"
-\end{verbatim}
-\item \textbf{Integer:} Whole numbers, denoted with an \texttt{L} suffix.
-\begin{verbatim}
-x <- 42L
-typeof(x)      # returns "integer"
-\end{verbatim}
-\item \textbf{Double:} Floating-point numbers (default numeric type).
-\begin{verbatim}
-x <- 3.14
-typeof(x)      # returns "double"
-\end{verbatim}
-\item \textbf{Character:} Strings of text.
-\begin{verbatim}
-x <- "hello"
-typeof(x)      # returns "character"
-\end{verbatim}
-\item \textbf{Complex:} Complex numbers with real and imaginary parts.
-\begin{verbatim}
-x <- 2 + 3i
-typeof(x)      # returns "complex"
-\end{verbatim}
-\item \textbf{Raw:} Raw bytes (rarely used).
-\begin{verbatim}
-x <- charToRaw("A")
-typeof(x)      # returns "raw"
-\end{verbatim}
-\end{itemize}
-Composite Types
-Beyond atomic vectors, R supports several composite data structures:
-\begin{itemize}
-\item \textbf{List:} Heterogeneous collections that can hold elements of different types.
-\begin{verbatim}
-x <- list(42, "text", TRUE)
-typeof(x)      # returns "list"
-\end{verbatim}
-\item \textbf{Function:} Functions are first-class objects.
-\begin{verbatim}
-f <- function(x) x + 1
-typeof(f)      # returns "closure"
-\end{verbatim}
-This means functions are treated as normal variables. It can be nested definition, passed as parameter and returned from a function.
-\item \textbf{Environment:} Hash-like structures for variable scoping.
-\begin{verbatim}
-e <- new.env()
-typeof(e)      # returns "environment"
-\end{verbatim}
-\end{itemize}
-Type Coercion
-R performs implicit type coercion following a hierarchy: logical → integer → double → character. When combining types, R automatically converts to the most general type:
-\begin{verbatim}
-c(TRUE, 1L, 2.5, "text")  # returns character vector:
-# "TRUE" "1" "2.5" "text"
-\end{verbatim}
-This automatic coercion simplifies interactive use but can lead to unexpected behavior if types are not carefully managed.
-
-\subsection{Peculiarities}
-As every programming language comes with their nuances and uniqueness, R is no short of those. Below, the ones mention worthy examples
-
-
-\begin{itemize}
-    \item Vectors and lists are indexed by 1. For example,
-    \begin{verbatim}
-        v <- c(10,20,30) // initializes a vector of 10,20,30
-        v[1]             // returns 10
-        v[2]             // returns 20
-    \end{verbatim}
-
-    \item Even a scalar is represented as a vector of 1 element. 
-    \begin{verbatim}
-        x <- 5           // assign 5
-        is.vector(x)     // return TRUE
-    \end{verbatim}
-    The reason for it is to recycle the vectors easily. The language is designed for vector operations
-    \begin{verbatim}
-        x <- 5           // assign 5
-        v <- c(10,20,30) // initializes a vector of 10,20,30
-        x + v            // returns a vector of 15,25,35
-    \end{verbatim}
-    
-\end{itemize}
-
-
-\section{WebAssembly}
-WebAssembly is a binary instruction format designed as a portable compilation target for high-level languages. In simpler terms, it's a bytecode format made to be a common-ground between web environment and different programming languages. For web environment, JavaScript is the only language that can be executed. However, with WebAssembly, commonly known as WASM, we can execute languages such as C, Rust in web environment after compiling them to WASM bytecode format. WASM main characteristics include:
-\begin{itemize}
-    \item Stack-based virtual machine: WASM uses a structured stack machine with explicit control flow constructs (block, loop, if) rather than arbitrary jumps.
-    \item Linear memory: A contiguous, resizable array of bytes for heap allocation, isolated from the host environment for security.
-    \item Type safety: WASM enforces type safety at validation time, preventing type confusion and memory safety violations.
-\end{itemize}
-
-
-\chapter{Language Design}
-\section{Design Goals}
-To design typed R, I tried to be as close as possible to R semantics to easily compile available R codes with wasmR. Although there are obviously inherent limitations compiling dynamic language to statically typed bytecode. Issues include mutability, typing, reflections. For example, how do we deal with
-
-\begin{verbatim}
-var <- 21  // assign integer
-print(var)
-var <- c(1,2,3) // assign vector
-\end{verbatim}
-
-This is a perfectly fine code for R but compiling it to WASM brings difficulties. Therefore, like other static languages, we will add checking against mutability of different types. 
-
-\begin{itemize}
-    \item R compatibility: Preserve R's syntax and core semantics where possible
-    \item Type safety: Static type checking with sound type system
-    \item Ahead-of-time compilation
-    \item A single executable WASM file, no linking required
-    \item First-class functions: Support functional programming with closures
-    \item Practicality: Provide essential functions for data processing (builtins)
-\end{itemize}
-
-\section{Typed R-like Language}
-Syntax overview and supported language constructs.
-
-\section {Syntax}
-hello.
-\section{Type System}
-Primitive types, vector types, function types, and typing rules.
-
-\begin{verbatim}
-<type>          ::= <function_type>
-
-<function_type> ::= <param_list> "->" <type>
-                  | <primary_type>
-
-<param_list>    ::= <primary_type>
-                  | <primary_type> "," <param_list>
-
-<primary_type>  ::= <builtin_type>
-                  | <generic_type>
-                  | "(" <function_type> ")"
-                  | "function"
-
-<builtin_type>  ::= "int" | "double" | "string" | "char"
-                  | "void" | "logical" | "any"
-
-<generic_type>  ::= "vector" "<" <type> ">"
-                  | "list" "<" <type> ">"
-\end{verbatim}
-
-
-
-\section{Semantics}
-Operational semantics of expressions, control flow, and function calls.
-
-\chapter{Compiler and Runtime}
-\section{Compiler Architecture}
-Frontend, type checking, intermediate representation, and backend.
-
-\section{WebAssembly Code Generation}
-Translation of language constructs and types to WebAssembly.
-
-\section{Runtime System}
-Vector representation, memory management, and built-in operations.
-
-\section{Implementation Details}
-Key implementation choices and limitations.
-
-\chapter{Evaluation}
-\section{Correctness}
-Testing methodology and comparison with R behavior.
-
-\section{Performance}
-Execution time, code size, and runtime overhead.
-
-\section{Discussion}
-Analysis of results and trade-offs.
-
-\chapter{Conclusion}
-Summary of contributions and future work.

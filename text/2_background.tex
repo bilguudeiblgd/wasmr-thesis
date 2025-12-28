@@ -1,0 +1,136 @@
+\chapter{Background}
+
+\section{The R Programming Language}
+
+\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
+
+\subsection{Key Characteristics}
+
+\begin{itemize}
+  \item \textbf{Dynamic typing:} Variables have no declared types; types are determined at runtime. This enables rapid prototyping but prevents static verification and certain compiler optimizations.
+
+  \item \textbf{Vectorization:} Operations apply element-wise to vectors, matrices, and arrays. For example,
+  \[
+    \texttt{c(1,2,3) + c(4,5,6)} \;\Rightarrow\; \texttt{c(5,7,9)}
+  \]
+  without the need for explicit loops.
+
+  \item \textbf{Lexical scoping:} R uses lexical (static) scoping with closures. Functions capture their defining environment, enabling functional programming patterns and higher-order abstractions.
+
+  \item \textbf{Lazy evaluation:} Function arguments are evaluated lazily (call-by-need), allowing non-standard evaluation mechanisms that support domain-specific sublanguages.
+
+  \item \textbf{Copy-on-modify semantics:} R employs implicit copying to preserve referential transparency. While this simplifies reasoning about programs, it may introduce performance overhead in memory-intensive workloads.
+\end{itemize}
+
+\subsection{Assignment Operators}
+
+R provides multiple assignment operators with distinct scoping behavior:
+
+\begin{itemize}
+  \item \texttt{\textless{}-}: Regular assignment in the current environment.
+  \item \texttt{\textless{}\textless{}-}: Superassignment, which modifies the nearest existing binding in an enclosing environment.
+\end{itemize}
+
+\subsection{Type System}
+R employs a dynamic type system with several foundational types, all of which are first-class objects. Unlike statically-typed languages, type information is associated with values at runtime rather than with variable declarations.
+Atomic Types
+R provides six atomic vector types:
+\begin{itemize}
+\item \textbf{Logical:} Boolean values \texttt{TRUE}, \texttt{FALSE}, and \texttt{NA} (missing).
+\begin{verbatim}
+x <- TRUE
+typeof(x)      # returns "logical"
+\end{verbatim}
+\item \textbf{Integer:} Whole numbers, denoted with an \texttt{L} suffix.
+\begin{verbatim}
+x <- 42L
+typeof(x)      # returns "integer"
+\end{verbatim}
+\item \textbf{Double:} Floating-point numbers (default numeric type).
+\begin{verbatim}
+x <- 3.14
+typeof(x)      # returns "double"
+\end{verbatim}
+\item \textbf{Character:} Strings of text.
+\begin{verbatim}
+x <- "hello"
+typeof(x)      # returns "character"
+\end{verbatim}
+\item \textbf{Complex:} Complex numbers with real and imaginary parts.
+\begin{verbatim}
+x <- 2 + 3i
+typeof(x)      # returns "complex"
+\end{verbatim}
+\item \textbf{Raw:} Raw bytes (rarely used).
+\begin{verbatim}
+x <- charToRaw("A")
+typeof(x)      # returns "raw"
+\end{verbatim}
+\end{itemize}
+Composite Types
+Beyond atomic vectors, R supports several composite data structures:
+\begin{itemize}
+\item \textbf{List:} Heterogeneous collections that can hold elements of different types.
+\begin{verbatim}
+x <- list(42, "text", TRUE)
+typeof(x)      # returns "list"
+\end{verbatim}
+\item \textbf{Function:} Functions are first-class objects.
+\begin{verbatim}
+f <- function(x) x + 1
+typeof(f)      # returns "closure"
+\end{verbatim}
+This means functions are treated as normal variables. It can be nested definition, passed as parameter and returned from a function.
+\item \textbf{Environment:} Hash-like structures for variable scoping.
+\begin{verbatim}
+e <- new.env()
+typeof(e)      # returns "environment"
+\end{verbatim}
+\end{itemize}
+Type Coercion
+R performs implicit type coercion following a hierarchy: logical → integer → double → character. When combining types, R automatically converts to the most general type:
+\begin{verbatim}
+c(TRUE, 1L, 2.5, "text")  # returns character vector:
+# "TRUE" "1" "2.5" "text"
+\end{verbatim}
+This automatic coercion simplifies interactive use but can lead to unexpected behavior if types are not carefully managed.
+
+\subsection{Peculiarities}
+As every programming language comes with their nuances and uniqueness, R is no short of those. Below, the ones mention worthy examples
+
+
+\begin{itemize}
+    \item Vectors and lists are indexed by 1. For example,
+    \begin{verbatim}
+        v <- c(10,20,30) // initializes a vector of 10,20,30
+        v[1]             // returns 10
+        v[2]             // returns 20
+    \end{verbatim}
+
+    \item Even a scalar is represented as a vector of 1 element. 
+    \begin{verbatim}
+        x <- 5           // assign 5
+        is.vector(x)     // return TRUE
+    \end{verbatim}
+    The reason for it is to recycle the vectors easily. The language is designed for vector operations
+    \begin{verbatim}
+        x <- 5           // assign 5
+        v <- c(10,20,30) // initializes a vector of 10,20,30
+        x + v            // returns a vector of 15,25,35
+    \end{verbatim}
+    
+\end{itemize}
+
+
+\section{WebAssembly}
+WebAssembly is a low-level assembly-like language that is made to
+run in modern browser\cite{mdn_webassembly}. It's designed to work together with
+JavaScript, the language of the web environment, offering flexibility and performance.
+Currently most modern languages support WASM as compilation target; for example, Rust through
+rustc, C/C++ through Emscripten.
+
+Practically, WebAssembly offers myriad of possibilities to developers. 
+From Image-processing libraries in hidden behind C to desktop apps written in C\#, with WASM
+, they can run on the web with near native-like performance. Notable examples 
+of adoption of WASM are Figma\cite{figma_wasm}, Autodesk AutoCAD Web App\cite{autocad_wasm}, and Google Earth\cite{google_earth_wasm}.
+

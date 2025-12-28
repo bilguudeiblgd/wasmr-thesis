@@ -1,4 +1,53 @@
-\chapter{Nějaká příloha}
+\chapter{Some content}
 
 
-Sem přijde to, co nepatří do hlavní části.
+\label{generic_wasm_function}
+An example below to show how the bytecode for generic functions would look like in arbitrary typed bytecode. How would we compile untyped code for?
+
+1. The high level code
+\begin{verbatim}
+    c = a + b
+\end{verbatim}
+
+2. Every value is a boxed value.
+\begin{verbatim}
+    Value {
+      tag : TypeTag
+      payload : union {
+        int64
+        float64
+        pointer
+        object_ref
+      }
+    }
+
+    TypeTags :== INT | FLOAT | STRING | OBJECT | ...
+\end{verbatim}
+
+3. Load variable and call the generic function (simplified instruction)
+\begin{verbatim}
+    LOAD_LOCAL   a
+    LOAD_LOCAL   b
+    ADD_GENERIC
+    STORE_LOCAL  c
+\end{verbatim}
+
+4. What ADD\_GENERIC have to do?
+\begin{verbatim}
+    b = pop()
+    a = pop()
+    
+    if a.tag == INT and b.tag == INT:
+        push(int_add(a, b))
+    elif a.tag == FLOAT and b.tag == FLOAT:
+        push(float_add(a, b))
+    elif a.tag == STRING and b.tag == STRING:
+        push(string_concat(a, b))
+    elif a.tag == OBJECT:
+        call a.__add__(b)
+    else:
+        runtime_type_error()
+\end{verbatim}
+
+Remember, this is optimistic scenario. What happens when we have on LHS(left-hand side) an INT and on RHS(right-hand side) FLOAT? Moreover what if one of them is composite types? As one can see this dispatcher function for every operation combinated with every type will be a huge overhead. 
+

@@ -19,71 +19,178 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{webassembly}{inproceedings}{}{}
-      \name{author}{9}{}{%
-        {{hash=d285745edf3df63d50a2aaae6417e9de}{%
-           family={Haas},
-           familyi={H\bibinitperiod},
-           given={Andreas},
-           giveni={A\bibinitperiod}}}%
-        {{hash=e41d0523c45d34fc1a4630ae8dfa1b45}{%
-           family={Rossberg},
-           familyi={R\bibinitperiod},
-           given={Andreas},
-           giveni={A\bibinitperiod}}}%
-        {{hash=a1a9ac6abb10a490a1c600fd3fb50bfd}{%
-           family={Schuff},
-           familyi={S\bibinitperiod},
-           given={Derek\bibnamedelima L},
-           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
-        {{hash=c4ede8193f4de30bb8c003babb575025}{%
-           family={Titzer},
-           familyi={T\bibinitperiod},
-           given={Ben\bibnamedelima L},
-           giveni={B\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
-        {{hash=f3c36a0376f6a1b154d101380a9ee9ee}{%
-           family={Holman},
-           familyi={H\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod}}}%
-        {{hash=0033c00a4ac7e8d28588850ff2892879}{%
-           family={Gohman},
-           familyi={G\bibinitperiod},
-           given={Dan},
-           giveni={D\bibinitperiod}}}%
-        {{hash=3b04ed2ed09df1fb347c7c6a307b856f}{%
-           family={Wagner},
-           familyi={W\bibinitperiod},
-           given={Luke},
-           giveni={L\bibinitperiod}}}%
-        {{hash=c4cfe1bc600036ecf862fcbdf7b6d1cf}{%
-           family={Zakai},
-           familyi={Z\bibinitperiod},
-           given={Alon},
-           giveni={A\bibinitperiod}}}%
-        {{hash=6ed048f7e52d9b7495c2c1155343cba0}{%
-           family={Bastien},
-           familyi={B\bibinitperiod},
-           given={JF},
-           giveni={J\bibinitperiod}}}%
+    \entry{crafting_interpreters}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=26313e6493577f16e529ef2698d1a15c}{%
+           family={Nystrom},
+           familyi={N\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
       }
-      \strng{namehash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{fullhash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{fullhashraw}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{bibnamehash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{authorbibnamehash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{authornamehash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{authorfullhash}{d85819e34a2c685aa697c34d20936ff9}
-      \strng{authorfullhashraw}{d85819e34a2c685aa697c34d20936ff9}
+      \list{publisher}{1}{%
+        {Genever Benning}%
+      }
+      \strng{namehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{fullhash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{fullhashraw}{26313e6493577f16e529ef2698d1a15c}
+      \strng{bibnamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorbibnamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authornamehash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorfullhash}{26313e6493577f16e529ef2698d1a15c}
+      \strng{authorfullhashraw}{26313e6493577f16e529ef2698d1a15c}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 38th ACM SIGPLAN conference on programming language design and implementation}
-      \field{title}{Bringing the web up to speed with WebAssembly}
+      \field{isbn}{978-0990582939}
+      \field{title}{{Crafting Interpreters}}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://craftinginterpreters.com/
+      \endverb
+      \verb{url}
+      \verb https://craftinginterpreters.com/
+      \endverb
+    \endentry
+    \entry{webR}{software}{}{}
+      \name{author}{1}{}{%
+        {{hash=15a342111fe4be774d071e43ad43a58a}{%
+           family={{RStudio, PBC}},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{fullhash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{fullhashraw}{15a342111fe4be774d071e43ad43a58a}
+      \strng{bibnamehash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{authorbibnamehash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{authornamehash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{authorfullhash}{15a342111fe4be774d071e43ad43a58a}
+      \strng{authorfullhashraw}{15a342111fe4be774d071e43ad43a58a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{webR}
+      \field{version}{1.0}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://webr.rstudio.com
+      \endverb
+      \verb{url}
+      \verb https://webr.rstudio.com
+      \endverb
+    \endentry
+    \entry{mdn_webassembly}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=eace3534eb86e51f9a1db37427425ce9}{%
+           family={{MDN Web Docs}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{bibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorbibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{{WebAssembly}}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/en-US/docs/WebAssembly
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/en-US/docs/WebAssembly
+      \endverb
+    \endentry
+    \entry{figma_wasm}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=7ba078f119c9102e94e9bc9054acc26d}{%
+           family={{Evan Wallace}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{fullhash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{fullhashraw}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{bibnamehash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{authorbibnamehash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{authornamehash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{authorfullhash}{7ba078f119c9102e94e9bc9054acc26d}
+      \strng{authorfullhashraw}{7ba078f119c9102e94e9bc9054acc26d}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{{WebAssembly cut Figma's load time by 3x}}
       \field{year}{2017}
-      \field{pages}{185\bibrangedash 200}
-      \range{pages}{16}
+      \verb{urlraw}
+      \verb https://www.figma.com/blog/webassembly-cut-figmas-load-time-by-3x/
+      \endverb
+      \verb{url}
+      \verb https://www.figma.com/blog/webassembly-cut-figmas-load-time-by-3x/
+      \endverb
+    \endentry
+    \entry{autocad_wasm}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=1eb00e82d93cd350720258e53c058802}{%
+           family={{Aaron Turner}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1eb00e82d93cd350720258e53c058802}
+      \strng{fullhash}{1eb00e82d93cd350720258e53c058802}
+      \strng{fullhashraw}{1eb00e82d93cd350720258e53c058802}
+      \strng{bibnamehash}{1eb00e82d93cd350720258e53c058802}
+      \strng{authorbibnamehash}{1eb00e82d93cd350720258e53c058802}
+      \strng{authornamehash}{1eb00e82d93cd350720258e53c058802}
+      \strng{authorfullhash}{1eb00e82d93cd350720258e53c058802}
+      \strng{authorfullhashraw}{1eb00e82d93cd350720258e53c058802}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{{AutoCAD Web App}}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://madewithwebassembly.com/showcase/autocad/
+      \endverb
+      \verb{url}
+      \verb https://madewithwebassembly.com/showcase/autocad/
+      \endverb
+    \endentry
+    \entry{google_earth_wasm}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b7caa0d79fd51ecd5be406efe7b81e1a}{%
+           family={{Jordon Mears}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{fullhash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{fullhashraw}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{bibnamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{authorbibnamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{authornamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{authorfullhash}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \strng{authorfullhashraw}{b7caa0d79fd51ecd5be406efe7b81e1a}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{{How we're bringing Google Earth to the web}}
+      \verb{urlraw}
+      \verb https://web.dev/case-studies/earth-webassembly/
+      \endverb
+      \verb{url}
+      \verb https://web.dev/case-studies/earth-webassembly/
+      \endverb
     \endentry
   \enddatalist
 \endrefsection
