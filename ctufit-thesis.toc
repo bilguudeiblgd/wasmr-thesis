@@ -5,10 +5,9 @@
 \contentsline {chapter}{\thectufitdeclarationlabel }{iv}{chapter*.2}%
 \contentsline {chapter}{Abstract}{v}{chapter*.3}%
 \contentsline {chapter}{Abstrakt}{vi}{chapter*.4}%
-\contentsline {chapter}{\thectufitabbreviationlabel }{ix}{chapter*.9}%
+\contentsline {chapter}{\thectufitabbreviationlabel }{x}{chapter*.9}%
 \setcounter {tocdepth}{3}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}%
 \contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}The R Programming Language}{3}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Key Characteristics}{3}{subsection.2.1.1}%
@@ -20,21 +19,52 @@
 \contentsline {section}{\numberline {3.1}Design Goals}{7}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Typed R-like Language}{7}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Syntax}{8}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Type System}{8}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Semantics}{8}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Compiler and Runtime}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Compiler Architecture}{9}{section.4.1}%
-\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{9}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Runtime System}{9}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Implementation Details}{9}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Evaluation}{10}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Correctness}{10}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Performance}{10}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Discussion}{10}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Conclusion}{11}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Nějaká příloha}{12}{appendix.A}%
+\contentsline {subsection}{\numberline {3.3.1}Lexical Elements}{8}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Variable Declaration and Assignment}{9}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Function Definitions}{9}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Control Flow}{10}{subsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.4.1}Conditional Statements}{10}{subsubsection.3.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.3.4.2}Loops}{11}{subsubsection.3.3.4.2}%
+\contentsline {subsection}{\numberline {3.3.5}Expressions}{11}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Blocks and Tail Expressions}{12}{subsection.3.3.6}%
+\contentsline {section}{\numberline {3.4}Type System}{12}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Primitive Types}{12}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Composite Types}{12}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}Vector Types}{12}{subsubsection.3.4.2.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}Function Types}{13}{subsubsection.3.4.2.2}%
+\contentsline {subsection}{\numberline {3.4.3}Type Inference}{13}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Typing Rules}{14}{subsection.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.4.1}Variable Reference}{14}{subsubsection.3.4.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.4.2}Function Application}{14}{subsubsection.3.4.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.4.3}Function Definition}{14}{subsubsection.3.4.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4.4}Binary Operations}{14}{subsubsection.3.4.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.4.5}Vector Operations}{15}{subsubsection.3.4.4.5}%
+\contentsline {subsubsection}{\numberline {3.4.4.6}Conditionals}{15}{subsubsection.3.4.4.6}%
+\contentsline {subsection}{\numberline {3.4.5}Scoping and Closures}{15}{subsection.3.4.5}%
+\contentsline {section}{\numberline {3.5}Semantics}{15}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Expression Evaluation}{16}{subsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.1.1}Literal Evaluation}{16}{subsubsection.3.5.1.1}%
+\contentsline {subsubsection}{\numberline {3.5.1.2}Variable Lookup}{16}{subsubsection.3.5.1.2}%
+\contentsline {subsubsection}{\numberline {3.5.1.3}Binary Operations}{16}{subsubsection.3.5.1.3}%
+\contentsline {subsubsection}{\numberline {3.5.1.4}Function Application}{17}{subsubsection.3.5.1.4}%
+\contentsline {subsection}{\numberline {3.5.2}Statement Execution}{17}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}Assignment}{17}{subsubsection.3.5.2.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}Conditional Execution}{18}{subsubsection.3.5.2.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.3}While Loops}{18}{subsubsection.3.5.2.3}%
+\contentsline {subsubsection}{\numberline {3.5.2.4}For Loops}{18}{subsubsection.3.5.2.4}%
+\contentsline {subsection}{\numberline {3.5.3}Function Calls and Return}{18}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{19}{subsection.3.5.4}%
+\contentsline {chapter}{\numberline {4}Compiler and Runtime}{20}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Compiler Architecture}{20}{section.4.1}%
+\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{20}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Runtime System}{20}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Implementation Details}{20}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Evaluation}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Correctness}{21}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Performance}{21}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Discussion}{21}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Conclusion}{22}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Some content}{23}{appendix.A}%
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {english}{}\relax 
-\contentsline {chapter}{Obsah příloh}{14}{appendix*.11}%
+\contentsline {chapter}{Contents of the attachment}{26}{appendix*.12}%

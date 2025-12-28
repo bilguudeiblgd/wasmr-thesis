@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.27)  28 DEC 2025 14:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.27)  28 DEC 2025 18:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1452,39 +1452,150 @@ Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 
 xurl: Set penalties for biblatex
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/forest/forest.sty
+Package: forest 2017/07/14 v2.1.5 Drawing (linguistic) trees
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.code.tex
+File: tikzlibraryshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.misc.code.tex
+File: tikzlibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.misc.code.tex
+File: pgflibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.symbols.code.tex
+File: tikzlibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.symbols.code.tex
+File: pgflibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.arrows.code.tex
+File: tikzlibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.arrows.code.tex
+File: pgflibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.callouts.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.callouts.code.tex)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodepartlowerbox=\box116
+\pgfnodeparttwobox=\box117
+\pgfnodepartthreebox=\box118
+\pgfnodepartfourbox=\box119
+\pgfnodeparttwentybox=\box120
+\pgfnodepartnineteenbox=\box121
+\pgfnodeparteighteenbox=\box122
+\pgfnodepartseventeenbox=\box123
+\pgfnodepartsixteenbox=\box124
+\pgfnodepartfifteenbox=\box125
+\pgfnodepartfourteenbox=\box126
+\pgfnodepartthirteenbox=\box127
+\pgfnodeparttwelvebox=\box128
+\pgfnodepartelevenbox=\box129
+\pgfnodeparttenbox=\box130
+\pgfnodepartninebox=\box131
+\pgfnodeparteightbox=\box132
+\pgfnodepartsevenbox=\box133
+\pgfnodepartsixbox=\box134
+\pgfnodepartfivebox=\box135
+))) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryintersections.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex)
+\pgf@intersect@solutions=\count488
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/pgfopts/pgfopts.sty
+Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
+\pgfopts@list@add@a@toks=\toks59
+\pgfopts@list@add@b@toks=\toks60
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/elocalloc/elocalloc.sty
+Package: elocalloc 2016/12/15 v0.03 local allocation for LaTeX 2015+ (DPC)
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/inlinedef/inlinedef.sty
+Package: inlinedef 2008/07/10 v1.0 Inlined expansions within definitions
+\ID@toks=\toks61
+\ID@count=\count489
+)
+\ID@usercommands=\toks62
+\safeloop@depth=\count490
+\safeRKloop@depth=\count491
+\forest@temp@dimen=\dimen319
+\forest@temp@count=\count492
+\forest@n=\count493
+\forest@temp@global@count=\count494
+\forest@temp@toks=\toks63
+\forest@temparray@M=\count495
+\forest@temparray@N=\count496
+\forest@global@temparray@M=\count497
+\forest@global@temparray@N=\count498
+\forest@isnum@count=\count499
+\forest@isdim@nonintpart=\count500
+\forest@isdim@dimen=\dimen320
+\forest@sort@m=\count501
+\forest@sort@k=\count502
+\forest@sort@p=\count503
+\bracket@content=\toks64
+\bracket@afterthought=\toks65
+\forest@node@maxid=\count504
+\forest@process@left@M=\count505
+\forest@process@left@N=\count506
+\forest@process@right@M=\count507
+\forest@process@right@N=\count508
+\forest@process@saved@M=\count509
+\forest@process@saved@N=\count510
+\forest@process@result@M=\count511
+\forest@process@result@N=\count512
+\forest@process@n=\count513
+\forest@nodewalk@branch@toks=\toks66
+\forest@nodewalk@shortsteps@resolution=\toks67
+\forest@do@dynamics=\toks68
+\forest@box=\box136
+\forest@xg=\dimen321
+\forest@yg=\dimen322
+\forest@xs=\dimen323
+\forest@ys=\dimen324
+\forest@pi@toks=\toks69
+\forest@segment@toks=\toks70
+\forest@PIi@toks=\toks71
+\forest@PIii@toks=\toks72
+\forest@copy@in=\read6
+\forest@copy@out=\write6
+\forest@externalize@max@outer@n=\count514
+\forest@externalize@inner@n=\count515
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count488
-\lst@gtempboxa=\box116
-\lst@token=\toks59
-\lst@length=\count489
-\lst@currlwidth=\dimen319
-\lst@column=\count490
-\lst@pos=\count491
-\lst@lostspace=\dimen320
-\lst@width=\dimen321
-\lst@newlines=\count492
-\lst@lineno=\count493
-\lst@maxwidth=\dimen322
+\lst@mode=\count516
+\lst@gtempboxa=\box137
+\lst@token=\toks73
+\lst@length=\count517
+\lst@currlwidth=\dimen325
+\lst@column=\count518
+\lst@pos=\count519
+\lst@lostspace=\dimen326
+\lst@width=\dimen327
+\lst@newlines=\count520
+\lst@lineno=\count521
+\lst@maxwidth=\dimen328
  (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstpatch.sty
 File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
-\c@lstnumber=\count494
-\lst@skipnumbers=\count495
-\lst@framebox=\box117
+\c@lstnumber=\count522
+\lst@skipnumbers=\count523
+\lst@framebox=\box138
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
 Package: listings 2024/09/23 1.10c (Carsten Heinz)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count496
-\csq@gtype=\count497
-\csq@glevel=\count498
-\csq@qlevel=\count499
-\csq@maxlvl=\count500
-\csq@tshold=\count501
-\csq@ltx@everypar=\toks60
+\csq@reset=\count524
+\csq@gtype=\count525
+\csq@glevel=\count526
+\csq@qlevel=\count527
+\csq@maxlvl=\count528
+\csq@tshold=\count529
+\csq@ltx@everypar=\toks74
  (/usr/local/texlive/2025/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
 )
@@ -1497,45 +1608,45 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
- (./ctufit-thesis.aux (./text/text.aux) (./text/appendix.aux) (./text/medium.aux))
+ (./ctufit-thesis.aux (./text/text.aux) (./text/3_language_design.aux) (./text/4_compiler_runtime.aux) (./text/5_evaluation.aux) (./text/appendix.aux) (./text/medium.aux))
 \openout1 = `ctufit-thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-\metadatafile=\write6
-\openout6 = `ctufit-thesis.xmpdata'.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+\metadatafile=\write7
+\openout7 = `ctufit-thesis.xmpdata'.
 
-LaTeX Info: Redefining \lstlistingname on input line 112.
-LaTeX Info: Redefining \lstlistlistingname on input line 112.
+LaTeX Info: Redefining \lstlistingname on input line 113.
+LaTeX Info: Redefining \lstlistlistingname on input line 113.
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count502
-\scratchdimen=\dimen323
-\scratchbox=\box118
-\nofMPsegments=\count503
-\nofMParguments=\count504
-\everyMPshowfont=\toks61
-\MPscratchCnt=\count505
-\MPscratchDim=\dimen324
-\MPnumerator=\count506
-\makeMPintoPDFobject=\count507
-\everyMPtoPDFconversion=\toks62
+\scratchcounter=\count530
+\scratchdimen=\dimen329
+\scratchbox=\box139
+\nofMPsegments=\count531
+\nofMParguments=\count532
+\everyMPshowfont=\toks75
+\MPscratchCnt=\count533
+\MPscratchDim=\dimen330
+\MPnumerator=\count534
+\makeMPintoPDFobject=\count535
+\everyMPtoPDFconversion=\toks76
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -1580,10 +1691,10 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 112.
+Package hyperref Info: Link coloring OFF on input line 113.
 (./ctufit-thesis.out) (./ctufit-thesis.out)
-\@outlinefile=\write7
-\openout7 = `ctufit-thesis.out'.
+\@outlinefile=\write8
+\openout8 = `ctufit-thesis.out'.
 
  (/usr/local/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
@@ -1630,9 +1741,9 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'ctufit-thesis.bbl' found.
  (./ctufit-thesis.bbl)
-Package biblatex Info: Reference section=0 on input line 112.
-Package biblatex Info: Reference segment=0 on input line 112.
-\c@lstlisting=\count508
+Package biblatex Info: Reference section=0 on input line 113.
+Package biblatex Info: Reference segment=0 on input line 113.
+\c@lstlisting=\count536
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: pdftex
 * paper: <default>
@@ -1665,10 +1776,10 @@ Package biblatex Info: Reference segment=0 on input line 112.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logoCVUT.pdf, id=137, 126.78566pt x 96.54268pt>
+<images/logoCVUT.pdf, id=265, 126.78566pt x 96.54268pt>
 File: images/logoCVUT.pdf Graphic file (type pdf)
 <use images/logoCVUT.pdf>
-Package pdftex.def Info: images/logoCVUT.pdf  used on input line 115.
+Package pdftex.def Info: images/logoCVUT.pdf  used on input line 116.
 (pdftex.def)             Requested size: 85.35826pt x 64.99849pt.
 
 
@@ -1678,27 +1789,27 @@ Package pdftex.def Info: images/logoCVUT.pdf  used on input line 115.
 
 
  <./images/logoCVUT.pdf>]
-<example-assignment-include.pdf, id=147, 597.50829pt x 845.0471pt>
+<example-assignment-include.pdf, id=275, 597.50829pt x 845.0471pt>
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf>
-Package pdftex.def Info: example-assignment-include.pdf  used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf  used on input line 118.
 (pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
-<example-assignment-include.pdf, id=149, page=1, 597.50829pt x 845.0471pt>
+<example-assignment-include.pdf, id=277, page=1, 597.50829pt x 845.0471pt>
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
-Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 118.
 (pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
-Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 118.
 (pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
-Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 118.
 (pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
-Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 118.
 (pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
 
 
@@ -1706,11 +1817,11 @@ Package pdftex.def Info: example-assignment-include.pdf , page1 used on input li
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.117 ...ges={1-}]{example-assignment-include.pdf}
+l.118 ...ges={1-}]{example-assignment-include.pdf}
                                                    % replace this file with ...
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
-Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 117.
+Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 118.
 (pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
  [1
 
@@ -1721,11 +1832,11 @@ Package pdftex.def Info: example-assignment-include.pdf , page1 used on input li
 [2
 
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 129.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 130.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 129.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 130.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -1744,46 +1855,53 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [6
 
-] (./ctufit-thesis.toc)
-\tf@toc=\write8
-\openout8 = `ctufit-thesis.toc'.
-
-
+] (./ctufit-thesis.toc
 
 [7
 
-] (./ctufit-thesis.lof)
-\tf@lof=\write9
-\openout9 = `ctufit-thesis.lof'.
+])
+\tf@toc=\write9
+\openout9 = `ctufit-thesis.toc'.
+
+
+
+[8] (./ctufit-thesis.lof)
+\tf@lof=\write10
+\openout10 = `ctufit-thesis.lof'.
 
  (./ctufit-thesis.lot)
-\tf@lot=\write10
-\openout10 = `ctufit-thesis.lot'.
+\tf@lot=\write11
+\openout11 = `ctufit-thesis.lot'.
 
  (./ctufit-thesis.lol)
-\tf@lol=\write11
-\openout11 = `ctufit-thesis.lol'.
+\tf@lol=\write12
+\openout12 = `ctufit-thesis.lol'.
 
 
 
-[8
+[9
 
 ]
 
-[9
+[10
 
 ]
 \openout2 = `text/text.aux'.
 
  (./text/text.tex
 Chapter 1.
+<images/r-ast-eval-process.png, id=410, 1084.05pt x 308.15125pt>
+File: images/r-ast-eval-process.png Graphic file (type png)
+<use images/r-ast-eval-process.png>
+Package pdftex.def Info: images/r-ast-eval-process.png  used on input line 11.
+(pdftex.def)             Requested size: 371.38885pt x 105.56937pt.
 
 
 [1
 
 
 
-]
+ <./images/r-ast-eval-process.png>]
 
 [2]
 Chapter 2.
@@ -1792,61 +1910,142 @@ Chapter 2.
 [3
 
 ]
-LaTeX Font Info:    Trying to load font information for OML+cmtt on input line 90.
-LaTeX Font Info:    No file OMLcmtt.fd. on input line 90.
+LaTeX Font Info:    Trying to load font information for OML+cmtt on input line 66.
+LaTeX Font Info:    No file OMLcmtt.fd. on input line 66.
 
 
 LaTeX Font Warning: Font shape `OML/cmtt/m/n' undefined
 (Font)              using `OML/cmm/m/it' instead
-(Font)              for symbol `textless' on input line 90.
+(Font)              for symbol `textless' on input line 66.
 
 
 
 [4]
 
-[5]
+[5])
 
 [6]
+\openout2 = `text/3_language_design.aux'.
+
+ (./text/3_language_design.tex
 Chapter 3.
 
 
 [7
 
-]
 
-[8]
+
+
+]
+Overfull \hbox (2.59155pt too wide) in paragraph at lines 49--50
+[]\OT1/cmr/bx/n/10.95 Type key-words: \OT1/cmtt/m/n/10.95 int\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 double\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 string\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 char\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 void\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 logical\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 any\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 vector\OT1/cmr/m/n/10.95 ,
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 60.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 60.
+
+LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 60.
+
+
+
+[8] (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 71.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 76.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2024/09/23 1.10c listings language file
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2024/09/23 1.10c listings language file
+)
+
+[9]
+Overfull \hbox (56.79062pt too wide) in paragraph at lines 120--121
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+
+[10]
+
+[11]
+
+[12]
+Overfull \hbox (0.19812pt too wide) in paragraph at lines 240--241
+[]\OT1/cmr/m/n/10.95 Vectors sup-port component-wise arith-metic op-er-a-tions when both operands
+ []
+
+
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+Overfull \hbox (0.68523pt too wide) in paragraph at lines 449--450
+[]\OT1/cmr/bx/n/10.95 Vector-Scalar Op-er-a-tions\OT1/cmr/m/n/10.95 : Scalars are broad-cast to match vec-tor length: 
+ []
+
+
+
+[17]
+
+[18])
+
+[19]
+\openout2 = `text/4_compiler_runtime.aux'.
+
+ (./text/4_compiler_runtime.tex
 Chapter 4.
+)
+
+[20
 
 
-[9
+
 
 ]
+\openout2 = `text/5_evaluation.aux'.
+
+ (./text/5_evaluation.tex
 Chapter 5.
 
 
-[10
+[21
+
+
+
 
 ]
 Chapter 6.
 )
 
-[11
+[22
 
 ]
 \openout2 = `text/appendix.aux'.
 
  (./text/appendix.tex
 Appendix A.
-)
-
-[12
 
 
+[23
 
 
-]
 
-[13
+
+])
+
+[24]
+
+[25
 
 
 
@@ -1856,10 +2055,10 @@ Appendix A.
 
  (./text/medium.tex)
 
-[14
+[26
 
 
-] (./ctufit-thesis.aux (./text/text.aux) (./text/appendix.aux) (./text/medium.aux))
+] (./ctufit-thesis.aux (./text/text.aux) (./text/3_language_design.aux) (./text/4_compiler_runtime.aux) (./text/5_evaluation.aux) (./text/appendix.aux) (./text/medium.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1869,23 +2068,23 @@ L3 programming layer <2025-01-18>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `ctufit-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 1D74F170959924E678E728B0761CC1F8;3984.
+(rerunfilecheck)             Checksum: 0413D6BE3389A02BF2226D2B6BB365C9;9046.
 Package logreq Info: Writing requests to 'ctufit-thesis.run.xml'.
 \openout1 = `ctufit-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39337 strings out of 473190
- 722472 string characters out of 5715799
- 1643491 words of memory out of 5000000
- 61879 multiletter control sequences out of 15000+600000
- 568394 words of font info for 71 fonts, out of 8000000 for 9000
+ 50498 strings out of 473190
+ 1029018 string characters out of 5715799
+ 1998765 words of memory out of 5000000
+ 72778 multiletter control sequences out of 15000+600000
+ 570275 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 106i,17n,109p,1526b,2937s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on ctufit-thesis.pdf (24 pages, 214981 bytes).
+ 106i,17n,109p,1684b,3913s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on ctufit-thesis.pdf (37 pages, 360901 bytes).
 PDF statistics:
- 349 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
- 301 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 736 PDF objects out of 1000 (max. 8388607)
+ 210 named destinations out of 1000 (max. 500000)
+ 562 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,61 +1,37 @@
 \chapter{Introduction}
 The R programming language is ubiquitous for statistical computing and data analysis, offering powerful abstraction for data manipulation and visualization. Inspired by S-Language, the R language has been important part for industries working with statistics and been pioneer for introducing widespread tools currently used by the community such as DataFrame.
 
-(probably reformat, explain how R is compiled and what web assembly is shortly)
-The thesis, wasmR, presents compilation of typed R-like language that compiles to WebAssembly directly. The reason choosing for R-like language, instead of plain R language is that dynamic languages are known to be notoriously hard to compile to a typed bytecode(reference needed). R programs are traditionally in the bucket of interpreted languages where types are only known runtime, and not in compile-time. However, compiling to typed bytecode requires full information of the types(why exactly, what are the reasons?), unless the architect is ready to face trade-off of writing generic functions that dispatches on runtime time. 
+Traditionally, R is an interpretered language that runs on most major operating systems.
+By interpretered language, we mean that the language source code is not translated to certain binary to be executed by processor 
+like compiled languages. Instead interpreter is a program, usually written in low-level languages such as C, C++  or Rust, which 
+takes the source code, does lexing and parsing to get AST and directly executes the program from its AST representation by evaluating 
+from top node\cite{crafting_interpreters}. Figure~\ref{r-being-interpretted} shows pipeline of R code being interpretted.
 
-An example below to show how the bytecode for generic functions would look like in arbitrary typed bytecode. How would we compile untyped code for?
+\begin{figure}[h!]
+    \includegraphics[width=370px]{images/r-ast-eval-process.png}
+    \caption{Example of R program being interpretered}
+    \label{r-being-interpretted}
+\end{figure}
 
+% Usage of interpreter is common for dynamically typed, high-level languages like R. As dynamically typed language allows 
+% programs to be written without type annotations, the type is only known in run-time by the interpreter.
+% This limits certain optimization techniques but gives user minimal syntax with less conceptual overhead\cite{empirical_r_types}.
 
-1. The high level code
-\begin{verbatim}
-    c = a + b
-\end{verbatim}
+Nowadays, the industry has been expanding the environments where we can run our programs. 
+The interpreter program we talked about, is traditionally compiled to bytecode, and then binary that 
+the processor can execute. However, with invention of WebAssembly, we can take this interpreter
+and compile it to so-called WASM bytecode, and run it on web. This is exactly what webR(cite webR) did.
+This way, R code we write, can seamlessly run on the web environment on most browsers.
 
-2. Every value is a boxed value.
-\begin{verbatim}
-    Value {
-      tag : TypeTag
-      payload : union {
-        int64
-        float64
-        pointer
-        object_ref
-      }
-    }
+Compiling the interpreter to WASM introduces certain challenges. 
+Since the interpreter consists of a substantial amount of code, 
+every R program executed in the browser must include the entire interpreter compiled to WASM. 
+This increases the overall memory footprint and can negatively impact performance, 
+particularly in resource-constrained environments.
 
-    TypeTags :== INT | FLOAT | STRING | OBJECT | ...
-\end{verbatim}
-
-3. Load variable and call the generic function (simplified instruction)
-\begin{verbatim}
-    LOAD_LOCAL   a
-    LOAD_LOCAL   b
-    ADD_GENERIC
-    STORE_LOCAL  c
-\end{verbatim}
-
-4. What ADD\_GENERIC have to do?
-\begin{verbatim}
-    b = pop()
-    a = pop()
-    
-    if a.tag == INT and b.tag == INT:
-        push(int_add(a, b))
-    elif a.tag == FLOAT and b.tag == FLOAT:
-        push(float_add(a, b))
-    elif a.tag == STRING and b.tag == STRING:
-        push(string_concat(a, b))
-    elif a.tag == OBJECT:
-        call a.__add__(b)
-    else:
-        runtime_type_error()
-\end{verbatim}
-
-Remember, this is optimistic scenario. What happens when we have on LHS(left-hand side) an INT and on RHS(right-hand side) FLOAT? Moreover what if one of them is composite types? As one can see this dispatcher function for every operation combinated with every type will be a huge overhead. 
-
-\section{Motivation}
-One main motivation for the thesis is WebAssembly as a compilation target. There's no work currently exactly mapping R to WebAssembly. Moreover, the recent WebAssembly GC proposal enables more convenient and efficient implementation of high-level language features including function references, closures, and composite data structures such as arrays and structs.
+Thus, this thesis explores direct compilation of R-like language to WebAssembly. I create
+subset of R with type annotations, in order to make compilation possible to WASM, as it needs static typing. Then
+explore the challenges of mapping a dynamic high-level language to WASM, and finally evaluate the performance and correctness of my compiler.
 
 
 \chapter{Background}
@@ -190,84 +166,3 @@ WebAssembly is a binary instruction format designed as a portable compilation ta
     \item Type safety: WASM enforces type safety at validation time, preventing type confusion and memory safety violations.
 \end{itemize}
 
-
-\chapter{Language Design}
-\section{Design Goals}
-To design typed R, I tried to be as close as possible to R semantics to easily compile available R codes with wasmR. Although there are obviously inherent limitations compiling dynamic language to statically typed bytecode. Issues include mutability, typing, reflections. For example, how do we deal with
-
-\begin{verbatim}
-var <- 21  // assign integer
-print(var)
-var <- c(1,2,3) // assign vector
-\end{verbatim}
-
-This is a perfectly fine code for R but compiling it to WASM brings difficulties. Therefore, like other static languages, we will add checking against mutability of different types. 
-
-\begin{itemize}
-    \item R compatibility: Preserve R's syntax and core semantics where possible
-    \item Type safety: Static type checking with sound type system
-    \item Ahead-of-time compilation
-    \item A single executable WASM file, no linking required
-    \item First-class functions: Support functional programming with closures
-    \item Practicality: Provide essential functions for data processing (builtins)
-\end{itemize}
-
-\section{Typed R-like Language}
-Syntax overview and supported language constructs.
-
-\section {Syntax}
-hello.
-\section{Type System}
-Primitive types, vector types, function types, and typing rules.
-
-\begin{verbatim}
-<type>          ::= <function_type>
-
-<function_type> ::= <param_list> "->" <type>
-                  | <primary_type>
-
-<param_list>    ::= <primary_type>
-                  | <primary_type> "," <param_list>
-
-<primary_type>  ::= <builtin_type>
-                  | <generic_type>
-                  | "(" <function_type> ")"
-                  | "function"
-
-<builtin_type>  ::= "int" | "double" | "string" | "char"
-                  | "void" | "logical" | "any"
-
-<generic_type>  ::= "vector" "<" <type> ">"
-                  | "list" "<" <type> ">"
-\end{verbatim}
-
-
-
-\section{Semantics}
-Operational semantics of expressions, control flow, and function calls.
-
-\chapter{Compiler and Runtime}
-\section{Compiler Architecture}
-Frontend, type checking, intermediate representation, and backend.
-
-\section{WebAssembly Code Generation}
-Translation of language constructs and types to WebAssembly.
-
-\section{Runtime System}
-Vector representation, memory management, and built-in operations.
-
-\section{Implementation Details}
-Key implementation choices and limitations.
-
-\chapter{Evaluation}
-\section{Correctness}
-Testing methodology and comparison with R behavior.
-
-\section{Performance}
-Execution time, code size, and runtime overhead.
-
-\section{Discussion}
-Analysis of results and trade-offs.
-
-\chapter{Conclusion}
-Summary of contributions and future work.
