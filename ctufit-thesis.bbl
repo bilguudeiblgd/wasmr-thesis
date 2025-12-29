@@ -192,6 +192,42 @@
       \verb https://web.dev/case-studies/earth-webassembly/
       \endverb
     \endentry
+    \entry{wasm_specs}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=e41d0523c45d34fc1a4630ae8dfa1b45}{%
+           family={Rossberg},
+           familyi={R\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {W3C}%
+      }
+      \strng{namehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{fullhash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{fullhashraw}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{bibnamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{authorbibnamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{authornamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{authorfullhash}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \strng{authorfullhashraw}{e41d0523c45d34fc1a4630ae8dfa1b45}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{5}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{title}{{{WebAssembly Core Specification}}}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.w3.org/TR/wasm-core-1/
+      \endverb
+      \verb{url}
+      \verb https://www.w3.org/TR/wasm-core-1/
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

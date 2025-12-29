@@ -41,14 +41,39 @@ The design philosophy emphasizes a familiar R-like syntax while ensuring type sa
 
 The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. This section describes the core syntactic constructs.
 
+
 \begin{align*}
-e ::= & \; x && \text{(variable)} \\
-    | & \; n && \text{(literal)} \\
-    | & \; e_1 \; \textit{op} \; e_2 && \text{(binary operation)} \\
-    | & \; \textit{op} \; e_1 && \text{(unary operation)} \\
-    | & \; \texttt{if} \; e_1 \; \texttt{then} \; e_2 \; \texttt{else} \; e_3 && \text{(conditional)} \\
-    | & \; \texttt{fun}(x : \tau) \to e && \text{(function)} \\
-    | & \; e_1(e_2) && \text{(application)}
+\langle\textit{program}\rangle \; ::= \; & \langle\textit{statement}\rangle^* \\[0.5em]
+%
+\langle\textit{statement}\rangle \; ::= \; & \langle\textit{assignment}\rangle \mid \langle\textit{control flow}\rangle \mid \langle\textit{expression}\rangle \mid \langle\textit{index assign}\rangle \mid \langle\textit{return}\rangle \\[0.5em]
+%
+\langle\textit{control flow}\rangle \; ::= \; & \langle\textit{if}\rangle \mid \langle\textit{for}\rangle \mid \langle\textit{while}\rangle \\[0.5em]
+%
+\langle\textit{if}\rangle \; ::= \; & \texttt{if (} \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\}} \\
+& \mid \; \texttt{if (} \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\} else \{} \langle\textit{statements}\rangle \texttt{\}} \\[0.5em]
+%
+\langle\textit{for}\rangle \; ::= \; & \texttt{for (} \langle\textit{identifier}\rangle \texttt{ in } \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\}} \\[0.5em]
+%
+\langle\textit{assignment}\rangle \; ::= \; & \langle\textit{identifier}\rangle \; [\texttt{:} \langle\textit{type}\rangle] \; \texttt{<-} \; \langle\textit{expression}\rangle \\[0.5em]
+%
+\langle\textit{expression}\rangle \; ::= \; & \langle\textit{literal}\rangle \mid \langle\textit{identifier}\rangle \mid \langle\textit{function\_def}\rangle \mid \langle\textit{function\_call}\rangle \mid \ldots \\[0.5em]
+%
+\langle\textit{function\_def}\rangle \; ::= \; & \texttt{function (} \langle\textit{param\_list}\rangle \texttt{) :} \langle\textit{type}\rangle \texttt{ \{} \langle\textit{statement}\rangle^* \texttt{\}} \\[0.5em]
+%
+\langle\textit{param\_list}\rangle \; ::= \; & \langle\textit{param}\rangle \; (\texttt{,} \langle\textit{param}\rangle)^* \\[0.5em]
+%
+\langle\textit{param}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{:} \langle\textit{type}\rangle \\[0.5em]
+%
+\langle\textit{function\_call}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{(} \langle\textit{arg\_list}\rangle \texttt{)} \\[0.5em]
+%
+\langle\textit{function\_call}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{(} \langle\textit{arg\_list}\rangle \texttt{)} \\[0.5em]
+%
+\langle\textit{arg\_list}\rangle \; ::= \; & \langle\textit{expression}\rangle \; (\texttt{,} \langle\textit{expression}\rangle)^* \\[0.5em]
+%
+\langle\textit{type}\rangle \; ::= \; & \texttt{integer} \mid \texttt{logical} \mid \texttt{double} \mid \texttt{(} \langle\textit{type}\rangle \texttt{ -> } \langle\textit{type}\rangle \texttt{)} \\
+& \mid \; \texttt{any} \mid \texttt{function} \mid \langle\textit{composite type}\rangle \\[0.5em]
+%
+\langle\textit{composite type}\rangle \; ::= \; & \texttt{vector} \; \langle\textit{type}\rangle
 \end{align*}
 
 \subsection{Lexical Elements}
@@ -57,7 +82,7 @@ The language uses the following lexical tokens:
 
 \begin{itemize}
     \item \textbf{Keywords:} \texttt{function}, \texttt{if}, \texttt{else}, \texttt{for}, \texttt{in}, \texttt{while}, \texttt{return}
-    \item \textbf{Type keywords:} \texttt{int}, \texttt{double}, \texttt{string}, \texttt{char}, \texttt{void}, \texttt{logical}, \texttt{any}, \texttt{vector}, \texttt{list}
+    \item \textbf{Type keywords:} \texttt{int}, \texttt{double}, \texttt{void}, \texttt{logical}, \texttt{any}, \texttt{vector}, \texttt{list}
     \item \textbf{Operators:}
     \begin{itemize}
         \item Assignment: \texttt{<-} (assignment), \texttt{<<-} (super-assignment)
@@ -321,7 +346,18 @@ while (i <= 5) {
 
 \subsection{Expressions}
 
-The language supports various expression forms:
+Abstract syntax tree of expressions 
+\begin{align*}
+e ::= & \; x && \text{(variable)} \\
+    | & \; n && \text{(literal)} \\
+    | & \; e_1 \; \textit{op} \; e_2 && \text{(binary operation)} \\
+    | & \; \textit{op} \; e_1 && \text{(unary operation)} \\
+    | & \; \texttt{if} \; e_1 \; \texttt{then} \; e_2 \; \texttt{else} \; e_3 && \text{(conditional)} \\
+    | & \; \texttt{fun}(x : \tau) \to e && \text{(function)} \\
+    | & \; e_1(e_2) && \text{(application)}
+\end{align*}
+
+\noindent The language supports various expression forms:
 
 \begin{itemize}
     \item \textbf{Literals:} \texttt{42L}, \texttt{3} \texttt{3.14}, \texttt{TRUE}, \texttt{FALSE}

@@ -101,6 +101,7 @@
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{text/bib-database.bib}
 \usepackage{xurl}
+% \usepackage{syntax}
 \usepackage{forest}
 \usepackage{listings} % typesetting of sources
 %\usepackage{minted}
@@ -183,6 +184,34 @@
 %%%%%%%%%%%%%%%%%%%
 % SUMMARY END
 %%%%%%%%%%%%%%%%%%%
+
+
+% Define WebAssembly listing style
+\lstdefinelanguage{wat}{
+  morekeywords={module, func, param, result, local, i32, i64, f32, f64, 
+                const, add, mul, sub, load, store, call, export, import,
+                block, loop, if, else, end, br, br_if, get_local, set_local,
+                memory, table},
+  sensitive=true,
+  morecomment=[l]{;;},
+  morestring=[b]",
+}
+
+\lstset{
+  language=wat,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=8pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  captionpos=b,
+}
 
 \tableofcontents % do not remove this command
 %%%%%%%%%%%%%%%%%%%%%%

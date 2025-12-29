@@ -2399,6 +2399,10 @@
     <bcf:citekey order="4" intorder="1">figma_wasm</bcf:citekey>
     <bcf:citekey order="5" intorder="1">autocad_wasm</bcf:citekey>
     <bcf:citekey order="6" intorder="1">google_earth_wasm</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">wasm_specs</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">wasm_specs</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">wasm_specs</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">wasm_specs</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

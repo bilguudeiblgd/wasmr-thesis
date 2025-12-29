@@ -134,3 +134,120 @@ From Image-processing libraries in hidden behind C to desktop apps written in C\
 , they can run on the web with near native-like performance. Notable examples 
 of adoption of WASM are Figma\cite{figma_wasm}, Autodesk AutoCAD Web App\cite{autocad_wasm}, and Google Earth\cite{google_earth_wasm}.
 
+Moreover, for readability, WebAssembly also has so-called Web Assembly Text Format, in short WAT.
+It's a form where bytecode itself is more readable, with more syntactic sugars. Let's iterate over properties of WASM and how it's structured and written in WAT format.
+
+\paragraph{Module system}
+WebAssembly code is organized into modules. 
+Modules declare imports (functions, memory, tables, globals from the host environment) 
+and exports (making internal definitions available externally)\cite{wasm_specs}:
+\begin{lstlisting}[caption={Module demonstrating import and export mechanisms}]
+(module
+  ;; Import a logging function from the host
+  (import "env" "log" (func $log (param i32)))
+  
+  ;; Import memory from the host
+  (import "env" "memory" (memory 1))
+  
+  ;; Internal function (not exported)
+  (func $internal_add (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.add
+  )
+
+  ;; Can write memory
+  ;; Can create data segment
+  
+  ;; Public function that uses imports
+  (func $add_and_log (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    call $internal_add    ;; call internal function
+    local.get 0           ;; duplicate result for logging
+    call $log             ;; log the result
+  )
+  
+  ;; Export the public function
+  (export "addAndLog" (func $add_and_log))
+)
+\end{lstlisting}
+
+\paragraph{Stack-based machine}
+With goals of being fast, efficient, and portable, WebAssembly, at its heart, is a stack-based virtual machine
+running on the web. Stack-based machine in this context is a process virtual machine that works as 
+virtualization of computer system on top of a computer. Its workings is primarily based on
+interacting with the stack. For example:
+
+% Center the tree diagram
+\begin{figure}[h!]
+  \centering
+  \begin{forest}
+    [\texttt{+}
+      [\texttt{1}]
+      [\texttt{2}]
+    ]
+  \end{forest}
+  \caption{Tree representation}
+\end{figure}
+
+\begin{lstlisting}[caption={A simple WebAssembly function showing stack operations}]
+(module
+  (func $compute (result i32)
+    i32.const 1       ;; push constant 1 onto stack
+    i32.const 2       ;; push constant 2 onto stack
+    i32.add           ;; pop two values, push sum
+  )
+  (export "compute" (func $compute))
+)
+\end{lstlisting}
+
+\paragraph{Structured control flow}
+
+Unlike raw bytecode with goto-style jumps, WebAssembly uses structured 
+control flow constructs: block, loop, if, and br (branch). 
+Each construct creates a label that branches can target.\cite{wasm_specs}
+
+\begin{lstlisting}[caption={Conditional execution using structured control flow}]
+(module
+  (func $max (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.gt_s              ;; signed greater-than comparison
+    (if (result i32)
+      (then
+        local.get $a
+      )
+      (else
+        local.get $b
+      )
+    )
+  )
+  (export "max" (func $max))
+)
+\end{lstlisting}
+
+
+\paragraph{Linear memory model}
+WebAssembly provides a contiguous, resizable array of bytes called linear memory. Memory is accessed via load/store instructions with explicit alignment and offset.\cite{wasm_specs}
+\begin{lstlisting}[caption={Accessing linear memory with load and store instructions}]
+(module
+  (memory 1)              ;; declare 1 page (64KB) of memory
+  (func $increment_at_zero
+    i32.const 0           ;; memory address
+    i32.const 0           ;; memory address (for load)
+    i32.load              ;; load 32-bit value from address 0
+    i32.const 1           ;; constant 1
+    i32.add               ;; increment
+    i32.store             ;; store result back to address 0
+  )
+  (export "memory" (memory 0))
+  (export "increment" (func $increment_at_zero))
+)
+\end{lstlisting}
+
+\paragraph{Type system and Determinism}
+A decoded module is type-safe and checked in module instantiation. 
+Moreover, WebAssembly specification fully defines
+valid programs and their behaviour.\cite{wasm_specs}
+
