@@ -251,3 +251,21 @@ A decoded module is type-safe and checked in module instantiation.
 Moreover, WebAssembly specification fully defines
 valid programs and their behaviour.\cite{wasm_specs}
 
+\section{Previous works}
+Work related to R about compilers and interpreter has been nothing but inspiring. The R
+has started with what we now call Tree-Walk interpreter\cite{r_paper}. Then around April 2011, with release of R 2.13.0
+come the bytecode compiler by Luke Tierney, which was written almost entirely in R\cite{r_version_213_notes}. Essentially, it's faster 
+to compile R into some intermediate bytecode and then have it executed by VM\cite{tierney2019bytecode}.
+Thus, standard R environment execution became either with AST interpreter or with Bytecode Compiler\cite{rbytecodebook}.
+From then on all standard functions and packages in base R ws pre-compiled into bytecode. Lastly, JIT bytecode compiler 
+became the default from R.3.4.1\cite{RJ-2017-1-ch}.
+
+On top of standard implementations, execution on different environments have also been explored.
+WebR\cite{webR}, most notably, is a recent work that compiles the R interpreter to WebAssembly using the Emscripten compiler 
+to run R code on the web. Though as hinted at introduction, compiling the interpreter to WASM
+has its tradeoffs.
+
+In terms of type system and type annotations around the R, there has been a discussion around type system in R as well\cite{R_towards_type_system}.
+There are even implementations for type system for R\cite{typr2025}, although it's not adopted by R community. However, the purpose of the thesis
+is exploring the compilation of R to WASM. In that we use type annotations, but it's important to note that 
+we won't dig deep into type systems at all.

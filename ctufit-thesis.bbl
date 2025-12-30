@@ -228,6 +228,227 @@
       \verb https://www.w3.org/TR/wasm-core-1/
       \endverb
     \endentry
+    \entry{r_paper}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ac7719f901654e5ae5281acf37563142}{%
+           family={Ihaka},
+           familyi={I\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8a97fae1ed0550968a6f77cd783776f5}{%
+           family={Gentleman},
+           familyi={G\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{fullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{fullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{bibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorbibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authornamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorfullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorfullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Computational and Graphical Statistics}
+      \field{number}{3}
+      \field{title}{R: A language for data analysis and graphics}
+      \field{volume}{5}
+      \field{year}{1996}
+      \field{pages}{299\bibrangedash 314}
+      \range{pages}{16}
+    \endentry
+    \entry{r_version_213_notes}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=19c16a29c7c1db67796fdee712478912}{%
+           family={Eddelbuettel},
+           familyi={E\bibinitperiod},
+           given={Dirk},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{19c16a29c7c1db67796fdee712478912}
+      \strng{fullhash}{19c16a29c7c1db67796fdee712478912}
+      \strng{fullhashraw}{19c16a29c7c1db67796fdee712478912}
+      \strng{bibnamehash}{19c16a29c7c1db67796fdee712478912}
+      \strng{authorbibnamehash}{19c16a29c7c1db67796fdee712478912}
+      \strng{authornamehash}{19c16a29c7c1db67796fdee712478912}
+      \strng{authorfullhash}{19c16a29c7c1db67796fdee712478912}
+      \strng{authorfullhashraw}{19c16a29c7c1db67796fdee712478912}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{The new R compiler package in R 2.13.0: Some first experiments}
+      \verb{urlraw}
+      \verb https://www.r-bloggers.com/2011/04/the-new-r-compiler-package-in-r-2-13-0-some-first-experiments/
+      \endverb
+      \verb{url}
+      \verb https://www.r-bloggers.com/2011/04/the-new-r-compiler-package-in-r-2-13-0-some-first-experiments/
+      \endverb
+    \endentry
+    \entry{tierney2019bytecode}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=f801b3457bf8c7e89de7c7e7128b8774}{%
+           family={Tierney},
+           familyi={T\bibinitperiod},
+           given={Luke},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Toulouse, France}%
+      }
+      \strng{namehash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{fullhash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{fullhashraw}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{bibnamehash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{authorbibnamehash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{authornamehash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{authorfullhash}{f801b3457bf8c7e89de7c7e7128b8774}
+      \strng{authorfullhashraw}{f801b3457bf8c7e89de7c7e7128b8774}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{RIOT 2019: R Implementation, Optimization and Tooling Workshop}
+      \field{title}{The R bytecode compiler and VM}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://homepage.divms.uiowa.edu/~luke/talks/Riot-2019.pdf
+      \endverb
+      \verb{url}
+      \verb https://homepage.divms.uiowa.edu/~luke/talks/Riot-2019.pdf
+      \endverb
+    \endentry
+    \entry{rbytecodebook}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=293d1a9ce23b9c2d9a35c205643f4d72}{%
+           family={mikefc@coolbutuseless.com},
+           familyi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{fullhash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{fullhashraw}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{bibnamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{authorbibnamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{authornamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{authorfullhash}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \strng{authorfullhashraw}{293d1a9ce23b9c2d9a35c205643f4d72}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{https://coolbutuseless.github.io/book/rbytecodebook/}
+      \field{note}{Accessed: 2025-12-28}
+      \field{title}{R Bytecode Book}
+      \field{year}{2023}
+    \endentry
+    \entry{RJ-2017-1-ch}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=f7b2c9004e2ef1e4ab9d909fa669a218}{%
+           family={Team},
+           familyi={T\bibinitperiod},
+           given={The\bibnamedelimb R\bibnamedelima Core},
+           giveni={T\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{fullhash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{fullhashraw}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{bibnamehash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{authorbibnamehash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{authornamehash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{authorfullhash}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \strng{authorfullhashraw}{f7b2c9004e2ef1e4ab9d909fa669a218}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{2073-4859}
+      \field{issue}{1}
+      \field{journaltitle}{The R Journal}
+      \field{note}{https://journal.r-project.org/news/RJ-2017-1-ch}
+      \field{title}{Changes in R}
+      \field{volume}{9}
+      \field{year}{2017}
+      \field{pages}{509\bibrangedash 521}
+      \range{pages}{13}
+    \endentry
+    \entry{R_towards_type_system}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=95ea0d405175d7354b250d82e041ff97}{%
+           family={Turcotte},
+           familyi={T\bibinitperiod},
+           given={Alexi},
+           giveni={A\bibinitperiod}}}%
+        {{hash=02d6346b81238d26cc771c69d33f7a1c}{%
+           family={Vitek},
+           familyi={V\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {London, United Kingdom}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{fullhash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{fullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{bibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorbibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authornamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorfullhash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorfullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{R is a fascinating language: It is dynamically typed, vectorized, both lazy and side-effecting, and it fosters an interactive style of programming. This unique combination of features makes it easy to use, but prone to errors and strange behaviour. R is the tool of choice for many data analysts, and our aim is to empower them with a language that is not simply easy to use, but easy to use well, so as to increase their confidence in the data analyses they undertake. To that end, we are developing a type system for R that is simple enough to be attractive to programmers while being expressive enough to capture existing programming paradigms. In this paper, we outline past, present, and future work as we build up to a type system for R.}
+      \field{booktitle}{Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems}
+      \field{isbn}{9781450368629}
+      \field{series}{ICOOOLPS '19}
+      \field{title}{Towards a Type System for R}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1145/3340670.3342426
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3340670.3342426
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3340670.3342426
+      \endverb
+    \endentry
+    \entry{typr2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=21db9c6b7f9cc541b0d55769c3f00d41}{%
+           family={{WeData}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{fullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{fullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{bibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorbibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authornamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorfullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorfullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://we-data-ch.github.io/typr.github.io/}}
+      \field{note}{Accessed: 2025-12-30}
+      \field{title}{{TypR}: {R}'s Types for Data Sciences}
+      \field{year}{2025}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

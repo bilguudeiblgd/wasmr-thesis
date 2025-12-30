@@ -1,8 +1,10 @@
 
-\chapter{Language Design and Mappings}
+\chapter{Language Design and Type System}
 In this chapter, we'll design a subset of R with types and see how types and their operations could map to WASM generation.
 \section{Design Goals}
-To design typed R, I tried to be as close as possible to R semantics to easily compile available R codes with wasmR. Although there are obviously inherent limitations compiling dynamic language to statically typed bytecode. Issues include mutability, typing, reflections. For example, how do we deal with
+Due to this thesis' primarily aim being compiling a dynamic language like R to 
+WASM, it's important to specify clearly to what degree and which subset to choose.
+A full featureset of R will be notoriously hard to compile.
 
 \begin{verbatim}
 var <- 21  // assign integer
@@ -94,7 +96,7 @@ The language uses the following lexical tokens:
         \item Function arrow: \texttt{->} (in type signatures)
     \end{itemize}
     \item \textbf{Delimiters:} \texttt{(}, \texttt{)}, \texttt{\{}, \texttt{\}}, \texttt{[}, \texttt{]}, \texttt{,}
-    \item \textbf{Literals:} Numeric literals, string literals (double-quoted), logical literals (\texttt{TRUE}, \texttt{FALSE})
+    \item \textbf{Literals:} Numeric literals, logical literals (\texttt{TRUE}, \texttt{FALSE})
     \item \textbf{Identifiers:} Alphanumeric sequences starting with a letter or underscore
     \item \textbf{Special:} \texttt{...} (varargs placeholder)
 \end{itemize}
@@ -481,6 +483,16 @@ Type annotations are required in the following contexts:
     \item Ambiguous variable declarations
 \end{itemize}
 
+\textbf{Type Promotion}: When operands have different numeric types, implicit casting promotes to the wider type:
+\begin{align*}
+\text{int} \oplus \text{double} &\to \text{double} \\
+\text{logical} \oplus \text{int} &\to \text{int} \\
+\text{logical} \oplus \text{double} &\to \text{double}
+\end{align*}
+
+Example: \texttt{3 + 2.5} evaluates as \texttt{3.0 + 2.5 = 5.5} after promoting \texttt{3} to \texttt{double}.
+
+
 \subsection{Typing Rules}
 
 Selected typing rules are presented below using inference rule notation.
@@ -608,15 +620,6 @@ n_1 / n_2 &= \lfloor n_1 \div n_2 \rfloor \quad \text{(integer division)} \\
 d_1 / d_2 &= d_1 \div d_2 \quad \text{(floating-point division)} \\
 n_1 \bmod n_2 &= n_1 \bmod n_2
 \end{align*}
-
-\textbf{Type Promotion}: When operands have different numeric types, implicit casting promotes to the wider type:
-\begin{align*}
-\text{int} \oplus \text{double} &\to \text{double} \\
-\text{logical} \oplus \text{int} &\to \text{int} \\
-\text{logical} \oplus \text{double} &\to \text{double}
-\end{align*}
-
-Example: \texttt{3 + 2.5} evaluates as \texttt{3.0 + 2.5 = 5.5} after promoting \texttt{3} to \texttt{double}.
 
 \textbf{Comparison Operators} (\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}) produce logical values:
 \begin{align*}
