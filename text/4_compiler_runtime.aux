@@ -5,13 +5,48 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Compiler Architecture}{27}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{27}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Runtime System}{27}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Implementation Details}{27}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Front-end}{27}{paragraph*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Middle-end}{27}{paragraph*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Back-end}{27}{paragraph*.20}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Compiler pipeline architecture showing front-end, middle-end, and back-end phases}}{28}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:compiler-pipeline}{{4.1}{28}{Compiler pipeline architecture showing front-end, middle-end, and back-end phases}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{28}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Type Mapping}{28}{subsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1.1}Vector Representation}{29}{subsubsection.4.2.1.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{29}{lstlisting.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1.2}Function References}{29}{subsubsection.4.2.1.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{29}{lstlisting.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Expression Compilation}{29}{subsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.1}Literals}{29}{subsubsection.4.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.2}Variables}{30}{subsubsection.4.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.3}Binary Operations}{30}{subsubsection.4.2.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.4}Function Calls}{31}{subsubsection.4.2.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Statement Compilation}{31}{subsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3.1}Assignment}{31}{subsubsection.4.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3.2}Control Flow}{32}{subsubsection.4.2.3.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{32}{lstlisting.4.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{32}{lstlisting.4.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{33}{lstlisting.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Function Compilation}{33}{subsection.4.2.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{34}{lstlisting.4.6}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{34}{lstlisting.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Runtime System}{34}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Memory Management}{34}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Vector Operations}{35}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Built-in Function Implementations}{35}{subsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3.1}Print Function}{35}{subsubsection.4.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3.2}Sequence Generation}{36}{subsubsection.4.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}WASI Integration}{36}{subsection.4.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Implementation Details}{36}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{36}{subsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{37}{subsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{37}{subsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Runtime System}{38}{section.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Implementation Details}{38}{section.4.6}\protected@file@percent }
 \@setckpt{text/4_compiler_runtime}{
-\setcounter{page}{28}
+\setcounter{page}{39}
 \setcounter{equation}{0}
-\setcounter{enumi}{0}
+\setcounter{enumi}{4}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
@@ -19,21 +54,21 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{4}
-\setcounter{section}{4}
+\setcounter{section}{6}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{0}
+\setcounter{figure}{1}
 \setcounter{table}{0}
 \setcounter{caption@flags}{2}
 \setcounter{continuedfloat}{0}
 \setcounter{parentequation}{0}
 \setcounter{theorem}{0}
 \setcounter{section@level}{0}
-\setcounter{Item}{0}
+\setcounter{Item}{45}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{58}
+\setcounter{bookmark@seq@number}{81}
 \setcounter{AM@survey}{0}
 \setcounter{tabx@nest}{0}
 \setcounter{listtotal}{0}
@@ -149,6 +184,6 @@
 \setcounter{biburlucpenalty}{200}
 \setcounter{biburllcpenalty}{100}
 \setcounter{smartand}{1}
-\setcounter{lstnumber}{12}
-\setcounter{lstlisting}{0}
+\setcounter{lstnumber}{14}
+\setcounter{lstlisting}{7}
 }

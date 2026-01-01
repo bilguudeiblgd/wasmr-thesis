@@ -23,6 +23,13 @@
 \contentsline {lstlisting}{\numberline {3.11}{\ignorespaces Vector type examples}}{20}{lstlisting.3.11}%
 \contentsline {lstlisting}{\numberline {3.12}{\ignorespaces Closure example}}{23}{lstlisting.3.12}%
 \addvspace {10\p@ }
+\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{29}{lstlisting.4.1}%
+\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{29}{lstlisting.4.2}%
+\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{32}{lstlisting.4.3}%
+\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{32}{lstlisting.4.4}%
+\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{33}{lstlisting.4.5}%
+\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{34}{lstlisting.4.6}%
+\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{34}{lstlisting.4.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

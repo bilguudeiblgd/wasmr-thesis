@@ -1,10 +1,486 @@
-
 \chapter{Compiler and Runtime}
+All implementation related to compiling and its scripts are written in Rust language.
+Rust is chosen for its modern features, memory safety and performance. In coming sections,
+we'll describe the architecture, and design decisions about the implementation of the compiler.
 \section{Compiler Architecture}
-Frontend, type checking, intermediate representation, and backend.
+Most compilers follow pass-based implementation. To make sense of the complexity,
+we divide compiler into so-called front-end, middle-end, and back-end. Front-end includes
+everything related to actually taking the code as a string and creating AST tree, and then 
+intermediate representation. Middle-end is used for mostly language-independent optimizations 
+on the IR. Then, finally the backend, back-end takes that IR and generates target-specific 
+binaries or bytecode. In our case back-end would be generating the WASM code.
+
+Conceptually, each part is composed of multiple modules shown in figure below \ref{fig:compiler-pipeline}
+.
+\paragraph{Front-end}
+Composed of Lexer and Parser, it handles syntactic analysis and semantic analysis. Lexer takes in a source code as string,
+then produces so-called Tokens that programmer has defined. Those tokens are later fed into Parser, which uses the grammar to 
+create AST tree.
+\paragraph{Middle-end}
+This is where the optimizations happen. Or it could simply translate the IR into more efficient forms for back-end.
+\paragraph{Back-end}
+Part that's concerned with only generating code for target architecture.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, align=center, rounded corners},
+    phase/.style={rectangle, draw=none, font=\small\itshape, align=center},
+    arrow/.style={->, >=stealth, thick}
+]
+
+% Front-end
+\node[phase] (frontend) {Front-end};
+\node[box, below=0.3cm of frontend] (lexer) {Lexer};
+\node[box, below of=lexer] (parser) {Parser};
+\node[box, below of=parser] (ir) {IR Generation};
+
+% Middle-end
+\node[phase, below=1.5cm of ir] (middleend) {Middle-end};
+\node[box, below=0.3cm of middleend] (opt) {Optimization\\Passes};
+
+% Back-end
+\node[phase, below=1.5cm of opt] (backend) {Back-end};
+\node[box, below=0.3cm of backend] (codegen) {Code Generation\\(WASM)};
+
+% Arrows
+\draw[arrow] (lexer) -- (parser);
+\draw[arrow] (parser) -- (ir);
+\draw[arrow] (ir) -- (opt);
+\draw[arrow] (opt) -- (codegen);
+
+% Input/Output labels
+\node[left=0.8cm of lexer, font=\small] {Source Code};
+\draw[->, dashed] ($(lexer.west) + (-0.5,0)$) -- (lexer.west);
+
+\node[left=0.8cm of codegen, font=\small] {WASM Bytecode};
+\draw[->, dashed] (codegen.east) -- ($(codegen.east) + (0.5,0)$);
+
+% Phase boundaries
+\draw[dashed, gray] ($(ir.south) + (-3,-.75)$) -- ($(ir.south) + (3,-.75)$);
+\draw[dashed, gray] ($(opt.south) + (-3,-.75)$) -- ($(opt.south) + (3,-.75)$);
+
+\end{tikzpicture}
+\caption{Compiler pipeline architecture showing front-end, middle-end, and back-end phases}
+\label{fig:compiler-pipeline}
+\end{figure}
 
 \section{WebAssembly Code Generation}
-Translation of language constructs and types to WebAssembly.
+This section describes the translation of language constructs to WebAssembly instructions.
+
+\subsection{Type Mapping}
+
+Types are mapped to WebAssembly value types as follows:
+
+\begin{center}
+\begin{tabular}{ll}
+\hline
+\textbf{Source Type} & \textbf{WebAssembly Type} \\
+\hline
+\texttt{int} & \texttt{i32} \\
+\texttt{double} & \texttt{f64} \\
+\texttt{logical} & \texttt{i32} (0 = false, 1 = true) \\
+\texttt{vector<T>} & \texttt{(ref \$vec\_T)} (struct with data array and length) \\
+\texttt{function} & \texttt{(ref \$functype)} (typed function reference) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Vector Representation}
+
+Vectors are represented as WebAssembly GC structs:
+\begin{lstlisting}[language=wat, caption={Vector struct type}]
+(type $vec_f64 (struct
+  (field $data (ref (array (mut f64))))
+  (field $length (mut i32))
+))
+\end{lstlisting}
+
+This representation:
+\begin{itemize}
+    \item Uses WebAssembly GC arrays for efficient storage
+    \item Stores length separately for fast access
+    \item Allows mutable arrays for in-place updates
+    \item Type-specialized structs for different element types (i32, f64, anyref)
+\end{itemize}
+
+\subsubsection{Function References}
+
+Functions are represented using WebAssembly typed function references:
+\begin{itemize}
+    \item Simple functions: Direct \texttt{(ref \$functype)} where \texttt{\$functype} is the function signature
+    \item Closures: Struct containing function reference and captured environment
+    \item Function calls use \texttt{call\_ref} for indirect calls through function references
+\end{itemize}
+
+Closure representation:
+\begin{lstlisting}[language=wat, caption={Closure struct type}]
+(type $closure (struct
+  (field $func (ref $functype))
+  (field $env (ref $env_struct))
+))
+\end{lstlisting}
+
+\subsection{Expression Compilation}
+
+\subsubsection{Literals}
+
+Literals compile to immediate value instructions:
+\begin{itemize}
+    \item Integer literals: \texttt{i32.const n}
+    \item Floating-point literals: \texttt{f64.const x}
+    \item Boolean literals: \texttt{i32.const 0} (false) or \texttt{i32.const 1} (true)
+\end{itemize}
+
+\subsubsection{Variables}
+
+Variable references compile to local or global access:
+\begin{itemize}
+    \item Local variables: \texttt{local.get \$var\_idx}
+    \item Captured variables: Load from closure environment struct
+    \item Function references: \texttt{ref.func \$func\_idx}
+\end{itemize}
+
+\subsubsection{Binary Operations}
+
+Binary operations compile to corresponding WebAssembly instructions:
+
+\begin{itemize}
+    \item Integer arithmetic: \texttt{i32.add}, \texttt{i32.sub}, \texttt{i32.mul}, \texttt{i32.div\_s}, \texttt{i32.rem\_s}
+    \item Float arithmetic: \texttt{f64.add}, \texttt{f64.sub}, \texttt{f64.mul}, \texttt{f64.div}
+    \item Integer comparison: \texttt{i32.eq}, \texttt{i32.ne}, \texttt{i32.lt\_s}, \texttt{i32.le\_s}, \texttt{i32.gt\_s}, \texttt{i32.ge\_s}
+    \item Float comparison: \texttt{f64.eq}, \texttt{f64.ne}, \texttt{f64.lt}, \texttt{f64.le}, \texttt{f64.gt}, \texttt{f64.ge}
+    \item Logical operations: \texttt{i32.and}, \texttt{i32.or} (with boolean normalization)
+\end{itemize}
+
+Vector operations compile to loops that apply scalar operations element-wise:
+\begin{enumerate}
+    \item Allocate result vector with same length as operands
+    \item Loop over indices 0 to length-1
+    \item Extract elements from both operand vectors
+    \item Apply scalar operation
+    \item Store result in result vector
+\end{enumerate}
+Moreover, all vector operations are written in Typed R language and it's compiled and embedded
+into runtime. For example:
+
+\begin{lstlisting}
+system_vector_add___vec_int__vec_int <- function(a: vector<int>, b: vector<int>): vector<int> {
+    n <- length(a)
+    m <- length(b)
+
+    if(n != m & n %% m != 0 & m %% n != 0) {
+        stop("Vector lengths not compatible for recycling")
+    }
+
+    result_len <- max(n, m)
+    result: vector<int> <- vec(length=result_len, mode="int")
+
+    for(i in 1:result_len) {
+        a_idx <- ((i - 1) %% n) + 1
+        b_idx <- ((i - 1) %% m) + 1
+        result[i] <- a[a_idx] + b[b_idx]
+    }
+    return(result)
+}
+\end{lstlisting}
+Such function is compiled to WASM and the operation vec + vec is mapped to this function name.
+\subsubsection{Function Calls}
+
+Function calls compile differently based on callee type:
+
+\begin{itemize}
+    \item \textbf{Direct calls} (known function): \texttt{call \$func\_idx}
+    \item \textbf{Indirect calls} (function variable):
+    \begin{enumerate}
+        \item Load function reference from local/environment
+        \item Evaluate arguments
+        \item \texttt{call\_ref \$functype\_idx}
+    \end{enumerate}
+    \item \textbf{Closure calls}:
+    \begin{enumerate}
+        \item Load closure struct
+        \item Extract environment field
+        \item Extract function field
+        \item Pass environment as first parameter
+        \item Pass regular arguments
+        \item \texttt{call\_ref \$closure\_functype\_idx}
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Statement Compilation}
+
+\subsubsection{Assignment}
+
+Regular assignment (\texttt{<-}):
+\begin{enumerate}
+    \item Evaluate right-hand side expression
+    \item Store result in local variable: \texttt{local.set \$var\_idx}
+\end{enumerate}
+
+Super-assignment (\texttt{<<-}) for captured variables:
+\begin{enumerate}
+    \item Evaluate right-hand side expression
+    \item Load closure environment
+    \item Navigate to appropriate nesting level
+    \item Extract reference cell for variable
+    \item Update cell contents using \texttt{struct.set}
+\end{enumerate}
+
+\subsubsection{Control Flow}
+
+\textbf{If statements} compile to WebAssembly block structures:
+\begin{lstlisting}[language=wat, caption={If-else compilation}]
+; Evaluate condition
+(condition code)
+
+; If-else structure
+(if (result ...)
+  (then
+    ; then-branch code
+  )
+  (else
+    ; else-branch code
+  )
+)
+\end{lstlisting}
+
+\textbf{While loops} compile to loop blocks with conditional branching:
+\begin{lstlisting}[language=wat, caption={While loop compilation}]
+(block $loop_exit
+  (loop $loop_start
+    ; Evaluate condition
+    (condition code)
+
+    ; Exit if false
+    (i32.eqz)
+    (br_if $loop_exit)
+
+    ; Loop body
+    (body code)
+
+    ; Continue loop
+    (br $loop_start)
+  )
+)
+\end{lstlisting}
+
+\textbf{For loops} over ranges compile to indexed loops:
+\begin{lstlisting}[language=wat, caption={For loop compilation}]
+; Initialize loop variable to start
+(local.set $iter (start value))
+
+(block $loop_exit
+  (loop $loop_start
+    ; Check condition: iter <= end
+    (local.get $iter)
+    (end value)
+    (i32.gt_s)
+    (br_if $loop_exit)
+
+    ; Loop body with iter
+    (body code)
+
+    ; Increment iter
+    (local.get $iter)
+    (i32.const 1)
+    (i32.add)
+    (local.set $iter)
+
+    (br $loop_start)
+  )
+)
+\end{lstlisting}
+
+For loops over vectors use similar structure but load vector elements by index.
+
+\subsection{Function Compilation}
+
+Function compilation involves multiple steps:
+
+\begin{enumerate}
+    \item \textbf{Type registration}: Register function type in type section
+    \item \textbf{Function index allocation}: Assign unique function index
+    \item \textbf{Local variable allocation}: Determine local variable slots from \texttt{FunctionMetadata}
+    \item \textbf{Closure analysis}: Identify captured variables
+    \item \textbf{Environment struct generation}: Create struct type for captured variables (if needed)
+    \item \textbf{Code generation}: Emit function body
+\end{enumerate}
+
+Simple function (no captures):
+\begin{lstlisting}[language=wat, caption={Simple function}]
+(func $add (param $a i32) (param $b i32) (result i32)
+  (local.get $a)
+  (local.get $b)
+  (i32.add)
+)
+\end{lstlisting}
+
+Closure function (with captures):
+\begin{lstlisting}[language=wat, caption={Closure function}]
+(type $env (struct (field $captured_var (mut i32))))
+
+(func $closure_fn (param $env (ref $env)) (param $x i32) (result i32)
+  ; Access captured variable
+  (local.get $env)
+  (struct.get $env $captured_var)
+
+  ; Use parameter
+  (local.get $x)
+
+  ; Computation
+  (i32.add)
+)
+\end{lstlisting}
+
+When returning a closure, the compiler:
+\begin{enumerate}
+    \item Allocates environment struct
+    \item Copies captured variable values into struct fields
+    \item Allocates closure struct
+    \item Stores function reference and environment
+    \item Returns closure struct reference
+\end{enumerate}
+
+\section{Runtime System}
+
+\subsection{Memory Management}
+
+The runtime uses WebAssembly GC for automatic memory management:
+\begin{itemize}
+    \item Vectors, strings, and closures are GC-managed heap objects
+    \item No explicit deallocation required
+    \item WebAssembly GC handles reference counting and garbage collection
+    \item Linear memory used for WASI I/O buffers and string serialization
+\end{itemize}
+
+Memory layout:
+\begin{itemize}
+    \item Address 0: Reserved for null pointer checks
+    \item Address 8+: WASI I/O buffers for \texttt{fd\_write}
+    \item Dynamic region: Managed by compiler for temporary string buffers
+\end{itemize}
+
+\subsection{Vector Operations}
+
+Built-in vector operations are compiled to runtime function calls:
+
+\textbf{Vector Construction} (\texttt{c(...)}):
+\begin{enumerate}
+    \item Determine element type from arguments
+    \item Allocate array of appropriate size
+    \item Initialize array elements
+    \item Allocate vector struct
+    \item Store array reference and length
+    \item Return vector struct reference
+\end{enumerate}
+
+\textbf{Component-wise Operations}:
+Vector arithmetic is implemented as inline loops (described previously) rather than runtime calls for performance.
+
+\textbf{Reduction Operations} (\texttt{sum}, \texttt{length}):
+\begin{itemize}
+    \item \texttt{length}: Extract and return length field from vector struct
+    \item \texttt{sum}: Loop over vector elements, accumulating sum
+\end{itemize}
+
+\subsection{Built-in Function Implementations}
+
+\subsubsection{Print Function}
+
+The \texttt{print} function serializes values to strings and outputs via WASI:
+\begin{enumerate}
+    \item Convert value to string representation
+    \item Write string to linear memory buffer
+    \item Call \texttt{fd\_write} to output to stdout (file descriptor 1)
+\end{enumerate}
+
+For different types:
+\begin{itemize}
+    \item Integers: Convert to decimal string
+    \item Floats: Convert to decimal string with precision
+    \item Strings: Output directly
+    \item Vectors: Format as \texttt{[elem1, elem2, ...]}
+    \item Booleans: Output \texttt{TRUE} or \texttt{FALSE}
+\end{itemize}
+
+\subsubsection{Sequence Generation}
+
+The range operator \texttt{start:end} and \texttt{gen\_seq} runtime function:
+\begin{enumerate}
+    \item Calculate sequence length: \texttt{end - start + 1}
+    \item Allocate vector of integers
+    \item Fill array with values from \texttt{start} to \texttt{end}
+    \item Return vector struct
+\end{enumerate}
+
+Optimized implementation uses a simple loop without intermediate allocations.
+
+\subsection{WASI Integration}
+
+The runtime integrates with WASI (WebAssembly System Interface) for I/O:
+
+\begin{itemize}
+    \item \textbf{Import}: \texttt{fd\_write} from \texttt{wasi\_snapshot\_preview1}
+    \item \textbf{Signature}: \texttt{(i32, i32, i32, i32) -> i32}
+    \item \textbf{Parameters}: file descriptor, iovs pointer, iovs length, nwritten pointer
+    \item \textbf{Usage}: Output strings to stdout/stderr
+\end{itemize}
+
+The \texttt{\_start} function is exported as the entry point, compatible with WASI runtimes like \texttt{wasmtime}.
+
+\section{Implementation Details}
+
+\subsection{Compilation Limitations}
+
+Current implementation limitations:
+
+\begin{itemize}
+    \item \textbf{String operations}: Limited string manipulation functions
+    \item \textbf{Error handling}: No exception or error handling mechanism
+    \item \textbf{Standard library}: Minimal built-in function set
+    \item \textbf{I/O}: Only print output via WASI, no file I/O or input reading
+    \item \textbf{Numeric coercion}: Limited implicit type conversions
+    \item \textbf{Vector operations}: Subset of R's vector operations implemented
+    \item \textbf{List types}: Declared but not fully implemented
+\end{itemize}
+
+\subsection{Design Decisions}
+
+Key design decisions and rationale:
+
+\begin{itemize}
+    \item \textbf{Static typing}: Enables efficient ahead-of-time compilation and early error detection, trading off R's dynamic flexibility
+
+    \item \textbf{WebAssembly GC}: Using the GC proposal simplifies memory management and enables efficient object representation, though requiring newer WebAssembly runtimes
+
+    \item \textbf{Lexical-only scoping}: Only functions create scopes (not blocks), matching R semantics and simplifying closure implementation
+
+    \item \textbf{Typed function references}: Using typed funcrefs instead of function tables enables type-safe indirect calls and eliminates table management overhead
+
+    \item \textbf{Struct-based closures}: Representing closures as structs with explicit environments rather than using WebAssembly stack manipulation provides cleaner semantics
+
+    \item \textbf{Component-wise vector operations}: Inlining vector operations as loops rather than runtime calls improves performance for common operations
+
+    \item \textbf{Reference cells for mutable captures}: Using GC structs for mutably-captured variables (super-assignment) enables efficient closure semantics
+\end{itemize}
+
+\subsection{Performance Considerations}
+
+Optimization strategies employed:
+
+\begin{itemize}
+    \item \textbf{Type specialization}: Separate vector struct types for i32, f64, and anyref avoid runtime type checks
+
+    \item \textbf{Direct calls}: Known function calls use direct \texttt{call} instructions instead of slower indirect calls
+
+    \item \textbf{Local variable reuse}: Temporary variables reuse local slots when possible
+
+    \item \textbf{Inline vector operations}: Component-wise operations inlined rather than calling runtime functions
+
+    \item \textbf{Cached type indices}: Function signature type indices cached to avoid recreating identical types
+\end{itemize}
+
 
 \section{Runtime System}
 Vector representation, memory management, and built-in operations.

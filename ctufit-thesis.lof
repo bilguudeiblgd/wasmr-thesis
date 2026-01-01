@@ -11,7 +11,9 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Tree representation}}{7}{figure.caption.13}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Compiler pipeline architecture showing front-end, middle-end, and back-end phases}}{28}{figure.caption.21}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces End-to-end validation test architecture. Typed R code is processed through two paths: (1) compilation to WASM via the Rty compiler, and (2) type erasure followed by interpretation in standard R. Outputs are compared to ensure semantic equivalence.}}{40}{figure.caption.25}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {english}{}\relax 
