@@ -86,7 +86,7 @@ Types are mapped to WebAssembly value types as follows:
 \end{tabular}
 \end{center}
 
-\subsubsection{Vector Representation}
+\paragraph{Vector Representation}
 
 Vectors are represented as WebAssembly GC structs:
 \begin{lstlisting}[language=wat, caption={Vector struct type}]
@@ -104,7 +104,7 @@ This representation:
     \item Type-specialized structs for different element types (i32, f64, anyref)
 \end{itemize}
 
-\subsubsection{Function References}
+\paragraph{Function References}
 
 Functions are represented using WebAssembly typed function references:
 \begin{itemize}
@@ -123,7 +123,7 @@ Closure representation:
 
 \subsection{Expression Compilation}
 
-\subsubsection{Literals}
+\paragraph{Literals}
 
 Literals compile to immediate value instructions:
 \begin{itemize}
@@ -132,7 +132,7 @@ Literals compile to immediate value instructions:
     \item Boolean literals: \texttt{i32.const 0} (false) or \texttt{i32.const 1} (true)
 \end{itemize}
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 Variable references compile to local or global access:
 \begin{itemize}
@@ -141,7 +141,7 @@ Variable references compile to local or global access:
     \item Function references: \texttt{ref.func \$func\_idx}
 \end{itemize}
 
-\subsubsection{Binary Operations}
+\paragraph{Binary Operations}
 
 Binary operations compile to corresponding WebAssembly instructions:
 
@@ -185,7 +185,7 @@ system_vector_add___vec_int__vec_int <- function(a: vector<int>, b: vector<int>)
 }
 \end{lstlisting}
 Such function is compiled to WASM and the operation vec + vec is mapped to this function name.
-\subsubsection{Function Calls}
+\paragraph{Function Calls}
 
 Function calls compile differently based on callee type:
 
@@ -210,7 +210,7 @@ Function calls compile differently based on callee type:
 
 \subsection{Statement Compilation}
 
-\subsubsection{Assignment}
+\paragraph{Assignment}
 
 Regular assignment (\texttt{<-}):
 \begin{enumerate}
@@ -227,7 +227,7 @@ Super-assignment (\texttt{<<-}) for captured variables:
     \item Update cell contents using \texttt{struct.set}
 \end{enumerate}
 
-\subsubsection{Control Flow}
+\paragraph{Control Flow}
 
 \textbf{If statements} compile to WebAssembly block structures:
 \begin{lstlisting}[language=wat, caption={If-else compilation}]
@@ -386,7 +386,7 @@ Vector arithmetic is implemented as inline loops (described previously) rather t
 
 \subsection{Built-in Function Implementations}
 
-\subsubsection{Print Function}
+\paragraph{Print Function}
 
 The \texttt{print} function serializes values to strings and outputs via WASI:
 \begin{enumerate}
@@ -404,7 +404,7 @@ For different types:
     \item Booleans: Output \texttt{TRUE} or \texttt{FALSE}
 \end{itemize}
 
-\subsubsection{Sequence Generation}
+\paragraph{Sequence Generation}
 
 The range operator \texttt{start:end} and \texttt{gen\_seq} runtime function:
 \begin{enumerate}

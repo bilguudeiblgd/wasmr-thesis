@@ -487,7 +487,7 @@
 \titleformat{\subsection}
   {\Large\bfseries\color{heading}}{{{\color{black}\thesubsection}}}{1em}{}%[\vskip -1em]
   
-\titleformat{\subsubsection}
+\titleformat{\paragraph}
   {\large\bfseries\color{heading}}{{{\color{black}\thesubsubsection}}}{1em}{}%[\vskip -1em]
 
 \ifnum\@ctufitsecdepth=4%if paragraph should be also styled

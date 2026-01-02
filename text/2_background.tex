@@ -251,6 +251,13 @@ A decoded module is type-safe and checked in module instantiation.
 Moreover, WebAssembly specification fully defines
 valid programs and their behaviour.\cite{wasm_specs}
 
+\subsection{WASM Garbage Collection Purposal}
+WASM Garbage collection purposal, in short GC, is a new purposal that tries to provide efficient support
+for high-level languages. Since WASM announcement, community were coming up with their own 
+GC as a way to compile high-level languages to WASM. With GC purposal, it helps to take load off of developers
+who are porting their languages to WASM. In this purposal, they introduced structs and arrays, which we'll heavily 
+use in the implementation of this thesis.
+
 \section{Previous works}
 Work related to R about compilers and interpreter has been nothing but inspiring. The R
 has started with what we now call Tree-Walk interpreter\cite{r_paper}. Then around April 2011, with release of R 2.13.0

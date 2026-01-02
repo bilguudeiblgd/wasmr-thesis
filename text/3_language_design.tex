@@ -2,40 +2,142 @@
 \chapter{Language Design and Type System}
 In this chapter, we'll design a subset of R with types and see how types and their operations could map to WASM generation.
 \section{Design Goals}
-Due to this thesis' primarily aim being compiling a dynamic language like R to 
-WASM, it's important to specify clearly to what degree and which subset to choose.
-A full featureset of R will be notoriously hard to compile.
+Some reader at this point might be wondering why subset of R and why with types, why not just compile R to WASM. 
+R is notoriously hard to compile to statically typed byte-code. A first reason is typing. 
+\newline
 
-\begin{verbatim}
-var <- 21  // assign integer
-print(var)
-var <- c(1,2,3) // assign vector
-\end{verbatim}
+\subsection{What makes R hard to compile}
+\paragraph{Dynamic typing}
+Let's take the following code.
+\begin{lstlisting}
+  x <- some_function()
+\end{lstlisting}
+WASM on the other hand is expecting variable \texttt{x} to have a type. There's 
+\texttt{any} type in WASM. Maybe we can try mapping it to \texttt{anyref}. A reference to \texttt{any} element by the WASM GC proposal.
+So now we have
+\begin{lstlisting}
+  (local $x anyref) // A tagged union can be also used.
+\end{lstlisting}
+Then, let's have a binary operation \texttt{x + y}, where \texttt{y} is also \texttt{anyref}.
+Now we need to implement a generic function for plus operator that can potentially dispatch to all types of that function.
+\begin{lstlisting}
+  if x is int && y is int:
+    add_int(x, y)
+  if x is double && y is double:
+    add_double(x, y)
+  ...
+\end{lstlisting}
+This code will continue for every type and its combination. We'd have to also include promotion logic 
+inside this code. Then x is int needs \texttt{try\_cast} as well. 
+We'll need to do such generic function for every operation and functions. Some will be 
+impossible to cover. This is essentially re-implementing the R interpreter.
+Thus we fixate on R that's well-typed and the type is known or inferrable at compile time.
 
-This is a perfectly fine code for R but compiling it to WASM brings difficulties. Therefore, like other static languages, we will add checking against mutability of different types. 
+Moreover, we will see the same issue of dynamic dispatching when R variables change types.
+\begin{lstlisting}
+  x <- 5        # numeric
+  x <- "hello"  # now a string
+  x <- list()   # now a list
+\end{lstlisting}
+This bounds us to either writing generic functions or using wrappers like a tagged union, which will 
+limit our performance and waste memory.
 
-\begin{itemize}
-    \item R compatibility: Preserve R's syntax and core semantics where possible
-    \item Type safety: Static type checking with sound type system
-    \item Ahead-of-time compilation
-    \item A single executable WASM file, no linking required
-    \item First-class functions: Support functional programming with closures
-    \item Practicality: Provide essential functions for data processing (builtins)
-\end{itemize}
+\paragraph{Changes in Runtime}
+Change in built-in functions.
+\begin{lstlisting}
+  `+` <- function(x, y) x * y  # redefine addition!
+\end{lstlisting}
+This makes the job of compiler very hard.
+
+\paragraph{Lazy Evaluation}
+R uses lazy evaluation for function arguments; they're only evaluated when actually used:
+\begin{lstlisting}
+  f <- function(x, y) { if (x > 0) y else 0 }
+  f(5, expensive_computation())  # expensive_computation() never runs!
+\end{lstlisting}
+This requires complex bookkeeping that's hard to optimize.
+
+\paragraph{Reflection and Metaprogramming}
+R code can inspect and modify itself at runtime:
+\begin{lstlisting}
+  x <- quote(a + b)  # capture unevaluated expression
+  eval(x)            # evaluate it later
+\end{lstlisting}
+
+\paragraph{Non-Standard Evaluation (NSE)}
+Many R functions evaluate arguments in non-standard ways:
+\begin{lstlisting}
+  subset(df, age > 30)  # 'age' isn't a variable, it's a column name!
+\end{lstlisting}
+This is extremely difficult to analyze statically.
+
+In conclusion, all those issues outlined above, is not impossible to compile. However, they require
+complex implementation and huge performance and memory trade-offs. For these, reasons it's important
+for me to define the subset of R, which I can compile and limit the scope without losing R's main functionalities and purposes.
 
 \section{Typed R-like Language}
 This section presents the design of a statically-typed programming language inspired by R's syntax, which we refer to as the \textit{Typed R-like Language}. The language maintains R's characteristic features such as the left-assignment operator (\texttt{<-}), first-class functions, and vector-oriented programming, while introducing a static type system to enable ahead-of-time compilation to WebAssembly.
+Below is table \ref{tab:r-typed-r-comparison0} comparing R and typed R in terms of features and design.
 
-The language supports:
-\begin{itemize}
-    \item \textbf{Static typing} with type inference and explicit type annotations
-    \item \textbf{First-class functions} with closures and lexical scoping
-    \item \textbf{Vector operations} as a fundamental data structure
-    \item \textbf{Control flow} constructs including conditionals and loops
-    \item \textbf{Higher-order functions} enabling functional programming patterns
-    \item \textbf{Lexical scoping} with support for nested functions and variable capture
-    \item \textbf{Named arguments} enabling option to have positional and optional arguments
-\end{itemize}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Language Feature (Types)} & \textbf{R} & \textbf{Typed R} \\
+% Basic Data Types
+\hline
+Integers & \checkmark & \checkmark \\
+Doubles & \checkmark & \checkmark \\
+Booleans & \checkmark & \checkmark \\
+Strings & \checkmark & $\times$ \\
+NULL/NA values & \checkmark & $\times$ \\
+\hline
+
+% Composite Data Types
+Vectors & \checkmark & \checkmark \\
+Matrices & \checkmark & $\times$ \\
+Lists & \checkmark & $\times$ \\
+Data frames & \checkmark & $\times$ \\
+Arrays & \checkmark & $\times$ \\
+\hline
+\end{tabular}
+\caption{Comparison of language features supported by R and Typed R}
+\label{tab:r-typed-r-comparison0}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Language Feature} & \textbf{R} & \textbf{Typed R} \\
+% Basic Data Types
+\hline
+
+Static typing & $\times$ & \checkmark \\
+First-class functions & \checkmark & \checkmark \\
+Vector operations & \checkmark & \checkmark \\
+Math operations & \checkmark & \checkmark \\
+Control flow & \checkmark & \checkmark \\
+Higher-order functions & \checkmark & \checkmark \\
+Lexical scoping & \checkmark & \checkmark \\
+Named arguments & \checkmark & \checkmark \\
+Variable arguments (...) & \checkmark & \checkmark \\
+\hline
+Reflection & \checkmark & $\times$ \\
+Runtime type changes & \checkmark & $\times$ \\
+Non-standard evaluation (NSE) & \checkmark & $\times$ \\
+Lazy evaluation & \checkmark & $\times$ \\
+Copy-on-modify semantics & \checkmark & $\times$ \\
+Garbage collection & \checkmark & \checkmark \\
+Operator overloading & \checkmark & $\times$  \\
+Attributes/metadata & \checkmark & $\times$  \\
+Method dispatch (S3/S4/R6) & \checkmark & $\times$  \\
+
+\hline
+\end{tabular}
+\caption{Comparison of language types supported by R and Typed R}
+\label{tab:r-typed-r-comparison1}
+\end{table}
 
 The design philosophy emphasizes a familiar R-like syntax while ensuring type safety and efficient compilation to WebAssembly. Unlike dynamically-typed R, all type information is resolved at compile time, enabling optimized code generation and early error detection.
 
@@ -43,70 +145,13 @@ The design philosophy emphasizes a familiar R-like syntax while ensuring type sa
 
 The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. This section describes the core syntactic constructs.
 
+\paragraph{Examples of Typed R}
 
-\begin{align*}
-\langle\textit{program}\rangle \; ::= \; & \langle\textit{statement}\rangle^* \\[0.5em]
-%
-\langle\textit{statement}\rangle \; ::= \; & \langle\textit{assignment}\rangle \mid \langle\textit{control flow}\rangle \mid \langle\textit{expression}\rangle \mid \langle\textit{index assign}\rangle \mid \langle\textit{return}\rangle \\[0.5em]
-%
-\langle\textit{control flow}\rangle \; ::= \; & \langle\textit{if}\rangle \mid \langle\textit{for}\rangle \mid \langle\textit{while}\rangle \\[0.5em]
-%
-\langle\textit{if}\rangle \; ::= \; & \texttt{if (} \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\}} \\
-& \mid \; \texttt{if (} \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\} else \{} \langle\textit{statements}\rangle \texttt{\}} \\[0.5em]
-%
-\langle\textit{for}\rangle \; ::= \; & \texttt{for (} \langle\textit{identifier}\rangle \texttt{ in } \langle\textit{expression}\rangle \texttt{) \{} \langle\textit{statements}\rangle \texttt{\}} \\[0.5em]
-%
-\langle\textit{assignment}\rangle \; ::= \; & \langle\textit{identifier}\rangle \; [\texttt{:} \langle\textit{type}\rangle] \; \texttt{<-} \; \langle\textit{expression}\rangle \\[0.5em]
-%
-\langle\textit{expression}\rangle \; ::= \; & \langle\textit{literal}\rangle \mid \langle\textit{identifier}\rangle \mid \langle\textit{function\_def}\rangle \mid \langle\textit{function\_call}\rangle \mid \ldots \\[0.5em]
-%
-\langle\textit{function\_def}\rangle \; ::= \; & \texttt{function (} \langle\textit{param\_list}\rangle \texttt{) :} \langle\textit{type}\rangle \texttt{ \{} \langle\textit{statement}\rangle^* \texttt{\}} \\[0.5em]
-%
-\langle\textit{param\_list}\rangle \; ::= \; & \langle\textit{param}\rangle \; (\texttt{,} \langle\textit{param}\rangle)^* \\[0.5em]
-%
-\langle\textit{param}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{:} \langle\textit{type}\rangle \\[0.5em]
-%
-\langle\textit{function\_call}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{(} \langle\textit{arg\_list}\rangle \texttt{)} \\[0.5em]
-%
-\langle\textit{function\_call}\rangle \; ::= \; & \langle\textit{identifier}\rangle \texttt{(} \langle\textit{arg\_list}\rangle \texttt{)} \\[0.5em]
-%
-\langle\textit{arg\_list}\rangle \; ::= \; & \langle\textit{expression}\rangle \; (\texttt{,} \langle\textit{expression}\rangle)^* \\[0.5em]
-%
-\langle\textit{type}\rangle \; ::= \; & \texttt{integer} \mid \texttt{logical} \mid \texttt{double} \mid \texttt{(} \langle\textit{type}\rangle \texttt{ -> } \langle\textit{type}\rangle \texttt{)} \\
-& \mid \; \texttt{any} \mid \texttt{function} \mid \langle\textit{composite type}\rangle \\[0.5em]
-%
-\langle\textit{composite type}\rangle \; ::= \; & \texttt{vector} \; \langle\textit{type}\rangle
-\end{align*}
-
-\subsection{Lexical Elements}
-
-The language uses the following lexical tokens:
-
-\begin{itemize}
-    \item \textbf{Keywords:} \texttt{function}, \texttt{if}, \texttt{else}, \texttt{for}, \texttt{in}, \texttt{while}, \texttt{return}
-    \item \textbf{Type keywords:} \texttt{int}, \texttt{double}, \texttt{void}, \texttt{logical}, \texttt{any}, \texttt{vector}, \texttt{list}
-    \item \textbf{Operators:}
-    \begin{itemize}
-        \item Assignment: \texttt{<-} (assignment), \texttt{<<-} (super-assignment)
-        \item Arithmetic: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%} (modulo)
-        \item Comparison: \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}
-        \item Logical: \texttt{\&} (and), \texttt{|} (or), \texttt{!} (not)
-        \item Range: \texttt{:} (sequence generation)
-        \item Type annotation: \texttt{:} (in declaration context)
-        \item Function arrow: \texttt{->} (in type signatures)
-    \end{itemize}
-    \item \textbf{Delimiters:} \texttt{(}, \texttt{)}, \texttt{\{}, \texttt{\}}, \texttt{[}, \texttt{]}, \texttt{,}
-    \item \textbf{Literals:} Numeric literals, logical literals (\texttt{TRUE}, \texttt{FALSE})
-    \item \textbf{Identifiers:} Alphanumeric sequences starting with a letter or underscore
-    \item \textbf{Special:} \texttt{...} (varargs placeholder)
-\end{itemize}
-
-
-\subsection{Variable Declaration and Assignment}
+\subparagraph{Variable Declaration and Assignment}
 
 Variables are declared using the left-assignment operator with optional type annotations:
 
-\begin{lstlisting}[language=Python, caption={Variable assignment examples}]
+\begin{lstlisting}[language=R, caption={Variable assignment examples}]
 # Simple assignment with type inference
 x <- 10
 
@@ -117,37 +162,38 @@ y: int <- 20
 vec <- c(1, 2, 3)
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Variable assignment in WAT}]
-(module
-  ;; Define array type for vectors
-  (type $vec_i32 (array (mut i32)))
+% \begin{lstlisting}[caption={Variable assignment in WAT}]
+% (module
+%   ;; Define array type for vectors
+%   (type $vec_i32 (array (mut i32)))
   
-  (func $main
-    (local $x i32)
-    (local $y i32)
-    (local $vec (ref null $vec_i32))
+%   (func $main
+%     (local $x i32)
+%     (local $y i32)
+%     (local $vec (ref null $vec_i32))
     
-    ;; x <- 10
-    i32.const 10
-    local.set $x
+%     ;; x <- 10
+%     i32.const 10
+%     local.set $x
     
-    ;; y: int <- 20
-    i32.const 20
-    local.set $y
+%     ;; y: int <- 20
+%     i32.const 20
+%     local.set $y
     
-    ;; vec <- c(1, 2, 3)
-    i32.const 1
-    i32.const 2
-    i32.const 3
-    i32.const 3
-    array.new_fixed $vec_i32 3
-    local.set $vec
-  )
+%     ;; vec <- c(1, 2, 3)
+%     i32.const 1
+%     i32.const 2
+%     i32.const 3
+%     i32.const 3
+%     array.new_fixed $vec_i32 3
+%     local.set $vec
+%   )
   
-  (start $main)
-)
-\end{lstlisting}
+%   (start $main)
+% )
+% \end{lstlisting}
 
+\subparagraph{Variable super-assignment}
 The super-assignment operator \texttt{<<-} modifies variables in enclosing function scopes:
 
 \begin{lstlisting}[language=R, caption={Super-assignment example}]
@@ -160,11 +206,10 @@ outer <- function() {
     return(x)  # Returns 10
 }
 \end{lstlisting}
-\textit{This takes certain workaround to compile it in WASM. We'll talk about its 
-compilation in further chapters.}
+\textit{In this case we see that it's identical to its R version}
 
 
-\subsection{Function Definitions}
+\subparagraph{Function Definitions}
 
 Functions are first-class values defined using the \texttt{function} keyword:
 
@@ -186,36 +231,32 @@ apply_twice <- function(f: int -> int, x: int): int {
 
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Function definition examples in WAT}]
-(module
-  ;; Define array type for double vectors
-  (type $vec_f64 (array (mut f64)))
+% \begin{lstlisting}[caption={Function definition examples in WAT}]
+% (module
+%   ;; Define array type for double vectors
+%   (type $vec_f64 (array (mut f64)))
   
-  ;; add <- function(a: int, b: int): int
-  (func $add (param $a i32) (param $b i32) (result i32)
-    local.get $a
-    local.get $b
-    i32.add
-  )
+%   ;; add <- function(a: int, b: int): int
+%   (func $add (param $a i32) (param $b i32) (result i32)
+%     local.get $a
+%     local.get $b
+%     i32.add
+%   )
   
-  ;; create_vector <- function(): vector<double>
-  (func $create_vector (result (ref $vec_f64))
-    f64.const 1.0
-    f64.const 2.0
-    f64.const 3.0
-    i32.const 3
-    array.new_fixed $vec_f64 3
-  )
-  ;; apply_twice is not shown here.
+%   ;; create_vector <- function(): vector<double>
+%   (func $create_vector (result (ref $vec_f64))
+%     f64.const 1.0
+%     f64.const 2.0
+%     f64.const 3.0
+%     i32.const 3
+%     array.new_fixed $vec_f64 3
+%   )
+%   ;; apply_twice is not shown here.
   
-)
-\end{lstlisting}
+% )
+% \end{lstlisting}
 
-Function types use arrow notation: \texttt{param\_types -> return\_type}. Multiple parameters are comma-separated, and parentheses group complex function types when used as parameters.
-
-\subsection{Control Flow}
-
-\subsubsection{Conditional Statements}
+\subparagraph{Conditional Statements}
 
 The language supports \texttt{if-else} statements and expressions:
 
@@ -236,46 +277,46 @@ if (x > 0) {
 result <- if (x > 0) { 1 } else { -1 }
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Conditional examples in WAT}]
-(module
-  ;; Import print function from host environment
-  (import "env" "print" (func $print (param i32)))
+% \begin{lstlisting}[caption={Conditional examples in WAT}]
+% (module
+%   ;; Import print function from host environment
+%   (import "env" "print" (func $print (param i32)))
   
-  (func $main
-    (local $x i32)
-    (local $y i32)
+%   (func $main
+%     (local $x i32)
+%     (local $y i32)
     
-    ;; Set x to some value for demonstration
-    i32.const 5
-    local.set $x
+%     ;; Set x to some value for demonstration
+%     i32.const 5
+%     local.set $x
     
-    ;; if (x > 0) { print(x) }
-    local.get $x
-    i32.const 0
-    i32.gt_s              ;; x > 0 (signed comparison)
-    if
-      local.get $x
-      call $print
-    end
+%     ;; if (x > 0) { print(x) }
+%     local.get $x
+%     i32.const 0
+%     i32.gt_s              ;; x > 0 (signed comparison)
+%     if
+%       local.get $x
+%       call $print
+%     end
     
-    ;; if (x > 0) { y <- 1 } else { y <- -1 }
-    local.get $x
-    i32.const 0
-    i32.gt_s              ;; x > 0
-    if
-      i32.const 1
-      local.set $y
-    else
-      i32.const -1
-      local.set $y
-    end
-  )
+%     ;; if (x > 0) { y <- 1 } else { y <- -1 }
+%     local.get $x
+%     i32.const 0
+%     i32.gt_s              ;; x > 0
+%     if
+%       i32.const 1
+%       local.set $y
+%     else
+%       i32.const -1
+%       local.set $y
+%     end
+%   )
   
-  (start $main)
-)
-\end{lstlisting}
+%   (start $main)
+% )
+% \end{lstlisting}
 
-\subsubsection{Loops}
+\subparagraph{Loops}
 
 Two loop constructs are provided: \texttt{for} and \texttt{while}.
 
@@ -300,81 +341,54 @@ while (i <= 5) {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[caption={While loop examples in WAT}]
-(module
-  (func $main
-    (local $i i32)
-    (local $sum i32)
+% \begin{lstlisting}[caption={While loop examples in WAT}]
+% (module
+%   (func $main
+%     (local $i i32)
+%     (local $sum i32)
     
-    ;; i <- 1
-    i32.const 1
-    local.set $i
+%     ;; i <- 1
+%     i32.const 1
+%     local.set $i
     
-    ;; sum <- 0
-    i32.const 0
-    local.set $sum
+%     ;; sum <- 0
+%     i32.const 0
+%     local.set $sum
     
-    ;; while (i <= 5) { ... }
-    (block $break
-      (loop $continue
-        ;; Check condition: i <= 5
-        local.get $i
-        i32.const 5
-        i32.le_s            ;; i <= 5 (signed comparison)
-        i32.eqz             ;; negate: if NOT (i <= 5)
-        br_if $break        ;; break if condition is false
+%     ;; while (i <= 5) { ... }
+%     (block $break
+%       (loop $continue
+%         ;; Check condition: i <= 5
+%         local.get $i
+%         i32.const 5
+%         i32.le_s            ;; i <= 5 (signed comparison)
+%         i32.eqz             ;; negate: if NOT (i <= 5)
+%         br_if $break        ;; break if condition is false
         
-        ;; sum <- sum + i
-        local.get $sum
-        local.get $i
-        i32.add
-        local.set $sum
+%         ;; sum <- sum + i
+%         local.get $sum
+%         local.get $i
+%         i32.add
+%         local.set $sum
         
-        ;; i <- i + 1
-        local.get $i
-        i32.const 1
-        i32.add
-        local.set $i
+%         ;; i <- i + 1
+%         local.get $i
+%         i32.const 1
+%         i32.add
+%         local.set $i
         
-        ;; Continue loop
-        br $continue
-      )
-    )
-  )
+%         ;; Continue loop
+%         br $continue
+%       )
+%     )
+%   )
   
-  (start $main)
-)
-\end{lstlisting}
-
-\subsection{Expressions}
-
-Abstract syntax tree of expressions 
-\begin{align*}
-e ::= & \; x && \text{(variable)} \\
-    | & \; n && \text{(literal)} \\
-    | & \; e_1 \; \textit{op} \; e_2 && \text{(binary operation)} \\
-    | & \; \textit{op} \; e_1 && \text{(unary operation)} \\
-    | & \; \texttt{if} \; e_1 \; \texttt{then} \; e_2 \; \texttt{else} \; e_3 && \text{(conditional)} \\
-    | & \; \texttt{fun}(x : \tau) \to e && \text{(function)} \\
-    | & \; e_1(e_2) && \text{(application)}
-\end{align*}
-
-\noindent The language supports various expression forms:
-
-\begin{itemize}
-    \item \textbf{Literals:} \texttt{42L}, \texttt{3} \texttt{3.14}, \texttt{TRUE}, \texttt{FALSE}
-    \item \textbf{Identifiers:} Variable references
-    \item \textbf{Binary operations:} Arithmetic, comparison, logical, range (\texttt{1:10})
-    \item \textbf{Unary operations:} Negation (\texttt{-x}), logical not (\texttt{!x})
-    \item \textbf{Function calls:} \texttt{f(arg1, arg2)} with positional or named arguments
-    \item \textbf{Vector indexing:} \texttt{vec[i]}
-    \item \textbf{Vector construction:} \texttt{c(1, 2, 3)}
-    \item \textbf{Function definitions:} Anonymous functions as expressions
-    \item \textbf{If expressions:} Conditional expressions returning values
-\end{itemize}
+%   (start $main)
+% )
+% \end{lstlisting}
 
 
-\subsection{Blocks and Tail Expressions}
+\subparagraph{Blocks and Tail Expressions}
 
 Blocks consist of zero or more statements followed by an optional tail expression. The tail expression (final expression without semicolon) determines the block's value:
 
@@ -386,12 +400,79 @@ f <- function(x: int): int {
 }
 \end{lstlisting}
 
+\subsection{Abstract Grammar}
 
+
+\paragraph{Types}
+\begin{align*}
+\tau ::= &\ \texttt{int} \mid \texttt{double} \mid \texttt{char} \mid \texttt{logical} \mid \texttt{void} \\
+    &\mid \texttt{vector}\langle\tau\rangle \\
+    &\mid \texttt{list} \\
+    &\mid \tau_1, \ldots, \tau_n \to \tau \quad \text{(function types)}
+\end{align*}
+
+\paragraph{Expressions}
+\begin{align*}
+e ::= &\ x \quad \text{(variable)} \\
+    &\mid n \mid d \mid \texttt{true} \mid \texttt{false} \quad \text{(literals)} \\
+    &\mid \texttt{function}(p_1, \ldots, p_n): \tau\ \{\ e\ \} \quad \text{(function definition)} \\
+    &\mid e_1(e_2, \ldots, e_n) \quad \text{(function call)} \\
+    &\mid e_1(x_1{=}e_2, \ldots, x_n{=}e_n) \quad \text{(named argument call)} \\
+    &\mid e_1 \oplus e_2 \quad \text{(binary operation)} \\
+    &\mid \ominus e \quad \text{(unary operation)} \\
+    &\mid \texttt{c}(e_1, \ldots, e_n) \quad \text{(vector construction)} \\
+    &\mid e_1:e_2 \quad \text{(range sequence)} \\
+    &\mid e_1[e_2] \quad \text{(vector indexing)} \\
+    &\mid \texttt{if}\ e_1\ \{\ e_2\ \}\ \texttt{else}\ \{\ e_3\ \} \quad \text{(conditional)} \\
+    &\mid \{\ e_1;\ \ldots;\ e_n\ \} \quad \text{(block)}
+\end{align*}
+
+\paragraph{Statements}
+\begin{align*}
+s ::= &\ x \gets e \quad \text{(assignment)} \\
+    &\mid x: \tau \gets e \quad \text{(typed assignment)} \\
+    &\mid x \ll\gets e \quad \text{(superassignment)} \\
+    &\mid e \quad \text{(expression statement)} \\
+    &\mid \texttt{return}(e) \quad \text{(return)} \\
+    &\mid \texttt{for}\ (x\ \texttt{in}\ e)\ \{\ s\ \} \quad \text{(for loop)} \\
+    &\mid \texttt{while}\ (e)\ \{\ s\ \} \quad \text{(while loop)}
+\end{align*}
+
+\paragraph{Parameter Definitions}
+\begin{align*}
+p ::= &\ x: \tau \quad \text{(required parameter)} \\
+    &\mid x: \tau = e \quad \text{(parameter with default)} \\
+    &\mid \ldots \quad \text{(varargs)}
+\end{align*}
+
+\subsection{Lexical Elements}
+
+The language uses the following lexical tokens:
+
+\begin{itemize}
+    \item \textbf{Keywords:} \texttt{function}, \texttt{if}, \texttt{else}, \texttt{for}, \texttt{in}, \texttt{while}, \texttt{return}
+    \item \textbf{Type keywords:} \texttt{int}, \texttt{double}, \texttt{void}, \texttt{logical}, \texttt{vector}
+    \item \textbf{Operators:}
+    \begin{itemize}
+        \item Assignment: \texttt{<-} (assignment), \texttt{<<-} (super-assignment)
+        \item Arithmetic: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%} (modulo)
+        \item Comparison: \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}
+        \item Logical: \texttt{\&} (and), \texttt{|} (or), \texttt{!} (not)
+        \item Range: num1 \texttt{:} num2 (sequence generation)
+        \item Type annotation: \texttt{:} (in declaration context)
+        \item Function arrow: \texttt{->} (in type signatures)
+    \end{itemize}
+    \item \textbf{Delimiters:} \texttt{(}, \texttt{)}, \texttt{\{}, \texttt{\}}, \texttt{[}, \texttt{]}, \texttt{,}
+    \item \textbf{Literals:} Numeric literals, logical literals (\texttt{TRUE}, \texttt{FALSE})
+    \item \textbf{Identifiers:} Alphanumeric sequences starting with a letter or underscore
+    \item \textbf{Special:} \texttt{...} (varargs placeholder)
+\end{itemize}
 
 \section{Type System}
-The type system ensures type safety through static analysis while supporting type inference to maintain concise syntax. 
+The type system ensures type safety through static analysis while supporting type inference to maintain concise syntax
+and ease of development. 
 Though it's important to note that there are many programs where type inference will fail to identify the type and our
-compiler won't work due to lack of type information. (reference needed as to why type inference is hard)
+compiler won't work due to lack of type information.
 
 \begin{align*}
 \tau ::= & \; num \mid \texttt{void} && \text{(base type)} \\
@@ -400,7 +481,7 @@ compiler won't work due to lack of type information. (reference needed as to why
 num    ::= & \; \texttt{int} \mid \texttt{double} \mid \texttt{bool} && \text{(numeric types)}
 \end{align*}
 
-\subsection{Primitive Types}
+\paragraph{Primitive Types}
 
 The language provides the following primitive types:
 
@@ -414,9 +495,9 @@ The language provides the following primitive types:
 Logicals will be represented as \texttt{int32} in WebAssembly, as it doesn't provide explicit type for logicals there.
 
 
-\subsection{Composite Types}
+\paragraph{Composite Types}
 
-\subsubsection{Vector Types}
+\subparagraph{Vector Types}
 
 Vectors are homogeneous arrays parameterized by element type:
 
@@ -433,7 +514,7 @@ v3: vector<double> <- v2 + c(1.0, 2.0, 3.0)
 
 Vectors support component-wise arithmetic operations when both operands have compatible vector types.
 
-\subsubsection{Function Types}
+\subparagraph{Function Types}
 
 Function types represent callable values with parameter and return types:
 
@@ -466,7 +547,7 @@ Examples of function types:
     \item \texttt{int, (int, int -> int) -> int}: Function taking an integer and a function
 \end{itemize}
 
-\subsection{Type Inference}
+\subsection{Type Checking}
 
 The type checker performs bidirectional type inference:
 
@@ -483,65 +564,175 @@ Type annotations are required in the following contexts:
     \item Ambiguous variable declarations
 \end{itemize}
 
-\textbf{Type Promotion}: When operands have different numeric types, implicit casting promotes to the wider type:
+Example: \texttt{3 + 2.5} evaluates as \texttt{3.0 + 2.5 = 5.5} after promoting \texttt{3} to \texttt{double}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=0.4cm,
+    every node/.style={font=\small},
+    astnode/.style={rectangle, draw, minimum width=2.2cm, minimum height=0.7cm, align=center, fill=gray!5},
+    typenode/.style={ellipse, draw, fill=blue!15, minimum width=1.8cm, minimum height=0.6cm, align=center, font=\small\ttfamily},
+    constraint/.style={rectangle, rounded corners, draw, fill=orange!15, minimum width=3cm, minimum height=0.6cm, align=center, font=\footnotesize},
+    arrow/.style={->, >=stealth, thick},
+    typearrow/.style={->, >=stealth, dashed, blue, thick},
+    checkarrow/.style={->, >=stealth, red!70, thick}
+]
+
+% Title
+\node[font=\bfseries] at (0, 4.2) {Type Checking: \texttt{a: double <- 3.5}};
+
+% AST Nodes
+\node[astnode] (assign) at (0, 3) {Assignment\\$\texttt{a} \leftarrow$};
+\node[astnode] (decl) at (-3, 1.8) {Variable\\Declaration: \texttt{a}};
+\node[astnode] (literal) at (3, 1.8) {Literal\\Expression: \texttt{3.5}};
+
+% Type annotations
+\node[typenode] (decltype) at (-3, 0.6) {double};
+\node[typenode] (littype) at (3, 0.6) {double};
+
+% Connections
+\draw[arrow] (assign) -- (decl);
+\draw[arrow] (assign) -- (literal);
+
+% Type inference (bottom-up)
+\draw[typearrow] (literal) -- node[right, font=\scriptsize, text=blue!70] {infer} (littype);
+
+% Type annotation (top-down)
+\draw[typearrow] (decl) -- node[left, font=\scriptsize, text=blue!70] {annotate} (decltype);
+
+% Unification
+\node[constraint] (unify) at (0, 0.6) {Unification Check};
+\draw[checkarrow] (decltype) -- (unify);
+\draw[checkarrow] (littype) -- (unify);
+
+% Success indicator
+\node[constraint, fill=green!20] (success) at (0, -0.4) { Type Check Passes: \texttt{double = double}};
+\draw[arrow, green!70!black, thick] (unify) -- (success);
+
+% Step-by-step annotation boxes
+\node[anchor=west, font=\scriptsize, align=left, draw, rounded corners, fill=yellow!10, minimum width=4.5cm] at (5, 3) {
+\textbf{Step 1: Top-down}\\
+Parse annotation \texttt{a: double}\\
+Expected type: \texttt{double}
+};
+
+\node[anchor=west, font=\scriptsize, align=left, draw, rounded corners, fill=yellow!10, minimum width=4.5cm] at (5, 1.5) {
+\textbf{Step 2: Bottom-up}\\
+Infer literal \texttt{3.5}\\
+Inferred type: \texttt{double}
+};
+
+\node[anchor=west, font=\scriptsize, align=left, draw, rounded corners, fill=yellow!10, minimum width=4.5cm] at (5, 0) {
+\textbf{Step 3: Unify}\\
+Check: \texttt{double} $\stackrel{?}{=}$ \texttt{double}\\
+Result: \textcolor{green!70!black}{\textbf{Success!}}
+};
+
+% Legend
+\node[font=\scriptsize\bfseries, anchor=west] at (-5, -1.3) {Legend:};
+\draw[arrow] (-5, -1.7) -- (-4.2, -1.7) node[anchor=west, font=\scriptsize] {AST structure};
+\draw[typearrow] (-5, -2.1) -- (-4.2, -2.1) node[anchor=west, font=\scriptsize] {Type flow};
+\draw[checkarrow] (-5, -2.5) -- (-4.2, -2.5) node[anchor=west, font=\scriptsize] {Unification};
+
+\end{tikzpicture}
+\caption{Bidirectional type checking for variable assignment. The type annotation \texttt{double} provides the expected type (top-down), while the literal \texttt{3.5} has its type inferred as \texttt{double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}
+\label{fig:type-checking-simple}
+\end{figure}
+
+\paragraph{Type Promotion}: When operands have different numeric types, implicit casting promotes to the wider type:
 \begin{align*}
 \text{int} \oplus \text{double} &\to \text{double} \\
 \text{logical} \oplus \text{int} &\to \text{int} \\
 \text{logical} \oplus \text{double} &\to \text{double}
 \end{align*}
-
-Example: \texttt{3 + 2.5} evaluates as \texttt{3.0 + 2.5 = 5.5} after promoting \texttt{3} to \texttt{double}.
-
+\textit{More complicated examples will be shown on compiler implementation section}
 
 \subsection{Typing Rules}
+We formalize Rty's type system using typing judgments of the form $\Gamma \vdash e : \tau$, read as ``under environment $\Gamma$, expression $e$ has type $\tau$.''
+Note that our typing system employs standard concept from theory\cite{types_and_pl}. Here, we'll 
+only extend on nuances.
 
-Selected typing rules are presented below using inference rule notation.
-
-\subsubsection{Variable Reference}
-
+\paragraph{Typing Contexts}
 \[
-\frac{\Gamma(x) = T}{\Gamma \vdash x : T}
+\Gamma ::= \emptyset \mid \Gamma, x:\tau
 \]
 
-A variable reference has the type bound in the environment $\Gamma$.
-
-\subsubsection{Function Application}
-
+\paragraph{Subtyping (for numeric promotion)}
 \[
-\frac{\Gamma \vdash e_1 : T_1, \ldots, T_n \to T \quad \Gamma \vdash e_2 : T_1 \quad \cdots \quad \Gamma \vdash e_{n+1} : T_n}{\Gamma \vdash e_1(e_2, \ldots, e_{n+1}) : T}
+\frac{}{\texttt{int} <: \texttt{int}} \qquad \frac{}{\texttt{double} <: \texttt{double}} \qquad \frac{}{\texttt{int} <: \texttt{double}}
 \]
 
-Function application checks that argument types match parameter types and produces the return type.
+\subsection{Core Typing Rules}
 
-\subsubsection{Function Definition}
+\begin{mathpar}
+\inferrule*[right=T-Var]
+    {x:\tau \in \Gamma}
+    {\Gamma \vdash x : \tau}
 
-\[
-\frac{\Gamma, x_1:T_1, \ldots, x_n:T_n \vdash e : T_{ret}}{\Gamma \vdash \texttt{function}(x_1:T_1, \ldots, x_n:T_n): T_{ret} \{ e \} : (T_1, \ldots, T_n \to T_{ret})}
-\]
+\and
 
-A function definition has a function type where parameters and return type match the declared signature.
+\inferrule*[right=T-Int]
+    {\ }
+    {\Gamma \vdash n : \texttt{int}}
 
-\subsubsection{Binary Operations}
+\and
 
-\[
-\frac{\Gamma \vdash e_1 : \texttt{int} \quad \Gamma \vdash e_2 : \texttt{int}}{\Gamma \vdash e_1 + e_2 : \texttt{int}}
-\]
+\inferrule*[right=T-Double]
+    {\ }
+    {\Gamma \vdash d : \texttt{double}}
 
-\[
-\frac{\Gamma \vdash e_1 : \texttt{double} \quad \Gamma \vdash e_2 : \texttt{double}}{\Gamma \vdash e_1 + e_2 : \texttt{double}}
-\]
+\and
 
-Arithmetic operators are overloaded for numeric types. Comparison operators produce \texttt{logical} values.
+\inferrule*[right=T-Func]
+    {\Gamma, x_1:\tau_1, \ldots, x_n:\tau_n \vdash e : \tau}
+    {\Gamma \vdash \texttt{function}(x_1:\tau_1, \ldots, x_n:\tau_n):\tau\ \{\ e\ \} : \tau_1,\ldots,\tau_n \to \tau}
 
-\subsubsection{Vector Operations}
+\and
 
-\[
-\frac{\Gamma \vdash e_1 : \texttt{vector}<T> \quad \Gamma \vdash e_2 : \texttt{vector}<T>}{\Gamma \vdash e_1 + e_2 : \texttt{vector}<T>}
-\]
+\inferrule*[right=T-App]
+    {\Gamma \vdash e_1 : \tau_1,\ldots,\tau_n \to \tau \\ \Gamma \vdash e_2 : \tau_1 \\ \cdots \\ \Gamma \vdash e_{n+1} : \tau_n}
+    {\Gamma \vdash e_1(e_2, \ldots, e_{n+1}) : \tau}
 
-Component-wise vector operations require matching element types.
+\and
 
-\subsubsection{Conditionals}
+\inferrule*[right=T-Vector]
+    {\Gamma \vdash e_1 : \tau \\ \cdots \\ \Gamma \vdash e_n : \tau}
+    {\Gamma \vdash \texttt{c}(e_1, \ldots, e_n) : \texttt{vector}\langle\tau\rangle}
+
+\and
+
+\inferrule*[right=T-AddInt]
+    {\Gamma \vdash e_1 : \texttt{int} \\ \Gamma \vdash e_2 : \texttt{int}}
+    {\Gamma \vdash e_1 + e_2 : \texttt{int}}
+
+\and
+
+\inferrule*[right=T-AddPromo]
+    {\Gamma \vdash e_1 : \tau_1 \\ \Gamma \vdash e_2 : \tau_2 \\ \tau_1 <: \texttt{double} \lor \tau_2 <: \texttt{double}}
+    {\Gamma \vdash e_1 + e_2 : \texttt{double}}
+
+\and
+
+\inferrule*[right=T-VecAdd]
+    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \texttt{vector}\langle\tau\rangle}
+    {\Gamma \vdash e_1 + e_2 : \texttt{vector}\langle\tau\rangle}
+
+\and
+
+\inferrule*[right=T-Assign]
+    {\Gamma \vdash e : \tau \\ \Gamma' = \Gamma, x:\tau}
+    {\Gamma \vdash x \gets e : \tau}
+
+\and
+
+\inferrule*[right=T-SuperAssign]
+    {\Gamma \vdash e : \tau \\ x:\tau \in \Gamma_i \text{ for some } i < |\Gamma|}
+    {\Gamma \vdash x \ll\gets e : \tau}
+\end{mathpar}
+
+
+\paragraph{Conditionals}
 
 \[
 \frac{\Gamma \vdash e_{cond} : \texttt{logical} \quad \Gamma \vdash e_{then} : T \quad \Gamma \vdash e_{else} : T}{\Gamma \vdash \texttt{if}\ (e_{cond})\ \{ e_{then} \}\ \texttt{else}\ \{ e_{else} \} : T}
@@ -585,7 +776,7 @@ This section describes the operational semantics of key language constructs.
 
 Expression evaluation follows a small-step operational semantics with evaluation contexts.
 
-\subsubsection{Literal Evaluation}
+\paragraph{Literal Evaluation}
 
 Literals evaluate to themselves:
 \begin{align*}
@@ -594,7 +785,7 @@ n &\Downarrow n \quad \text{(numeric literal)} \\
 \texttt{TRUE} &\Downarrow \texttt{TRUE} \quad \text{(logical literal)}
 \end{align*}
 
-\subsubsection{Variable Lookup}
+\paragraph{Variable Lookup}
 
 Variable references evaluate by environment lookup:
 \[
@@ -602,7 +793,7 @@ Variable references evaluate by environment lookup:
 \]
 where $\rho$ is the runtime environment mapping identifiers to values.
 
-\subsubsection{Binary Operations}
+\paragraph{Binary Operations}
 
 Binary operations evaluate operands left-to-right, then apply the operation:
 \[
@@ -647,7 +838,7 @@ For mixed vector types, element types are promoted (e.g., \texttt{vector<int>} +
 \]
 
 
-\subsubsection{Function Application}
+\paragraph{Function Application}
 
 Function application evaluates the callee to obtain a closure, evaluates arguments, extends the closure environment, and evaluates the body:
 \[
@@ -666,7 +857,7 @@ Function application evaluates the callee to obtain a closure, evaluates argumen
 
 Statements modify the environment and may alter control flow.
 
-\subsubsection{Assignment}
+\paragraph{Assignment}
 
 Assignment evaluates the right-hand side and binds the result to the identifier:
 \[
@@ -678,7 +869,7 @@ Super-assignment searches parent scopes:
 \frac{\langle e, \rho \rangle \Downarrow v \quad x \in \text{dom}(\rho_{parent})}{\langle x \texttt{ <<- } e, \rho \rangle \rightarrow \rho[\rho_{parent}[x \mapsto v]]}
 \]
 
-\subsubsection{Conditional Execution}
+\paragraph{Conditional Execution}
 
 If-statements evaluate the condition and execute the appropriate branch:
 \[
@@ -689,7 +880,7 @@ If-statements evaluate the condition and execute the appropriate branch:
 \frac{\langle e_{cond}, \rho \rangle \Downarrow \texttt{FALSE} \quad \langle s_{else}, \rho \rangle \rightarrow \rho'}{\langle \texttt{if}\ (e_{cond})\ \{ s_{then} \}\ \texttt{else}\ \{ s_{else} \}, \rho \rangle \rightarrow \rho'}
 \]
 
-\subsubsection{While Loops}
+\paragraph{While Loops}
 
 While loops repeatedly execute the body while the condition is true:
 \[
@@ -708,7 +899,7 @@ While loops repeatedly execute the body while the condition is true:
 }
 \]
 
-\subsubsection{For Loops}
+\paragraph{For Loops}
 
 For loops iterate over vectors or ranges:
 \[

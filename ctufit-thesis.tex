@@ -56,9 +56,21 @@
 \ctufityear{2026} % replace with the year of your defence
 \ctufitdeclarationplace{Prague} % replace with the place where you sign the declaration
 \ctufitdeclarationdate{\today} % replace with the date of signature of the declaration
-\ctufitabstractCZE{Fill in the abstract of this thesis in Czech. Lorem ipsum dolor sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.}
+\ctufitabstractCZE{R je široce používaný dynamický jazyk pro statistické výpočty, ale jeho dynamická
+povaha brání efektivní kompilaci předem. Představujeme návrh a
+implementaci kompilátoru pro staticky typovanou podmnožinu jazyka R, která cílí na
+WebAssembly. Definovaný jazyk si zachovává základní vlastnosti jazyka R, včetně
+prvotřídních vektorových operací a lexikálního rozsahu, a zároveň zavádí statické typování
+pro umožnění kompilace. Kompilátor využívá návrh WebAssembly Garbage
+Collection, který zjednodušuje správu paměti a umožňuje efektivní
+reprezentaci konstrukcí jazyků vysoké úrovně. Zdrojové programy jsou
+transformovány pomocí parsování, kontroly typů a mezilehlé reprezentace
+snižování, aby se generoval bajtkód WebAssembly, podporovaný běhovým systémem
+poskytujícím vektorové operace a interoperabilitu hostitelského prostředí. Vyhodnocení
+reprezentativních statistických programů demonstruje životaschopnost kompilace
+jazyků podobných jazyku R do WebAssembly s využitím moderních návrhů.}
 \ctufitabstractENG{R is a widely-used dynamic language for statistical computing, but its dynamic nature prevents efficient ahead-of-time compilation. We present the design and implementation of a compiler for a statically-typed subset of R that targets WebAssembly. The defined language retains R's core characteristics, including first-class vector operations and lexical scoping, while introducing static typing to enable compilation. The compiler leverages the WebAssembly Garbage Collection proposal, which simplifies memory management and enables efficient representation of high-level language constructs. Source programs are transformed through parsing, type checking, and intermediate representation lowering to generate WebAssembly bytecode, supported by a runtime system providing vector operations and host environment interoperability. Evaluation on representative statistical programs demonstrates the viability of compiling R-like languages to WebAssembly using modern proposals.}
-\ctufitkeywordsCZE{enter, comma, separated, list, of, keywords, in, CZECH}
+\ctufitkeywordsCZE{WebAssembly, WASM GC, typovaný R, WASM bytecode, kompilátor založený na průchodech}
 \ctufitkeywordsENG{WebAssembly, WASM GC, typed R, WASM bytecode, pass-based Compiler}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END FILL IN
@@ -101,6 +113,7 @@
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{text/bib-database.bib}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathpartir}
 \usepackage{xurl}
 % \usepackage{syntax}
 \usepackage{tikz}
@@ -159,7 +172,7 @@
 
 % Use one of the two following commands. The first prints abstracts+keywords on two pages, the second puts them on one page (if possible). \printonepageabstract can also accept optional argument that specifies a vertical space before both abstracts (the default is 18 mm).
 \printtwopageabstract
-%\printonepageabstract 
+% \printonepageabstract 
 
 %%%%%%%%%%%%%%%%%%%
 % SUMMARY
