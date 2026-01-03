@@ -17,15 +17,15 @@
 \contentsline {lstlisting}{\numberline {3.5}{\ignorespaces Loop examples}}{15}{lstlisting.3.5}%
 \contentsline {lstlisting}{\numberline {3.6}{\ignorespaces Block with tail expression}}{15}{lstlisting.3.6}%
 \contentsline {lstlisting}{\numberline {3.7}{\ignorespaces Vector type examples}}{18}{lstlisting.3.7}%
-\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Closure example}}{22}{lstlisting.3.8}%
+\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Closure example}}{28}{lstlisting.3.8}%
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{28}{lstlisting.4.1}%
-\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{28}{lstlisting.4.2}%
-\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{31}{lstlisting.4.3}%
-\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{31}{lstlisting.4.4}%
-\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{32}{lstlisting.4.5}%
-\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{33}{lstlisting.4.6}%
-\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{33}{lstlisting.4.7}%
+\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{32}{lstlisting.4.1}%
+\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{32}{lstlisting.4.2}%
+\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{35}{lstlisting.4.3}%
+\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{35}{lstlisting.4.4}%
+\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{36}{lstlisting.4.5}%
+\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{37}{lstlisting.4.6}%
+\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{37}{lstlisting.4.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

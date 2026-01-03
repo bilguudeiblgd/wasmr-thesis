@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.27)  3 JAN 2026 13:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.27)  3 JAN 2026 17:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1811,7 +1811,7 @@ Package biblatex Info: Reference segment=0 on input line 134.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logoCVUT.pdf, id=269, 126.78566pt x 96.54268pt>
+<images/logoCVUT.pdf, id=309, 126.78566pt x 96.54268pt>
 File: images/logoCVUT.pdf Graphic file (type pdf)
 <use images/logoCVUT.pdf>
 Package pdftex.def Info: images/logoCVUT.pdf  used on input line 137.
@@ -1824,12 +1824,12 @@ Package pdftex.def Info: images/logoCVUT.pdf  used on input line 137.
 
 
  <./images/logoCVUT.pdf>]
-<example-assignment-include.pdf, id=279, 597.50829pt x 845.0471pt>
+<example-assignment-include.pdf, id=319, 597.50829pt x 845.0471pt>
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf>
 Package pdftex.def Info: example-assignment-include.pdf  used on input line 139.
 (pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
-<example-assignment-include.pdf, id=281, page=1, 597.50829pt x 845.0471pt>
+<example-assignment-include.pdf, id=321, page=1, 597.50829pt x 845.0471pt>
 File: example-assignment-include.pdf Graphic file (type pdf)
 <use example-assignment-include.pdf, page 1>
 Package pdftex.def Info: example-assignment-include.pdf , page1 used on input line 139.
@@ -1952,7 +1952,7 @@ Overfull \hbox (0.7179pt too wide) in paragraph at lines 14--14
 
  (./text/text.tex
 Chapter 1.
-<images/r-ast-eval-process.png, id=475, 1084.05pt x 308.15125pt>
+<images/r-ast-eval-process.png, id=527, 1084.05pt x 308.15125pt>
 File: images/r-ast-eval-process.png Graphic file (type png)
 <use images/r-ast-eval-process.png>
 Package pdftex.def Info: images/r-ast-eval-process.png  used on input line 11.
@@ -2042,105 +2042,105 @@ File: lstlang3.sty 2024/09/23 1.10c listings language file
 [15]
 
 [16]
-LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 456.
-LaTeX Font Info:    No file OMScmtt.fd. on input line 456.
+LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 448.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 448.
 
 
 LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 456.
+(Font)              for symbol `textbraceleft' on input line 448.
 
 
 
 [17]
-Overfull \hbox (0.19812pt too wide) in paragraph at lines 506--507
+Overfull \hbox (0.19812pt too wide) in paragraph at lines 498--499
 []\OT1/cmr/m/n/10.95 Vectors sup-port component-wise arith-metic op-er-a-tions when both operands
- []
-
-
-Overfull \hbox (105.86093pt too wide) in paragraph at lines 595--596
- [][] 
  []
 
 
 
 [18]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 636.
 
-Overfull \hbox (42.05624pt too wide) in paragraph at lines 691--692
+[19]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 629.
+
+Overfull \hbox (42.05624pt too wide) in paragraph at lines 684--685
  [][] 
  []
 
 
 
-[19]
+[20
 
-[20]
+]
 
 [21]
 
 [22]
 
 [23]
-Overfull \hbox (0.68523pt too wide) in paragraph at lines 889--890
-[]\OT1/cmr/bx/n/10.95 Vector-Scalar Op-er-a-tions\OT1/cmr/m/n/10.95 : Scalars are broad-cast to match vec-tor length: 
- []
 
-
-
-[24])
+[24]
 
 [25]
+
+[26]
+
+[27]
+
+[28])
+
+[29]
 \openout2 = `text/4_compiler_runtime.aux'.
 
  (./text/4_compiler_runtime.tex
 Chapter 4.
 
 
-[26
+[30
 
 
 
 
 ]
 
-[27]
+[31]
 
-[28]
+[32]
 Overfull \hbox (18.24194pt too wide) in paragraph at lines 151--152
 []\OT1/cmr/m/n/10.95 Integer com-par-i-son: \OT1/cmtt/m/n/10.95 i32.eq\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 i32.ne\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 i32.lt[]s\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 i32.le[]s\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 i32.gt[]s\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 i32.ge[]s 
  []
 
 
 
-[29]
+[33]
 
-[30]
+[34]
 
-[31]
+[35]
 Overfull \hbox (41.53224pt too wide) in paragraph at lines 304--305
 []\OT1/cmr/bx/n/10.95 Local vari-able al-lo-ca-tion\OT1/cmr/m/n/10.95 : De-ter-mine lo-cal vari-able slots from \OT1/cmtt/m/n/10.95 FunctionMetadata 
  []
 
 
 
-[32]
+[36]
 
-[33]
+[37]
 
-[34]
+[38]
 
-[35]
+[39]
 Overfull \hbox (1.30228pt too wide) in paragraph at lines 463--464
 []\OT1/cmr/bx/n/10.95 Component-wise vec-tor op-er-a-tions\OT1/cmr/m/n/10.95 : In-lin-ing vec-tor op-er-a-tions as loops
  []
 
 
 
-[36])
+[40])
 
-[37]
+[41]
 \openout2 = `text/5_evaluation.aux'.
 
  (./text/5_evaluation.tex
@@ -2164,56 +2164,56 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 23.
 
 
-[38
+[42
 
 
 
 
 ]
 
-[39]
+[43]
 Overfull \hbox (6.34566pt too wide) in paragraph at lines 134--136
 []\OT1/cmr/bx/n/10.95 WASM Type Val-i-da-tion: \OT1/cmr/m/n/10.95 The gen-er-ated WASM is val-i-dated by \OT1/cmtt/m/n/10.95 wasmtime
  []
 
 
 
-[40]
+[44]
 
-[41]
+[45]
 
-[42]
+[46]
 Overfull \hbox (1.21642pt too wide) in paragraph at lines 268--269
 []\OT1/cmr/bx/n/10.95 Our con-tri-bu-tion\OT1/cmr/m/n/10.95 : First stat-i-cally typed R-like lan-guage tar-get-ing WASM 
  []
 
 
 
-[43]
+[47]
 
-[44]
+[48]
 Chapter 6.
 )
 
-[45
+[49
 
 ]
 
-[46]
+[50]
 \openout2 = `text/appendix.aux'.
 
  (./text/appendix.tex
 Appendix A.
 
 
-[47
+[51
 
 
 
 
 ])
 
-[48]
+[52]
 
 Package biblatex Warning: No driver for 'software'.
 (biblatex)                Using fallback driver on input line 307.
@@ -2230,7 +2230,7 @@ Overfull \hbox (6.08035pt too wide) in paragraph at lines 308--308
 
 
 
-[49
+[53
 
 
 
@@ -2242,12 +2242,12 @@ Overfull \hbox (197.95737pt too wide) in paragraph at lines 308--308
 
 
 
-[50]
+[54]
 \openout2 = `text/medium.aux'.
 
  (./text/medium.tex)
 
-[51
+[55
 
 
 ] (./ctufit-thesis.aux (./text/text.aux) (./text/2_background.aux) (./text/3_language_design.aux) (./text/4_compiler_runtime.aux) (./text/5_evaluation.aux) (./text/appendix.aux) (./text/medium.aux))
@@ -2260,23 +2260,23 @@ L3 programming layer <2025-01-18>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `ctufit-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: DCD45027E7707D282FD759FF08929C1A;9138.
+(rerunfilecheck)             Checksum: C34FAA0928FDAF0774A341C523673CE5;10884.
 Package logreq Info: Writing requests to 'ctufit-thesis.run.xml'.
 \openout1 = `ctufit-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 52471 strings out of 473190
- 1067391 string characters out of 5715799
- 2164955 words of memory out of 5000000
- 74379 multiletter control sequences out of 15000+600000
+ 52511 strings out of 473190
+ 1068189 string characters out of 5715799
+ 2165159 words of memory out of 5000000
+ 74396 multiletter control sequences out of 15000+600000
  573813 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,17n,109p,1684b,4722s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on ctufit-thesis.pdf (63 pages, 615526 bytes).
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on ctufit-thesis.pdf (67 pages, 638460 bytes).
 PDF statistics:
- 1371 PDF objects out of 1440 (max. 8388607)
- 555 named destinations out of 1000 (max. 500000)
- 570 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1461 PDF objects out of 1728 (max. 8388607)
+ 578 named destinations out of 1000 (max. 500000)
+ 650 words of extra memory for PDF output out of 10000 (max. 10000000)
 

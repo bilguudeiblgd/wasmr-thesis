@@ -402,7 +402,6 @@ f <- function(x: int): int {
 
 \subsection{Abstract Grammar}
 
-\paragraph{Expressions}
 \begin{align*}
 e ::= &\ x \quad \text{(variable)} \\
     &\mid n \mid d \mid \texttt{true} \mid \texttt{false} \quad \text{(literals)} \\
@@ -415,26 +414,19 @@ e ::= &\ x \quad \text{(variable)} \\
     &\mid e_1:e_2 \quad \text{(range sequence)} \\
     &\mid e_1[e_2] \quad \text{(vector indexing)} \\
     &\mid \texttt{if}\ e_1\ \{\ e_2\ \}\ \texttt{else}\ \{\ e_3\ \} \quad \text{(conditional)} \\
-    &\mid \{\ e_1;\ \ldots;\ e_n\ \} \quad \text{(block)}
-\end{align*}
-
-\paragraph{Statements}
-\begin{align*}
+    &\mid \{\ e_1;\ \ldots;\ e_n\ \} \quad \text{(block)} \\
 s ::= &\ x \gets e \quad \text{(assignment)} \\
     &\mid x: \tau \gets e \quad \text{(typed assignment)} \\
     &\mid x \ll\gets e \quad \text{(superassignment)} \\
     &\mid e \quad \text{(expression statement)} \\
     &\mid \texttt{return}(e) \quad \text{(return)} \\
     &\mid \texttt{for}\ (x\ \texttt{in}\ e)\ \{\ s\ \} \quad \text{(for loop)} \\
-    &\mid \texttt{while}\ (e)\ \{\ s\ \} \quad \text{(while loop)}
-\end{align*}
-
-\paragraph{Parameter Definitions}
-\begin{align*}
+    &\mid \texttt{while}\ (e)\ \{\ s\ \} \quad \text{(while loop)} \\
 p ::= &\ x: \tau \quad \text{(required parameter)} \\
     &\mid x: \tau = e \quad \text{(parameter with default)} \\
     &\mid \ldots \quad \text{(varargs)}
 \end{align*}
+
 
 \subsection{Lexical Elements}
 
@@ -449,7 +441,7 @@ The language uses the following lexical tokens:
         \item Arithmetic: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%} (modulo)
         \item Comparison: \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}
         \item Logical: \texttt{\&} (and), \texttt{|} (or), \texttt{!} (not)
-        \item Range: num1 \texttt{:} num2 (sequence generation)
+        \item Range: \texttt{num1} \texttt{:} \texttt{num2} (sequence generation)
         \item Type annotation: \texttt{:} (in declaration context)
         \item Function arrow: \texttt{->} (in type signatures)
     \end{itemize}
@@ -516,14 +508,14 @@ Function types represent callable values with parameter and return types:
     \item \texttt{int, (int, int -> int) -> int}: Function taking an integer and a function
 \end{itemize}
 
-\subsection{Subtyping}
+\subsection{Subtyping and Type Promotion}
 Subtyping relation between logical, int, double and vectors are shown below \ref{fig:subtyping-hierarchy}.
 For operations types are always implicitly casted to the wider types. From \texttt{logical $<:$ int $<:$ double}.
 There's also vectors which are covariant to these types. For example \texttt{vector<int>} can be used in place of
 \texttt{vector<double>}.
-
 \begin{figure}[htbp]
 \centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}[
     node distance=1.2cm,
     every node/.style={font=\small},
@@ -531,16 +523,16 @@ There's also vectors which are covariant to these types. For example \texttt{vec
     vectornode/.style={rectangle, draw, rounded corners, fill=green!15, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\ttfamily},
     subtype/.style={->, >=stealth, thick, blue!70},
     vecsubtype/.style={->, >=stealth, thick, green!70},
-    crosssubtype/.style={->, >=stealth, thick, purple!70}
+    crosssubtype/.style={->, >=stealth, thick, purple!70},
 ]
 
 % Title
 \node[font=\bfseries] at (0, 5.5) {Subtyping Hierarchy: $\tau_1 <: \tau_2$ means $\tau_1$ is a subtype of $\tau_2$};
 
 % Scalar types (top row)
-\node[scalarnode] (logical) at (-3, 4) {logical};
+\node[scalarnode] (logical) at (-3.5, 4) {logical};
 \node[scalarnode] (int) at (0, 4) {int};
-\node[scalarnode] (double) at (3, 4) {double};
+\node[scalarnode] (double) at (3.5, 4) {double};
 
 % Scalar subtyping arrows
 \draw[subtype] (logical) -- node[above, font=\scriptsize] {$<:$} (int);
@@ -561,7 +553,7 @@ There's also vectors which are covariant to these types. For example \texttt{vec
 \draw[crosssubtype] (double) -- (vecdouble);
 
 % Annotation boxes
-\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (-6.5, 3.2) {
+\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (-7.5, 3.2) {
 \textbf{Scalar Promotion:}\\
 Any \texttt{logical} can be used\\
 where \texttt{int} is expected.\\
@@ -569,7 +561,7 @@ Any \texttt{int} can be used\\
 where \texttt{double} is expected.
 };
 
-\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (6.5, 3.2) {
+\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (7.5, 3.2) {
 \textbf{Covariant Vectors:}\\
 Vector subtyping follows\\
 scalar subtyping.\\
@@ -587,22 +579,23 @@ is expected.
 };
 
 % Legend
-\node[font=\scriptsize\bfseries, anchor=west] at (-6.5, -1.2) {Legend:};
-\draw[subtype] (-6.5, -1.6) -- (-5.5, -1.6) node[anchor=west, font=\scriptsize] {Scalar subtyping};
-\draw[vecsubtype] (-6.5, -2.0) -- (-5.5, -2.0) node[anchor=west, font=\scriptsize] {Vector subtyping};
-\draw[crosssubtype] (-6.5, -2.4) -- (-5.5, -2.4) node[anchor=west, font=\scriptsize] {Scalar-to-vector};
+\node[font=\scriptsize\bfseries, anchor=west] at (-6.5, -1.6) {Legend:};
+\draw[subtype] (-6.5, -2) -- (-5.5, -2) node[anchor=west, font=\scriptsize] {Scalar subtyping};
+\draw[vecsubtype] (-6.5, -2.4) -- (-5.5, -2.4) node[anchor=west, font=\scriptsize] {Vector subtyping};
+\draw[crosssubtype] (-6.5, -2.8) -- (-5.5, -2.8) node[anchor=west, font=\scriptsize] {Scalar-to-vector};
 
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{Subtyping hierarchy showing scalar type promotion (\texttt{logical} $<:$ \texttt{int} $<:$ \texttt{double}) and covariant vector subtyping (\texttt{vector<logical>} $<:$ \texttt{vector<int>} $<:$ \texttt{vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}
 \label{fig:subtyping-hierarchy}
 \end{figure}
 
 It's important to note, the language doesn't allow there's no user creatable subtyping. Currently,
 we don't support S3 system, or any way to do OOP in Typed R.
-
+\clearpage
 \subsection{Type Checking}
 
-The type checker performs bidirectional type inference:
+The type checker performs bidirectional type inference\cite{bidirectional_typing}:
 
 \begin{itemize}
     \item \textbf{Bottom-up inference:} Expression types are inferred from literal values and operator signatures
@@ -693,108 +686,344 @@ Result: \textcolor{green!70!black}{\textbf{Success!}}
 \label{fig:type-checking-simple}
 \end{figure}
 
-\paragraph{Type Promotion}: When operands have different numeric types, implicit casting promotes to the wider type:
-\begin{align*}
-\text{int} \oplus \text{double} &\to \text{double} \\
-\text{logical} \oplus \text{int} &\to \text{int} \\
-\text{logical} \oplus \text{double} &\to \text{double}
-\end{align*}
-\textit{More complicated examples will be shown on compiler implementation section}
-
 \subsection{Typing Rules}
-We formalize Rty's type system using typing judgments of the form $\Gamma \vdash e : \tau$, read as ``under environment $\Gamma$, expression $e$ has type $\tau$.''
-Note that our typing system employs standard concept from theory\cite{types_and_pl}. Here, we'll 
-only extend on nuances.
 
-\paragraph{Typing Contexts}
+This section formalizes the type system using inference rules. We use \textbf{typing judgments} of the form:
+\[
+\Gamma \vdash e : \tau
+\]
+This is read as: ``under typing context $\Gamma$, expression $e$ has type $\tau$.'' The typing context $\Gamma$ maps variable names to their types. The rules are presented in natural deduction style, where premises appear above the horizontal line and the conclusion below. A rule with no premises (nothing above the line) is an \textbf{axiom}---it holds unconditionally.
+
+Our type system follows standard approaches from programming language theory~\cite{types_and_pl}, extended with subtyping for numeric promotion and vector operations.
+
+\subsubsection{Typing Contexts}
+
+A \textbf{typing context} (or type environment) is a finite mapping from variable names to types:
 \[
 \Gamma ::= \emptyset \mid \Gamma, x:\tau
 \]
 
-\paragraph{Subtyping (for numeric promotion)}
-\[
-\frac{}{\texttt{int} <: \texttt{int}} \qquad \frac{}{\texttt{double} <: \texttt{double}} \qquad \frac{}{\texttt{int} <: \texttt{double}}
-\]
+The empty context $\emptyset$ contains no bindings. The notation $\Gamma, x:\tau$ extends context $\Gamma$ with a new binding of variable $x$ to type $\tau$. We write $x:\tau \in \Gamma$ to indicate that $\Gamma$ contains the binding $x:\tau$.
 
-\paragraph{Core Typing Rules}
+\subsubsection{Subtyping}
+
+Subtyping defines when one type can be safely used where another is expected. We write $\tau_1 <: \tau_2$ to mean ``$\tau_1$ is a subtype of $\tau_2$'' (equivalently, $\tau_1$ can be used wherever $\tau_2$ is expected).
+
+\paragraph{Reflexivity and Base Cases}
+Every type is a subtype of itself, and we define the numeric promotion hierarchy:
 
 \begin{mathpar}
-\inferrule*[right=T-Var]
-    {x:\tau \in \Gamma}
-    {\Gamma \vdash x : \tau}
+\inferrule*[right=S-Refl]
+    {\ }
+    {\tau <: \tau}
 
 \and
 
-\inferrule*[right=T-Int]
+\inferrule*[right=S-LogicalInt]
     {\ }
+    {\texttt{logical} <: \texttt{int}}
+
+\and
+
+\inferrule*[right=S-IntDouble]
+    {\ }
+    {\texttt{int} <: \texttt{double}}
+\end{mathpar}
+
+\textbf{Explanation:} \textsc{S-Refl} states that any type is a subtype of itself (reflexivity). \textsc{S-LogicalInt} allows logical values (represented as 0 or 1) to be used as integers. \textsc{S-IntDouble} allows integers to be promoted to doubles, enabling mixed arithmetic like \texttt{3 + 2.5}.
+
+\paragraph{Transitivity}
+Subtyping is transitive, allowing chains like $\texttt{logical} <: \texttt{int} <: \texttt{double}$:
+
+\begin{mathpar}
+\inferrule*[right=S-Trans]
+    {\tau_1 <: \tau_2 \\ \tau_2 <: \tau_3}
+    {\tau_1 <: \tau_3}
+\end{mathpar}
+
+\textbf{Explanation:} If $\tau_1$ can be used as $\tau_2$, and $\tau_2$ can be used as $\tau_3$, then $\tau_1$ can be used as $\tau_3$. This gives us $\texttt{logical} <: \texttt{double}$ automatically.
+
+\paragraph{Vector Covariance}
+Vectors are \textbf{covariant} in their element type:
+
+\begin{mathpar}
+\inferrule*[right=S-Vector]
+    {\tau_1 <: \tau_2}
+    {\texttt{vector}\langle\tau_1\rangle <: \texttt{vector}\langle\tau_2\rangle}
+\end{mathpar}
+
+\textbf{Explanation:} If element type $\tau_1$ is a subtype of $\tau_2$, then a vector of $\tau_1$ can be used where a vector of $\tau_2$ is expected. For example, \texttt{vector<int>} $<:$ \texttt{vector<double>}, so an integer vector can be passed to a function expecting a double vector.
+
+\paragraph{Subsumption}
+The \textbf{subsumption rule} connects subtyping to the type system, allowing implicit type promotion:
+
+\begin{mathpar}
+\inferrule*[right=T-Sub]
+    {\Gamma \vdash e : \tau_1 \\ \tau_1 <: \tau_2}
+    {\Gamma \vdash e : \tau_2}
+\end{mathpar}
+
+\textbf{Explanation:} If expression $e$ has type $\tau_1$ and $\tau_1$ is a subtype of $\tau_2$, then $e$ can also be given type $\tau_2$. This rule enables all implicit conversions in the language. For example, if \texttt{x} has type \texttt{int}, we can use it where \texttt{double} is expected.
+
+\subsubsection{Literals and Variables}
+
+These rules assign types to the basic building blocks of expressions.
+
+\begin{mathpar}
+\inferrule*[right=T-Int]
+    {n \in \mathbb{Z}}
     {\Gamma \vdash n : \texttt{int}}
 
 \and
 
 \inferrule*[right=T-Double]
-    {\ }
+    {d \in \mathbb{R}}
     {\Gamma \vdash d : \texttt{double}}
 
 \and
 
-\inferrule*[right=T-Func]
-    {\Gamma, x_1:\tau_1, \ldots, x_n:\tau_n \vdash e : \tau}
-    {\Gamma \vdash \texttt{function}(x_1:\tau_1, \ldots, x_n:\tau_n):\tau\ \{\ e\ \} : \tau_1,\ldots,\tau_n \to \tau}
+\inferrule*[right=T-Bool]
+    {b \in \{\texttt{TRUE}, \texttt{FALSE}\}}
+    {\Gamma \vdash b : \texttt{logical}}
 
 \and
 
-\inferrule*[right=T-App]
-    {\Gamma \vdash e_1 : \tau_1,\ldots,\tau_n \to \tau \\ \Gamma \vdash e_2 : \tau_1 \\ \cdots \\ \Gamma \vdash e_{n+1} : \tau_n}
-    {\Gamma \vdash e_1(e_2, \ldots, e_{n+1}) : \tau}
+\inferrule*[right=T-Var]
+    {x:\tau \in \Gamma}
+    {\Gamma \vdash x : \tau}
+\end{mathpar}
 
-\and
+\textbf{Explanation:}
+\begin{itemize}
+    \item \textsc{T-Int}: Integer literals like \texttt{42} or \texttt{-7} have type \texttt{int}.
+    \item \textsc{T-Double}: Floating-point literals like \texttt{3.14} have type \texttt{double}.
+    \item \textsc{T-Bool}: The literals \texttt{TRUE} and \texttt{FALSE} have type \texttt{logical}.
+    \item \textsc{T-Var}: A variable $x$ has whatever type the context $\Gamma$ says it has. This rule performs a lookup in the typing environment.
+\end{itemize}
 
-\inferrule*[right=T-Vector]
-    {\Gamma \vdash e_1 : \tau \\ \cdots \\ \Gamma \vdash e_n : \tau}
-    {\Gamma \vdash \texttt{c}(e_1, \ldots, e_n) : \texttt{vector}\langle\tau\rangle}
+\subsubsection{Arithmetic Operators}
 
-\and
+Arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%}) follow the same typing pattern. We show rules for addition; other operators are analogous.
 
+\begin{mathpar}
 \inferrule*[right=T-AddInt]
     {\Gamma \vdash e_1 : \texttt{int} \\ \Gamma \vdash e_2 : \texttt{int}}
     {\Gamma \vdash e_1 + e_2 : \texttt{int}}
 
 \and
 
-\inferrule*[right=T-AddPromo]
-    {\Gamma \vdash e_1 : \tau_1 \\ \Gamma \vdash e_2 : \tau_2 \\ \tau_1 <: \texttt{double} \lor \tau_2 <: \texttt{double}}
+\inferrule*[right=T-AddDouble]
+    {\Gamma \vdash e_1 : \texttt{double} \\ \Gamma \vdash e_2 : \texttt{double}}
     {\Gamma \vdash e_1 + e_2 : \texttt{double}}
-
-\and
-
-\inferrule*[right=T-VecAdd]
-    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \texttt{vector}\langle\tau\rangle}
-    {\Gamma \vdash e_1 + e_2 : \texttt{vector}\langle\tau\rangle}
-
-\and
-
-\inferrule*[right=T-Assign]
-    {\Gamma \vdash e : \tau \\ \Gamma' = \Gamma, x:\tau}
-    {\Gamma \vdash x \gets e : \tau}
-
-\and
-
-\inferrule*[right=T-SuperAssign]
-    {\Gamma \vdash e : \tau \\ x:\tau \in \Gamma_i \text{ for some } i < |\Gamma|}
-    {\Gamma \vdash x \ll\gets e : \tau}
-
 \end{mathpar}
 
+\textbf{Explanation:} When both operands have the same numeric type, the result has that type. Note that mixed-type arithmetic like \texttt{3 + 2.5} is handled by first applying subsumption (\textsc{T-Sub}) to promote \texttt{3} from \texttt{int} to \texttt{double}, then applying \textsc{T-AddDouble}.
 
-\paragraph{Conditionals}
+\subsubsection{Comparison Operators}
 
-\[
-\frac{\Gamma \vdash e_{cond} : \texttt{logical} \quad \Gamma \vdash e_{then} : T \quad \Gamma \vdash e_{else} : T}{\Gamma \vdash \texttt{if}\ (e_{cond})\ \{ e_{then} \}\ \texttt{else}\ \{ e_{else} \} : T}
-\]
+Comparison operators (\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}) compare values and produce logical results:
 
-If-expressions require a logical condition and both branches must have the same type.
+\begin{mathpar}
+\inferrule*[right=T-Compare]
+    {\Gamma \vdash e_1 : \tau \\ \Gamma \vdash e_2 : \tau \\ \tau \in \{\texttt{int}, \texttt{double}, \texttt{logical}\}}
+    {\Gamma \vdash e_1 \odot e_2 : \texttt{logical}}
+\end{mathpar}
+
+where $\odot \in \{\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}\}$.
+
+\textbf{Explanation:} Comparisons require both operands to have the same type (after potential promotion via subsumption) and always produce a \texttt{logical} result. For example, \texttt{3 < 5} produces \texttt{TRUE}.
+
+\subsubsection{Logical Operators}
+
+Logical operators work on boolean values:
+
+\begin{mathpar}
+\inferrule*[right=T-And]
+    {\Gamma \vdash e_1 : \texttt{logical} \\ \Gamma \vdash e_2 : \texttt{logical}}
+    {\Gamma \vdash e_1\ \texttt{\&}\ e_2 : \texttt{logical}}
+
+\and
+
+\inferrule*[right=T-Or]
+    {\Gamma \vdash e_1 : \texttt{logical} \\ \Gamma \vdash e_2 : \texttt{logical}}
+    {\Gamma \vdash e_1\ \texttt{|}\ e_2 : \texttt{logical}}
+
+\and
+
+\inferrule*[right=T-Not]
+    {\Gamma \vdash e : \texttt{logical}}
+    {\Gamma \vdash \texttt{!}e : \texttt{logical}}
+\end{mathpar}
+
+\textbf{Explanation:} Logical AND (\texttt{\&}), OR (\texttt{|}), and NOT (\texttt{!}) require logical operands and produce logical results.
+
+\subsubsection{Vector Operations}
+
+\paragraph{Vector Construction}
+The \texttt{c()} function creates vectors from elements:
+
+\begin{mathpar}
+\inferrule*[right=T-Vector]
+    {\Gamma \vdash e_1 : \tau \\ \Gamma \vdash e_2 : \tau \\ \cdots \\ \Gamma \vdash e_n : \tau}
+    {\Gamma \vdash \texttt{c}(e_1, e_2, \ldots, e_n) : \texttt{vector}\langle\tau\rangle}
+\end{mathpar}
+
+\textbf{Explanation:} All elements must have the same type $\tau$ (after promotion). The result is a vector parameterized by that element type. For example, \texttt{c(1, 2, 3)} has type \texttt{vector<int>}.
+
+\paragraph{Range Construction}
+The colon operator creates integer sequences:
+
+\begin{mathpar}
+\inferrule*[right=T-Range]
+    {\Gamma \vdash e_1 : \texttt{int} \\ \Gamma \vdash e_2 : \texttt{int}}
+    {\Gamma \vdash e_1\texttt{:}e_2 : \texttt{vector}\langle\texttt{int}\rangle}
+\end{mathpar}
+
+\textbf{Explanation:} The range \texttt{1:5} creates the vector \texttt{c(1, 2, 3, 4, 5)}. Both bounds must be integers.
+
+\paragraph{Vector Indexing}
+Elements are accessed using bracket notation:
+
+\begin{mathpar}
+\inferrule*[right=T-Index]
+    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \texttt{int}}
+    {\Gamma \vdash e_1[e_2] : \tau}
+\end{mathpar}
+
+\textbf{Explanation:} Indexing a vector of type \texttt{vector<$\tau$>} with an integer index produces a value of type $\tau$. Note that our language uses 1-based indexing, following R convention.
+
+\paragraph{Vector Arithmetic}
+Binary operators extend component-wise to vectors:
+
+\begin{mathpar}
+\inferrule*[right=T-VecBinOp]
+    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \texttt{vector}\langle\tau\rangle \\ \tau \in \{\texttt{int}, \texttt{double}\}}
+    {\Gamma \vdash e_1 \oplus e_2 : \texttt{vector}\langle\tau\rangle}
+\end{mathpar}
+
+where $\oplus \in \{+, -, *, /, \texttt{\%\%}\}$.
+
+\textbf{Explanation:} When both operands are vectors of the same numeric type, the operation applies element-wise. For example, \texttt{c(1,2) + c(3,4)} produces \texttt{c(4,6)}.
+
+\paragraph{Scalar-Vector Operations}
+Scalars broadcast to match vector length:
+
+\begin{mathpar}
+\inferrule*[right=T-ScalarVec]
+    {\Gamma \vdash e_1 : \tau \\ \Gamma \vdash e_2 : \texttt{vector}\langle\tau\rangle \\ \tau \in \{\texttt{int}, \texttt{double}\}}
+    {\Gamma \vdash e_1 \oplus e_2 : \texttt{vector}\langle\tau\rangle}
+\end{mathpar}
+
+\textbf{Explanation:} A scalar is implicitly replicated to match the vector length. For example, \texttt{2 * c(1,2,3)} produces \texttt{c(2,4,6)}. The symmetric case (vector $\oplus$ scalar) follows analogously.
+
+\subsubsection{Functions}
+
+\paragraph{Function Definition}
+Functions are first-class values with explicit parameter and return types:
+
+\begin{mathpar}
+\inferrule*[right=T-Func]
+    {\Gamma, x_1:\tau_1, \ldots, x_n:\tau_n \vdash e : \tau}
+    {\Gamma \vdash \texttt{function}(x_1:\tau_1, \ldots, x_n:\tau_n):\tau\ \{\ e\ \} : (\tau_1, \ldots, \tau_n) \to \tau}
+\end{mathpar}
+
+\textbf{Explanation:} To type-check a function, we extend the context with the parameter bindings and check that the body $e$ has the declared return type $\tau$. The function itself has a \textbf{function type} $(\tau_1, \ldots, \tau_n) \to \tau$ indicating it takes $n$ arguments of types $\tau_1, \ldots, \tau_n$ and returns type $\tau$.
+
+\paragraph{Function Application}
+Function calls check argument types against parameter types:
+
+\begin{mathpar}
+\inferrule*[right=T-App]
+    {\Gamma \vdash e_0 : (\tau_1, \ldots, \tau_n) \to \tau \\ \Gamma \vdash e_1 : \tau_1 \\ \cdots \\ \Gamma \vdash e_n : \tau_n}
+    {\Gamma \vdash e_0(e_1, \ldots, e_n) : \tau}
+\end{mathpar}
+
+\textbf{Explanation:} To call a function, the callee $e_0$ must have a function type, and each argument must match the corresponding parameter type (or be promotable via subsumption). The result has the function's return type.
+
+\subsubsection{Control Flow}
+
+\paragraph{Conditional Expressions}
+If-else expressions require matching branch types:
+
+\begin{mathpar}
+\inferrule*[right=T-If]
+    {\Gamma \vdash e_1 : \texttt{logical} \\ \Gamma \vdash e_2 : \tau \\ \Gamma \vdash e_3 : \tau}
+    {\Gamma \vdash \texttt{if}\ (e_1)\ \{e_2\}\ \texttt{else}\ \{e_3\} : \tau}
+\end{mathpar}
+
+\textbf{Explanation:} The condition must be logical. Both branches must have the same type $\tau$, which becomes the type of the entire expression. This enables using if-else as an expression: \texttt{x <- if (cond) \{ 1 \} else \{ 2 \}}.
+
+\paragraph{While Loops}
+While loops do not produce meaningful values:
+
+\begin{mathpar}
+\inferrule*[right=T-While]
+    {\Gamma \vdash e_1 : \texttt{logical} \\ \Gamma \vdash e_2 : \tau}
+    {\Gamma \vdash \texttt{while}\ (e_1)\ \{e_2\} : \texttt{void}}
+\end{mathpar}
+
+\textbf{Explanation:} The condition must be logical. The body is checked but its type is discarded; the loop itself has type \texttt{void}.
+
+\paragraph{For Loops}
+For loops iterate over vectors:
+
+\begin{mathpar}
+\inferrule*[right=T-For]
+    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau_1\rangle \\ \Gamma, x:\tau_1 \vdash e_2 : \tau_2}
+    {\Gamma \vdash \texttt{for}\ (x\ \texttt{in}\ e_1)\ \{e_2\} : \texttt{void}}
+\end{mathpar}
+
+\textbf{Explanation:} The iterable must be a vector. The loop variable $x$ is bound to the element type within the body. Like while loops, for loops have type \texttt{void}.
+
+\subsubsection{Statements}
+
+\paragraph{Assignment}
+Assignment binds a value to a variable, extending the context:
+
+\begin{mathpar}
+\inferrule*[right=T-Assign]
+    {\Gamma \vdash e : \tau}
+    {\Gamma \vdash (x \gets e) : \tau \dashv \Gamma, x:\tau}
+\end{mathpar}
+
+\textbf{Explanation:} We use $\dashv \Gamma'$ to indicate the \textbf{output context} after the statement. Assignment evaluates $e$, binds the result to $x$, and produces an updated context where $x$ has type $\tau$. The assignment itself also has type $\tau$ (assignments are expressions in R).
+
+\paragraph{Super-Assignment}
+Super-assignment modifies a variable in an enclosing scope:
+
+\begin{mathpar}
+\inferrule*[right=T-SuperAssign]
+    {x:\tau \in \Gamma_{outer} \\ \Gamma \vdash e : \tau'}
+    {\Gamma \vdash (x \ll\gets e) : \tau'}
+\end{mathpar}
+
+where $\tau' <: \tau$ (the assigned value must be compatible with the existing binding).
+
+\textbf{Explanation:} Super-assignment requires that $x$ already exists in some enclosing function scope ($\Gamma_{outer}$). The expression type must be compatible with the existing variable's type.
+
+\paragraph{Blocks}
+A block is a sequence of statements with an optional tail expression:
+
+\begin{mathpar}
+\inferrule*[right=T-Block]
+    {\Gamma \vdash s_1 : \tau_1 \dashv \Gamma_1 \\ \Gamma_1 \vdash s_2 : \tau_2 \dashv \Gamma_2 \\ \cdots \\ \Gamma_{n-1} \vdash e : \tau}
+    {\Gamma \vdash \{s_1; s_2; \ldots; e\} : \tau}
+\end{mathpar}
+
+\textbf{Explanation:} Statements are checked in sequence, with each statement potentially extending the context for subsequent statements. The block's type is determined by its final expression (the tail expression).
+
+\paragraph{Return Statement}
+
+\begin{mathpar}
+\inferrule*[right=T-Return]
+    {\Gamma \vdash e : \tau}
+    {\Gamma \vdash \texttt{return}(e) : \tau}
+\end{mathpar}
+
+\textbf{Explanation:} A return statement has the type of its argument. The type checker verifies that this matches the declared return type of the enclosing function.
 
 \subsection{Scoping and Closures}
+\label{sec:scoping}
 
 The language uses lexical scoping where:
 \begin{itemize}
@@ -822,170 +1051,62 @@ print(counter())  # Prints 2
 
 
 
-\section{Semantics}
+\section{Evaluation Model}
 
-This section describes the operational semantics of key language constructs.
+This section describes the key runtime behaviors that affect how programs execute and how the compiler generates code.
 
-\subsection{Expression Evaluation}
+\subsection{Evaluation Order and Type Promotion}
 
-Expression evaluation follows a small-step operational semantics with evaluation contexts.
+Expressions are evaluated left-to-right. When operands have different numeric types, the narrower type is promoted to the wider type before the operation:
+\begin{itemize}
+    \item \texttt{logical} $\to$ \texttt{int}: \texttt{TRUE} becomes \texttt{1}, \texttt{FALSE} becomes \texttt{0}
+    \item \texttt{int} $\to$ \texttt{double}: integers are converted to floating-point
+\end{itemize}
 
-\paragraph{Literal Evaluation}
+For example, \texttt{TRUE + 2.5} evaluates as \texttt{1.0 + 2.5 = 3.5} (logical $\to$ int $\to$ double).
 
-Literals evaluate to themselves:
-\begin{align*}
-n &\Downarrow n \quad \text{(numeric literal)} \\
-\texttt{"str"} &\Downarrow \texttt{"str"} \quad \text{(string literal)} \\
-\texttt{TRUE} &\Downarrow \texttt{TRUE} \quad \text{(logical literal)}
-\end{align*}
+\subsection{Vector Operations}
 
-\paragraph{Variable Lookup}
-
-Variable references evaluate by environment lookup:
+Vector operations apply element-wise. When vectors have different element types, promotion occurs element-by-element:
 \[
-\frac{\rho(x) = v}{\langle x, \rho \rangle \Downarrow v}
-\]
-where $\rho$ is the runtime environment mapping identifiers to values.
-
-\paragraph{Binary Operations}
-
-Binary operations evaluate operands left-to-right, then apply the operation:
-\[
-\frac{\langle e_1, \rho \rangle \Downarrow v_1 \quad \langle e_2, \rho \rangle \Downarrow v_2 \quad v_1 \oplus v_2 = v}{\langle e_1 \oplus e_2, \rho \rangle \Downarrow v}
-\]
-where $\oplus$ represents any binary operator.
-
-\textbf{Arithmetic Operators} (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%}) on same types:
-\begin{align*}
-n_1 + n_2 &= n_1 + n_2 \quad \text{(int + int $\to$ int)} \\
-d_1 + d_2 &= d_1 + d_2 \quad \text{(double + double $\to$ double)} \\
-n_1 - n_2 &= n_1 - n_2 \\
-n_1 * n_2 &= n_1 \times n_2 \\
-n_1 / n_2 &= \lfloor n_1 \div n_2 \rfloor \quad \text{(integer division)} \\
-d_1 / d_2 &= d_1 \div d_2 \quad \text{(floating-point division)} \\
-n_1 \bmod n_2 &= n_1 \bmod n_2
-\end{align*}
-
-\textbf{Comparison Operators} (\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}) produce logical values:
-\begin{align*}
-n_1 < n_2 &= \texttt{TRUE} \text{ if } n_1 < n_2, \text{ else } \texttt{FALSE} \\
-n_1 == n_2 &= \texttt{TRUE} \text{ if } n_1 = n_2, \text{ else } \texttt{FALSE}
-\end{align*}
-Type promotion applies: \texttt{3 < 2.5} compares as \texttt{3.0 < 2.5}.
-
-\textbf{Logical Operators} (\texttt{\&}, \texttt{|}) on boolean values:
-\begin{align*}
-b_1 \texttt{ \& } b_2 &= b_1 \land b_2 \\
-b_1 \texttt{ | } b_2 &= b_1 \lor b_2
-\end{align*}
-
-\textbf{Vector Operations} are applied component-wise after ensuring compatible types:
-\[
-\texttt{vector}[v_1, \ldots, v_n] \oplus \texttt{vector}[w_1, \ldots, w_n] = \texttt{vector}[v_1 \oplus w_1, \ldots, v_n \oplus w_n]
+\texttt{c}(v_1, \ldots, v_n) \oplus \texttt{c}(w_1, \ldots, w_n) = \texttt{c}(v_1 \oplus w_1, \ldots, v_n \oplus w_n)
 \]
 
-For mixed vector types, element types are promoted (e.g., \texttt{vector<int>} + \texttt{vector<double>} produces \texttt{vector<double>}).
-
-\textbf{Vector-Scalar Operations}: Scalars are broadcast to match vector length:
+\paragraph{Scalar Broadcasting}
+When a scalar and vector are combined, the scalar is implicitly broadcast (replicated) to match the vector length:
 \[
-\texttt{vector}[v_1, \ldots, v_n] \oplus s = \texttt{vector}[v_1 \oplus s, \ldots, v_n \oplus s]
+s \oplus \texttt{c}(v_1, \ldots, v_n) = \texttt{c}(s \oplus v_1, \ldots, s \oplus v_n)
 \]
+For example, \texttt{2 * c(1, 2, 3)} produces \texttt{c(2, 4, 6)}.
 
+\subsection{Function Evaluation and Closures}
 
-\paragraph{Function Application}
+Functions in the typed R-like language are \textbf{closures}: they capture the environment in which they are defined. When a function is called:
+\begin{enumerate}
+    \item The callee expression is evaluated to obtain a closure (function code + captured environment)
+    \item Arguments are evaluated left-to-right in the caller's environment
+    \item A new environment is created, extending the closure's captured environment with parameter bindings
+    \item The function body is evaluated in this new environment
+\end{enumerate}
 
-Function application evaluates the callee to obtain a closure, evaluates arguments, extends the closure environment, and evaluates the body:
-\[
-\frac{
-\begin{aligned}
-&\langle e_0, \rho \rangle \Downarrow \langle \lambda(x_1, \ldots, x_n).e, \rho' \rangle \\
-&\langle e_1, \rho \rangle \Downarrow v_1 \quad \cdots \quad \langle e_n, \rho \rangle \Downarrow v_n \\
-&\langle e, \rho'[x_1 \mapsto v_1, \ldots, x_n \mapsto v_n] \rangle \Downarrow v
-\end{aligned}
-}{
-\langle e_0(e_1, \ldots, e_n), \rho \rangle \Downarrow v
-}
-\]
-
-\subsection{Statement Execution}
-
-Statements modify the environment and may alter control flow.
-
-\paragraph{Assignment}
-
-Assignment evaluates the right-hand side and binds the result to the identifier:
-\[
-\frac{\langle e, \rho \rangle \Downarrow v}{\langle x \texttt{ <- } e, \rho \rangle \rightarrow \rho[x \mapsto v]}
-\]
-
-Super-assignment searches parent scopes:
-\[
-\frac{\langle e, \rho \rangle \Downarrow v \quad x \in \text{dom}(\rho_{parent})}{\langle x \texttt{ <<- } e, \rho \rangle \rightarrow \rho[\rho_{parent}[x \mapsto v]]}
-\]
-
-\paragraph{Conditional Execution}
-
-If-statements evaluate the condition and execute the appropriate branch:
-\[
-\frac{\langle e_{cond}, \rho \rangle \Downarrow \texttt{TRUE} \quad \langle s_{then}, \rho \rangle \rightarrow \rho'}{\langle \texttt{if}\ (e_{cond})\ \{ s_{then} \}, \rho \rangle \rightarrow \rho'}
-\]
-
-\[
-\frac{\langle e_{cond}, \rho \rangle \Downarrow \texttt{FALSE} \quad \langle s_{else}, \rho \rangle \rightarrow \rho'}{\langle \texttt{if}\ (e_{cond})\ \{ s_{then} \}\ \texttt{else}\ \{ s_{else} \}, \rho \rangle \rightarrow \rho'}
-\]
-
-\paragraph{While Loops}
-
-While loops repeatedly execute the body while the condition is true:
-\[
-\frac{\langle e_{cond}, \rho \rangle \Downarrow \texttt{FALSE}}{\langle \texttt{while}\ (e_{cond})\ \{ s \}, \rho \rangle \rightarrow \rho}
-\]
-
-\[
-\frac{
-\begin{aligned}
-&\langle e_{cond}, \rho \rangle \Downarrow \texttt{TRUE} \\
-&\langle s, \rho \rangle \rightarrow \rho' \\
-&\langle \texttt{while}\ (e_{cond})\ \{ s \}, \rho' \rangle \rightarrow \rho''
-\end{aligned}
-}{
-\langle \texttt{while}\ (e_{cond})\ \{ s \}, \rho \rangle \rightarrow \rho''
-}
-\]
-
-\paragraph{For Loops}
-
-For loops iterate over vectors or ranges:
-\[
-\frac{
-\begin{aligned}
-&\langle e_{vec}, \rho \rangle \Downarrow \texttt{vector}[v_1, \ldots, v_n] \\
-&\langle s, \rho[x \mapsto v_1] \rangle \rightarrow \rho_1 \\
-&\cdots \\
-&\langle s, \rho_{n-1}[x \mapsto v_n] \rangle \rightarrow \rho_n
-\end{aligned}
-}{
-\langle \texttt{for}\ (x\ \texttt{in}\ e_{vec})\ \{ s \}, \rho \rangle \rightarrow \rho_n
-}
-\]
-
-\subsection{Function Calls and Return}
-
-Function calls push a new activation frame onto the call stack. The \texttt{return} statement terminates function execution and yields a value:
-\[
-\frac{\langle e, \rho \rangle \Downarrow v}{\langle \texttt{return}(e), \rho \rangle \Rightarrow v}
-\]
-
-The special $\Rightarrow$ arrow indicates early exit from the function body.
+This closure semantics enables patterns like factory functions and stateful callbacks, as shown in the counter example in Section~\ref{sec:scoping}.
 
 \subsection{Built-in Functions}
 
-The language provides built-in functions with special semantics:
+The language provides the following built-in functions:
 
-\begin{itemize}
-    \item \texttt{c(e1, ..., en)}: Creates a vector from arguments. All arguments must have the same type.
-    \item \texttt{print(e)}: Outputs the value of expression \texttt{e} to standard output.
-    \item \texttt{length(v)}: Returns the number of elements in vector \texttt{v}.
-    \item \texttt{sum(v)}: Returns the sum of all elements in numeric vector \texttt{v}.
-    \item \texttt{gen\_seq(start, end)}: Generates a sequence from \texttt{start} to \texttt{end} (equivalent to \texttt{start:end}).
-\end{itemize}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Function} & \textbf{Type} & \textbf{Description} \\
+\hline
+\texttt{c(e1, ..., en)} & $(\tau, \ldots, \tau) \to \texttt{vector}\langle\tau\rangle$ & Creates vector from elements \\
+\texttt{print(e)} & $\tau \to \texttt{void}$ & Outputs value to stdout \\
+\texttt{length(v)} & $\texttt{vector}\langle\tau\rangle \to \texttt{int}$ & Returns vector length \\
+\texttt{sum(v)} & $\texttt{vector}\langle\tau\rangle \to \tau$ & Sums numeric vector \\
+\hline
+\end{tabular}
+\caption{Built-in functions and their types}
+\label{tab:builtins}
+\end{table}

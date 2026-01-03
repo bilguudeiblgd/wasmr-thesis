@@ -508,6 +508,56 @@
       \field{pages}{509\bibrangedash 521}
       \range{pages}{13}
     \endentry
+    \entry{bidirectional_typing}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=60889da679127853753f4585e316703b}{%
+           family={Dunfield},
+           familyi={D\bibinitperiod},
+           given={Jana},
+           giveni={J\bibinitperiod}}}%
+        {{hash=0db8fd853ecaf02ae0100d840b9302a3}{%
+           family={Krishnaswami},
+           familyi={K\bibinitperiod},
+           given={Neel},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{fullhash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{fullhashraw}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{bibnamehash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{authorbibnamehash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{authornamehash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{authorfullhash}{f161efb86a0a4b5f891db095bdc39adb}
+      \strng{authorfullhashraw}{f161efb86a0a4b5f891db095bdc39adb}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Bidirectional typing combines two modes of typing: type checking, which checks that a program satisfies a known type, and type synthesis, which determines a type from the program. Using checking enables bidirectional typing to support features for which inference is undecidable; using synthesis enables bidirectional typing to avoid the large annotation burden of explicitly typed languages. In addition, bidirectional typing improves error locality. We highlight the design principles that underlie bidirectional type systems, survey the development of bidirectional typing from the prehistoric period before Pierce and Turner’s local type inference to the present day, and provide guidance for future investigations.}
+      \field{issn}{0360-0300}
+      \field{journaltitle}{ACM Comput. Surv.}
+      \field{month}{5}
+      \field{number}{5}
+      \field{title}{Bidirectional Typing}
+      \field{volume}{54}
+      \field{year}{2021}
+      \verb{doi}
+      \verb 10.1145/3450952
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3450952
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3450952
+      \endverb
+      \keyw{Type checking,type inference}
+    \endentry
     \entry{types_and_pl}{book}{}{}
       \name{author}{1}{}{%
         {{hash=7365a4e827c2dfa2c5af0c0ec4c18c27}{%
