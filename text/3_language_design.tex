@@ -402,15 +402,6 @@ f <- function(x: int): int {
 
 \subsection{Abstract Grammar}
 
-
-\paragraph{Types}
-\begin{align*}
-\tau ::= &\ \texttt{int} \mid \texttt{double} \mid \texttt{char} \mid \texttt{logical} \mid \texttt{void} \\
-    &\mid \texttt{vector}\langle\tau\rangle \\
-    &\mid \texttt{list} \\
-    &\mid \tau_1, \ldots, \tau_n \to \tau \quad \text{(function types)}
-\end{align*}
-
 \paragraph{Expressions}
 \begin{align*}
 e ::= &\ x \quad \text{(variable)} \\
@@ -514,38 +505,100 @@ v3: vector<double> <- v2 + c(1.0, 2.0, 3.0)
 
 Vectors support component-wise arithmetic operations when both operands have compatible vector types.
 
-\subparagraph{Function Types}
+\paragraph{Function Types}
 
 Function types represent callable values with parameter and return types:
 
-\begin{verbatim}
-<type> ::= <function_type>
-
-<function_type> ::= <param_list> "->" <type>
-                  | <primary_type>
-
-<param_list> ::= <primary_type>
-               | <primary_type> "," <param_list>
-
-<primary_type> ::= <builtin_type>
-                 | <generic_type>
-                 | "(" <function_type> ")"
-                 | "function"
-
-<builtin_type> ::= "int" | "double" | "string" | "char"
-                 | "void" | "logical" | "any"
-
-<generic_type> ::= "vector" "<" <type> ">"
-                 | "list" "<" <type> ">"
-\end{verbatim}
-
-Examples of function types:
 \begin{itemize}
     \item \texttt{int -> int}: Function taking an integer, returning an integer
     \item \texttt{int, int -> double}: Function taking two integers, returning a double
     \item \texttt{(int -> int) -> int}: Higher-order function taking a function as parameter
     \item \texttt{int, (int, int -> int) -> int}: Function taking an integer and a function
 \end{itemize}
+
+\subsection{Subtyping}
+Subtyping relation between logical, int, double and vectors are shown below \ref{fig:subtyping-hierarchy}.
+For operations types are always implicitly casted to the wider types. From \texttt{logical $<:$ int $<:$ double}.
+There's also vectors which are covariant to these types. For example \texttt{vector<int>} can be used in place of
+\texttt{vector<double>}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=1.2cm,
+    every node/.style={font=\small},
+    scalarnode/.style={rectangle, draw, rounded corners, fill=blue!15, minimum width=2cm, minimum height=0.7cm, align=center, font=\ttfamily},
+    vectornode/.style={rectangle, draw, rounded corners, fill=green!15, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\ttfamily},
+    subtype/.style={->, >=stealth, thick, blue!70},
+    vecsubtype/.style={->, >=stealth, thick, green!70},
+    crosssubtype/.style={->, >=stealth, thick, purple!70}
+]
+
+% Title
+\node[font=\bfseries] at (0, 5.5) {Subtyping Hierarchy: $\tau_1 <: \tau_2$ means $\tau_1$ is a subtype of $\tau_2$};
+
+% Scalar types (top row)
+\node[scalarnode] (logical) at (-3, 4) {logical};
+\node[scalarnode] (int) at (0, 4) {int};
+\node[scalarnode] (double) at (3, 4) {double};
+
+% Scalar subtyping arrows
+\draw[subtype] (logical) -- node[above, font=\scriptsize] {$<:$} (int);
+\draw[subtype] (int) -- node[above, font=\scriptsize] {$<:$} (double);
+
+% Vector types (bottom row)
+\node[vectornode] (veclogical) at (-3.5, 1.5) {vector<logical>};
+\node[vectornode] (vecint) at (0, 1.5) {vector<int>};
+\node[vectornode] (vecdouble) at (3.5, 1.5) {vector<double>};
+
+% Vector subtyping arrows
+\draw[vecsubtype] (veclogical) -- node[above, font=\scriptsize] {$<:$} (vecint);
+\draw[vecsubtype] (vecint) -- node[above, font=\scriptsize] {$<:$} (vecdouble);
+
+% Scalar to vector arrows (covariant)
+\draw[crosssubtype] (logical) -- node[left, font=\scriptsize, align=center] {scalar to\\vector} (veclogical);
+\draw[crosssubtype] (int) -- (vecint);
+\draw[crosssubtype] (double) -- (vecdouble);
+
+% Annotation boxes
+\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (-6.5, 3.2) {
+\textbf{Scalar Promotion:}\\
+Any \texttt{logical} can be used\\
+where \texttt{int} is expected.\\
+Any \texttt{int} can be used\\
+where \texttt{double} is expected.
+};
+
+\node[draw, rounded corners, fill=yellow!10, align=left, font=\scriptsize, text width=3.5cm] at (6.5, 3.2) {
+\textbf{Covariant Vectors:}\\
+Vector subtyping follows\\
+scalar subtyping.\\
+\texttt{vector<int>} can be used\\
+where \texttt{vector<double>}\\
+is expected.
+};
+
+% Example box
+\node[draw, rounded corners, fill=orange!10, align=left, font=\scriptsize, text width=6cm] at (0, -0.3) {
+\textbf{Example:}\\
+\texttt{x: double <- 42} \quad $\checkmark$ (\texttt{int} $<:$ \texttt{double})\\
+\texttt{y: vector<double> <- c(1L, 2L, 3L)} \quad $\checkmark$ (\texttt{vector<int>} $<:$ \texttt{vector<double>})\\
+\texttt{z: int <- 3.14} \quad $\times$ (\texttt{double} $\not<:$ \texttt{int})
+};
+
+% Legend
+\node[font=\scriptsize\bfseries, anchor=west] at (-6.5, -1.2) {Legend:};
+\draw[subtype] (-6.5, -1.6) -- (-5.5, -1.6) node[anchor=west, font=\scriptsize] {Scalar subtyping};
+\draw[vecsubtype] (-6.5, -2.0) -- (-5.5, -2.0) node[anchor=west, font=\scriptsize] {Vector subtyping};
+\draw[crosssubtype] (-6.5, -2.4) -- (-5.5, -2.4) node[anchor=west, font=\scriptsize] {Scalar-to-vector};
+
+\end{tikzpicture}
+\caption{Subtyping hierarchy showing scalar type promotion (\texttt{logical} $<:$ \texttt{int} $<:$ \texttt{double}) and covariant vector subtyping (\texttt{vector<logical>} $<:$ \texttt{vector<int>} $<:$ \texttt{vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}
+\label{fig:subtyping-hierarchy}
+\end{figure}
+
+It's important to note, the language doesn't allow there's no user creatable subtyping. Currently,
+we don't support S3 system, or any way to do OOP in Typed R.
 
 \subsection{Type Checking}
 
@@ -663,7 +716,7 @@ only extend on nuances.
 \frac{}{\texttt{int} <: \texttt{int}} \qquad \frac{}{\texttt{double} <: \texttt{double}} \qquad \frac{}{\texttt{int} <: \texttt{double}}
 \]
 
-\subsection{Core Typing Rules}
+\paragraph{Core Typing Rules}
 
 \begin{mathpar}
 \inferrule*[right=T-Var]
@@ -729,6 +782,7 @@ only extend on nuances.
 \inferrule*[right=T-SuperAssign]
     {\Gamma \vdash e : \tau \\ x:\tau \in \Gamma_i \text{ for some } i < |\Gamma|}
     {\Gamma \vdash x \ll\gets e : \tau}
+
 \end{mathpar}
 
 

@@ -210,86 +210,45 @@ Closure creation (10k) & 154 & 59 & 2.61$\times$ \\
 \end{itemize}
 
 \section{Discussion}
+The performance boost, compared to standard R environment and WebR, should be taken with a grain of salt.
+First of all, they deal with more complexity. NA/NULL types for example. It'd lead to wrapping the data with
+structured objects like tagged union and each operation will need to work with structs than primitive types.
+This leads to performance tradeoffs in runtime. Although, we can use more syntax sugar,
+annotating that some types can allow NA/NULL with symbols like \texttt{int?, int!}, so that we can
+use primitive types instead of struct types in WASM. This will indeed keep our performance more or so the same.
 
-\subsection{Achievements}
+Moreover, the standard R interpreter deals with OOP systems, NSE, lazy evaluation and more. Implementing these 
+would most likely, lower our performance a bit. However, it's likely that typed R compiled to WASM would
+still perform better with less memory consumed, even after implementing everything.
 
-\textbf{Type System:}
-\begin{itemize}
-    \item Sound static type system with polymorphic vectors
-    \item First-class functions with structural typing
-    \item Support for R's superassignment in a statically typed setting
-\end{itemize}
+\subsection{Results}
 
-\textbf{Compiler:}
-\begin{itemize}
-    \item Clean multi-stage architecture with IR passes
-    \item Novel use of WASM GC subtyping for closures
-    \item Efficient reference cell strategy for mutable captures
-\end{itemize}
+We found that compiling to typed R to WASM is not only possible, but can achieve great performance boost.
+Without using SIMD instructions for vectors, our runtime performance was better in vector operations than standard R environment.
+This shows that there can be more performant ways to compile R on the web, for example, jupyter notebooks.
 
-\textbf{Language Features:}
-\begin{itemize}
-    \item R-compatible syntax with type annotations
-    \item Named arguments and default values
-    \item Lexical scoping matching R semantics
-\end{itemize}
+Moreover, we found out that WASM GC implementation, greatly helps programmers for their future efforts of
+compiling a high-level language to WASM.
+(to be added more)
 
 \subsection{Limitations}
 
-\textbf{Language Coverage:}
-\begin{itemize}
-    \item No support for R's non-standard evaluation (NSE)
-    \item Missing advanced features: environments, formulas, S3/S4 objects
-    \item Limited built-in function library compared to R
-    \item No interoperability with R packages
-\end{itemize}
-
-\textbf{Type System:}
-\begin{itemize}
-    \item Parametric polymorphism limited to vectors (no generic functions)
-    \item No type inference for function parameters (must be annotated)
-    \item Subtyping only for numeric promotion
-\end{itemize}
-
-\textbf{Performance:}
-\begin{itemize}
-    \item WASM GC still maturing; some overhead compared to manual memory management
-    \item Vector operations not yet SIMD-optimized
-    \item No lazy evaluation (R uses promises extensively)
-\end{itemize}
-
-\textbf{Tooling:}
-\begin{itemize}
-    \item No REPL or interactive mode
-    \item Limited error messages compared to mature compilers
-    \item No IDE integration or language server
-\end{itemize}
+However, as research states, coming up with type system for R is of great difficulty\cite{R_towards_type_system}.
+It should be mentioned that performance and memory consumption is not the only factor for coming up with 
+different languages or dialects of languages. Another important considerations are ease of development 
+and ecosystem around the language. Adding annotation to R, could increase performance on the web environment,
+and increase trust in programs\cite{R_towards_type_system}, but it could also take away the ease of development.
+(to be detailed further)
 
 \subsection{Future Work}
 
-\textbf{Short-term:}
-\begin{enumerate}
-    \item \textbf{Expand type system}: Add structs/records, union types, type aliases
-    \item \textbf{More built-ins}: Statistical functions (mean, sd, cor), matrix operations
-    \item \textbf{Optimization passes}: Constant folding, dead code elimination, inlining
-    \item \textbf{Better errors}: Source location tracking, type error explanations
-\end{enumerate}
+This thesis establishes a foundation for compiling typed R to WebAssembly, but several promising directions remain for future development.
 
-\textbf{Medium-term:}
-\begin{enumerate}
-    \item \textbf{SIMD vectors}: Use WASM SIMD proposal for vectorized arithmetic
-    \item \textbf{Interop}: FFI to JavaScript or WASI for I/O and libraries
-    \item \textbf{Polymorphism}: Generic functions with type parameters
-    \item \textbf{Pattern matching}: Destructuring for vectors and structured data
-\end{enumerate}
+In the short term, the type system could be expanded to support more sophisticated data structures including structs or records for organizing related data, union types for representing alternatives, and type aliases to improve code readability. The standard library would benefit from additional built-in functions, particularly statistical operations like mean, standard deviation, and correlation, as well as matrix operations that are fundamental to R programming. The compiler pipeline could be enhanced with standard optimization passes such as constant folding, dead code elimination, and function inlining to improve generated code quality. Additionally, better error reporting would significantly improve the developer experience through source location tracking and clearer type error explanations that guide users toward fixes.
 
-\textbf{Long-term:}
-\begin{enumerate}
-    \item \textbf{REPL}: Interactive mode with incremental compilation
-    \item \textbf{Package system}: Module system and dependency management
-    \item \textbf{R compatibility layer}: Emulate R built-ins and semantics more closely
-    \item \textbf{Native backend}: LLVM or Cranelift for native code generation
-\end{enumerate}
+Medium-term improvements could leverage WebAssembly's evolving capabilities and add more advanced language features. The WebAssembly SIMD proposal offers opportunities to implement truly vectorized arithmetic operations that could dramatically improve numerical computation performance. Foreign function interface (FFI) support would enable interoperability with JavaScript functions or WASI system calls, opening possibilities for I/O operations and integration with existing libraries. Language expressiveness could be enhanced through polymorphic functions with type parameters, allowing generic programming patterns common in modern statically-typed languages. Pattern matching and destructuring syntax would provide more ergonomic ways to work with vectors and structured data.
+
+Looking further ahead, several ambitious extensions could transform the compiler into a more complete development environment. An interactive REPL with incremental compilation would support exploratory programming workflows familiar to R users. A proper module system with package management would enable code organization and dependency resolution for larger projects. Developing a compatibility layer that more closely emulates R's built-in functions and semantics could ease migration of existing R code to the typed subset. Finally, adding alternative compilation backends targeting LLVM or Cranelift would enable native code generation alongside WebAssembly, potentially offering even better performance for compute-intensive applications while maintaining the portability benefits of the WebAssembly target.
 
 \subsection{Related Work}
 

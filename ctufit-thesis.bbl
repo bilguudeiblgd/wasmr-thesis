@@ -81,6 +81,135 @@
       \verb https://webr.rstudio.com
       \endverb
     \endentry
+    \entry{typr2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=21db9c6b7f9cc541b0d55769c3f00d41}{%
+           family={{WeData}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{fullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{fullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{bibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorbibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authornamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorfullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \strng{authorfullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://we-data-ch.github.io/typr.github.io/}}
+      \field{note}{Accessed: 2025-12-30}
+      \field{title}{{TypR}: {R}'s Types for Data Sciences}
+      \field{year}{2025}
+    \endentry
+    \entry{R_towards_type_system}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=95ea0d405175d7354b250d82e041ff97}{%
+           family={Turcotte},
+           familyi={T\bibinitperiod},
+           given={Alexi},
+           giveni={A\bibinitperiod}}}%
+        {{hash=02d6346b81238d26cc771c69d33f7a1c}{%
+           family={Vitek},
+           familyi={V\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {London, United Kingdom}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{fullhash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{fullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{bibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorbibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authornamehash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorfullhash}{9f64a80954f8170a3a8afaa657e9268a}
+      \strng{authorfullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{R is a fascinating language: It is dynamically typed, vectorized, both lazy and side-effecting, and it fosters an interactive style of programming. This unique combination of features makes it easy to use, but prone to errors and strange behaviour. R is the tool of choice for many data analysts, and our aim is to empower them with a language that is not simply easy to use, but easy to use well, so as to increase their confidence in the data analyses they undertake. To that end, we are developing a type system for R that is simple enough to be attractive to programmers while being expressive enough to capture existing programming paradigms. In this paper, we outline past, present, and future work as we build up to a type system for R.}
+      \field{booktitle}{Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems}
+      \field{isbn}{9781450368629}
+      \field{series}{ICOOOLPS '19}
+      \field{title}{Towards a Type System for R}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1145/3340670.3342426
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3340670.3342426
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3340670.3342426
+      \endverb
+    \endentry
+    \entry{empirical_r_types}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=95ea0d405175d7354b250d82e041ff97}{%
+           family={Turcotte},
+           familyi={T\bibinitperiod},
+           given={Alexi},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8ca40062d4cfe5161920d8b929819b62}{%
+           family={Goel},
+           familyi={G\bibinitperiod},
+           given={Aviral},
+           giveni={A\bibinitperiod}}}%
+        {{hash=86f804d61da237c978abe0c87b343424}{%
+           family={Křikava},
+           familyi={K\bibinitperiod},
+           given={Filip},
+           giveni={F\bibinitperiod}}}%
+        {{hash=02d6346b81238d26cc771c69d33f7a1c}{%
+           family={Vitek},
+           familyi={V\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{fullhash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{fullhashraw}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{bibnamehash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{authorbibnamehash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{authornamehash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{authorfullhash}{507513246dfbdbc99858bc7ec790d7a4}
+      \strng{authorfullhashraw}{507513246dfbdbc99858bc7ec790d7a4}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The R programming language is widely used in a variety of domains. It was designed to favor an interactive style of programming with minimal syntactic and conceptual overhead. This design is well suited to data analysis, but a bad fit for tools such as compilers or program analyzers. In particular, R has no type annotations, and all operations are dynamically checked at run-time. The starting point for our work are the two questions: what expressive power is needed to accurately type R code? and which type system is the R community willing to adopt? Both questions are difficult to answer without actually experimenting with a type system. The goal of this paper is to provide data that can feed into that design process. To this end, we perform a large corpus analysis to gain insights in the degree of polymorphism exhibited by idiomatic R code and explore potential benefits that the R community could accrue from a simple type system. As a starting point, we infer type signatures for 25,215 functions from 412 packages among the most widely used open source R libraries. We then conduct an evaluation on 8,694 clients of these packages, as well as on end-user code from the Kaggle data science competition website.}
+      \field{journaltitle}{Proc. ACM Program. Lang.}
+      \field{month}{11}
+      \field{number}{OOPSLA}
+      \field{title}{Designing types for R, empirically}
+      \field{volume}{4}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.1145/3428249
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3428249
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3428249
+      \endverb
+      \keyw{R,dynamic languages,type declarations}
+    \endentry
     \entry{mdn_webassembly}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=eace3534eb86e51f9a1db37427425ce9}{%
@@ -95,8 +224,8 @@
       \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-12-28}
@@ -123,8 +252,8 @@
       \strng{authornamehash}{7ba078f119c9102e94e9bc9054acc26d}
       \strng{authorfullhash}{7ba078f119c9102e94e9bc9054acc26d}
       \strng{authorfullhashraw}{7ba078f119c9102e94e9bc9054acc26d}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-12-28}
@@ -151,8 +280,8 @@
       \strng{authornamehash}{1eb00e82d93cd350720258e53c058802}
       \strng{authorfullhash}{1eb00e82d93cd350720258e53c058802}
       \strng{authorfullhashraw}{1eb00e82d93cd350720258e53c058802}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-12-28}
@@ -179,8 +308,8 @@
       \strng{authornamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
       \strng{authorfullhash}{b7caa0d79fd51ecd5be406efe7b81e1a}
       \strng{authorfullhashraw}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-12-28}
@@ -211,8 +340,8 @@
       \strng{authornamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhashraw}{e41d0523c45d34fc1a4630ae8dfa1b45}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{day}{5}
@@ -379,76 +508,6 @@
       \field{pages}{509\bibrangedash 521}
       \range{pages}{13}
     \endentry
-    \entry{R_towards_type_system}{inproceedings}{}{}
-      \name{author}{2}{}{%
-        {{hash=95ea0d405175d7354b250d82e041ff97}{%
-           family={Turcotte},
-           familyi={T\bibinitperiod},
-           given={Alexi},
-           giveni={A\bibinitperiod}}}%
-        {{hash=02d6346b81238d26cc771c69d33f7a1c}{%
-           family={Vitek},
-           familyi={V\bibinitperiod},
-           given={Jan},
-           giveni={J\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {London, United Kingdom}%
-      }
-      \list{publisher}{1}{%
-        {Association for Computing Machinery}%
-      }
-      \strng{namehash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{fullhash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{fullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{bibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{authorbibnamehash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{authornamehash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{authorfullhash}{9f64a80954f8170a3a8afaa657e9268a}
-      \strng{authorfullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{R is a fascinating language: It is dynamically typed, vectorized, both lazy and side-effecting, and it fosters an interactive style of programming. This unique combination of features makes it easy to use, but prone to errors and strange behaviour. R is the tool of choice for many data analysts, and our aim is to empower them with a language that is not simply easy to use, but easy to use well, so as to increase their confidence in the data analyses they undertake. To that end, we are developing a type system for R that is simple enough to be attractive to programmers while being expressive enough to capture existing programming paradigms. In this paper, we outline past, present, and future work as we build up to a type system for R.}
-      \field{booktitle}{Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems}
-      \field{isbn}{9781450368629}
-      \field{series}{ICOOOLPS '19}
-      \field{title}{Towards a Type System for R}
-      \field{year}{2019}
-      \verb{doi}
-      \verb 10.1145/3340670.3342426
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/3340670.3342426
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/3340670.3342426
-      \endverb
-    \endentry
-    \entry{typr2025}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=21db9c6b7f9cc541b0d55769c3f00d41}{%
-           family={{WeData}},
-           familyi={W\bibinitperiod}}}%
-      }
-      \strng{namehash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{fullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{fullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{bibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{authorbibnamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{authornamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{authorfullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \strng{authorfullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://we-data-ch.github.io/typr.github.io/}}
-      \field{note}{Accessed: 2025-12-30}
-      \field{title}{{TypR}: {R}'s Types for Data Sciences}
-      \field{year}{2025}
-    \endentry
     \entry{types_and_pl}{book}{}{}
       \name{author}{1}{}{%
         {{hash=7365a4e827c2dfa2c5af0c0ec4c18c27}{%
@@ -468,8 +527,8 @@
       \strng{authornamehash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
       \strng{authorfullhash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
       \strng{authorfullhashraw}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Types and Programming Languages}
