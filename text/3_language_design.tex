@@ -400,6 +400,34 @@ f <- function(x: int): int {
 }
 \end{lstlisting}
 
+\subparagraph{Scoping and Closures}
+\label{sec:scoping}
+
+The language uses lexical scoping where:
+\begin{itemize}
+    \item Only functions create new scopes (blocks, if-statements, and loops do not)
+    \item Functions can capture variables from enclosing function scopes
+    \item Captured variables are implemented using closure environments in WebAssembly
+    \item Super-assignment (\texttt{<<-}) searches enclosing function scopes to modify variables
+\end{itemize}
+
+Example demonstrating closure:
+\begin{lstlisting}[language=R, caption={Closure example}]
+make_counter <- function(start: int): () -> int {
+    count <- start
+    function(): int {
+        count <<- count + 1
+        return(count)
+    }
+}
+
+counter <- make_counter(0)
+print(counter())  # Prints 1
+print(counter())  # Prints 2
+\end{lstlisting}
+
+
+
 \subsection{Abstract Grammar}
 
 \begin{align*}
@@ -696,7 +724,7 @@ This is read as: ``under typing context $\Gamma$, expression $e$ has type $\tau$
 
 Our type system follows standard approaches from programming language theory~\cite{types_and_pl}, extended with subtyping for numeric promotion and vector operations.
 
-\subsubsection{Typing Contexts}
+\paragraph{Typing Contexts}
 
 A \textbf{typing context} (or type environment) is a finite mapping from variable names to types:
 \[
@@ -705,7 +733,7 @@ A \textbf{typing context} (or type environment) is a finite mapping from variabl
 
 The empty context $\emptyset$ contains no bindings. The notation $\Gamma, x:\tau$ extends context $\Gamma$ with a new binding of variable $x$ to type $\tau$. We write $x:\tau \in \Gamma$ to indicate that $\Gamma$ contains the binding $x:\tau$.
 
-\subsubsection{Subtyping}
+\paragraph{Subtyping}
 
 Subtyping defines when one type can be safely used where another is expected. We write $\tau_1 <: \tau_2$ to mean ``$\tau_1$ is a subtype of $\tau_2$'' (equivalently, $\tau_1$ can be used wherever $\tau_2$ is expected).
 
@@ -765,7 +793,7 @@ The \textbf{subsumption rule} connects subtyping to the type system, allowing im
 
 \textbf{Explanation:} If expression $e$ has type $\tau_1$ and $\tau_1$ is a subtype of $\tau_2$, then $e$ can also be given type $\tau_2$. This rule enables all implicit conversions in the language. For example, if \texttt{x} has type \texttt{int}, we can use it where \texttt{double} is expected.
 
-\subsubsection{Literals and Variables}
+\paragraph{Literals and Variables}
 
 These rules assign types to the basic building blocks of expressions.
 
@@ -801,7 +829,7 @@ These rules assign types to the basic building blocks of expressions.
     \item \textsc{T-Var}: A variable $x$ has whatever type the context $\Gamma$ says it has. This rule performs a lookup in the typing environment.
 \end{itemize}
 
-\subsubsection{Arithmetic Operators}
+\paragraph{Arithmetic Operators}
 
 Arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%}) follow the same typing pattern. We show rules for addition; other operators are analogous.
 
@@ -819,7 +847,7 @@ Arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%
 
 \textbf{Explanation:} When both operands have the same numeric type, the result has that type. Note that mixed-type arithmetic like \texttt{3 + 2.5} is handled by first applying subsumption (\textsc{T-Sub}) to promote \texttt{3} from \texttt{int} to \texttt{double}, then applying \textsc{T-AddDouble}.
 
-\subsubsection{Comparison Operators}
+\paragraph{Comparison Operators}
 
 Comparison operators (\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}) compare values and produce logical results:
 
@@ -833,7 +861,7 @@ where $\odot \in \{\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}
 
 \textbf{Explanation:} Comparisons require both operands to have the same type (after potential promotion via subsumption) and always produce a \texttt{logical} result. For example, \texttt{3 < 5} produces \texttt{TRUE}.
 
-\subsubsection{Logical Operators}
+\paragraph{Logical Operators}
 
 Logical operators work on boolean values:
 
@@ -857,8 +885,6 @@ Logical operators work on boolean values:
 
 \textbf{Explanation:} Logical AND (\texttt{\&}), OR (\texttt{|}), and NOT (\texttt{!}) require logical operands and produce logical results.
 
-\subsubsection{Vector Operations}
-
 \paragraph{Vector Construction}
 The \texttt{c()} function creates vectors from elements:
 
@@ -868,29 +894,36 @@ The \texttt{c()} function creates vectors from elements:
     {\Gamma \vdash \texttt{c}(e_1, e_2, \ldots, e_n) : \texttt{vector}\langle\tau\rangle}
 \end{mathpar}
 
-\textbf{Explanation:} All elements must have the same type $\tau$ (after promotion). The result is a vector parameterized by that element type. For example, \texttt{c(1, 2, 3)} has type \texttt{vector<int>}.
+\textbf{Explanation:} All elements must have the same type $\tau$ (after promotion). The result is a vector parameterized by that element type. For example, \texttt{c(1, 2, 3)} has type \texttt{vector<double>}.
 
 \paragraph{Range Construction}
-The colon operator creates integer sequences:
+The colon operator creates sequences:
 
 \begin{mathpar}
 \inferrule*[right=T-Range]
-    {\Gamma \vdash e_1 : \texttt{int} \\ \Gamma \vdash e_2 : \texttt{int}}
-    {\Gamma \vdash e_1\texttt{:}e_2 : \texttt{vector}\langle\texttt{int}\rangle}
+    {\Gamma \vdash e_1 : \tau_1 \\ \Gamma \vdash e_2 : \tau_2 \\ \tau_1, \tau_2 \in \{\texttt{int}, \texttt{double}\}}
+    {\Gamma \vdash e_1\texttt{:}e_2 : \texttt{vector}\langle\tau_1 \sqcup \tau_2\rangle}
 \end{mathpar}
 
-\textbf{Explanation:} The range \texttt{1:5} creates the vector \texttt{c(1, 2, 3, 4, 5)}. Both bounds must be integers.
+where $\tau_1 \sqcup \tau_2$ denotes the \textbf{least upper bound} (join) of the two types under the subtyping relation:
+\[
+\texttt{int} \sqcup \texttt{int} = \texttt{int} \qquad
+\texttt{double} \sqcup \texttt{double} = \texttt{double} \qquad
+\texttt{int} \sqcup \texttt{double} = \texttt{double}
+\]
+
+\textbf{Explanation:} The range \texttt{1:5} creates the sequence from 1 to 5. The element type is the wider of the two bound types: \texttt{1L:5L} produces \texttt{vector<int>}, while \texttt{1:5} or \texttt{1L:5.0} produces \texttt{vector<double>}.
 
 \paragraph{Vector Indexing}
 Elements are accessed using bracket notation:
 
 \begin{mathpar}
 \inferrule*[right=T-Index]
-    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \texttt{int}}
+    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau\rangle \\ \Gamma \vdash e_2 : \tau' \\ \tau' \in \{\texttt{int}, \texttt{double}\}}
     {\Gamma \vdash e_1[e_2] : \tau}
 \end{mathpar}
 
-\textbf{Explanation:} Indexing a vector of type \texttt{vector<$\tau$>} with an integer index produces a value of type $\tau$. Note that our language uses 1-based indexing, following R convention.
+\textbf{Explanation:} Indexing a vector of type \texttt{vector<$\tau$>} produces a value of type $\tau$. The index can be an integer or double; doubles are truncated to integers at runtime. Following R convention, indexing is 1-based.
 
 \paragraph{Vector Arithmetic}
 Binary operators extend component-wise to vectors:
@@ -940,8 +973,6 @@ Function calls check argument types against parameter types:
 
 \textbf{Explanation:} To call a function, the callee $e_0$ must have a function type, and each argument must match the corresponding parameter type (or be promotable via subsumption). The result has the function's return type.
 
-\subsubsection{Control Flow}
-
 \paragraph{Conditional Expressions}
 If-else expressions require matching branch types:
 
@@ -952,30 +983,6 @@ If-else expressions require matching branch types:
 \end{mathpar}
 
 \textbf{Explanation:} The condition must be logical. Both branches must have the same type $\tau$, which becomes the type of the entire expression. This enables using if-else as an expression: \texttt{x <- if (cond) \{ 1 \} else \{ 2 \}}.
-
-\paragraph{While Loops}
-While loops do not produce meaningful values:
-
-\begin{mathpar}
-\inferrule*[right=T-While]
-    {\Gamma \vdash e_1 : \texttt{logical} \\ \Gamma \vdash e_2 : \tau}
-    {\Gamma \vdash \texttt{while}\ (e_1)\ \{e_2\} : \texttt{void}}
-\end{mathpar}
-
-\textbf{Explanation:} The condition must be logical. The body is checked but its type is discarded; the loop itself has type \texttt{void}.
-
-\paragraph{For Loops}
-For loops iterate over vectors:
-
-\begin{mathpar}
-\inferrule*[right=T-For]
-    {\Gamma \vdash e_1 : \texttt{vector}\langle\tau_1\rangle \\ \Gamma, x:\tau_1 \vdash e_2 : \tau_2}
-    {\Gamma \vdash \texttt{for}\ (x\ \texttt{in}\ e_1)\ \{e_2\} : \texttt{void}}
-\end{mathpar}
-
-\textbf{Explanation:} The iterable must be a vector. The loop variable $x$ is bound to the element type within the body. Like while loops, for loops have type \texttt{void}.
-
-\subsubsection{Statements}
 
 \paragraph{Assignment}
 Assignment binds a value to a variable, extending the context:
@@ -1022,40 +1029,12 @@ A block is a sequence of statements with an optional tail expression:
 
 \textbf{Explanation:} A return statement has the type of its argument. The type checker verifies that this matches the declared return type of the enclosing function.
 
-\subsection{Scoping and Closures}
-\label{sec:scoping}
-
-The language uses lexical scoping where:
-\begin{itemize}
-    \item Only functions create new scopes (blocks, if-statements, and loops do not)
-    \item Functions can capture variables from enclosing function scopes
-    \item Captured variables are implemented using closure environments in WebAssembly
-    \item Super-assignment (\texttt{<<-}) searches enclosing function scopes to modify variables
-\end{itemize}
-
-Example demonstrating closure:
-\begin{lstlisting}[language=R, caption={Closure example}]
-make_counter <- function(start: int): () -> int {
-    count <- start
-    function(): int {
-        count <<- count + 1
-        return(count)
-    }
-}
-
-counter <- make_counter(0)
-print(counter())  # Prints 1
-print(counter())  # Prints 2
-\end{lstlisting}
-
-
-
 
 \section{Evaluation Model}
 
 This section describes the key runtime behaviors that affect how programs execute and how the compiler generates code.
 
-\subsection{Evaluation Order and Type Promotion}
+\paragraph{Evaluation Order and Type Promotion}
 
 Expressions are evaluated left-to-right. When operands have different numeric types, the narrower type is promoted to the wider type before the operation:
 \begin{itemize}
@@ -1065,12 +1044,16 @@ Expressions are evaluated left-to-right. When operands have different numeric ty
 
 For example, \texttt{TRUE + 2.5} evaluates as \texttt{1.0 + 2.5 = 3.5} (logical $\to$ int $\to$ double).
 
-\subsection{Vector Operations}
+\paragraph{Vector Operations}
 
 Vector operations apply element-wise. When vectors have different element types, promotion occurs element-by-element:
 \[
 \texttt{c}(v_1, \ldots, v_n) \oplus \texttt{c}(w_1, \ldots, w_n) = \texttt{c}(v_1 \oplus w_1, \ldots, v_n \oplus w_n)
 \]
+When the length of the vector differs, we use recycling like in R. Essentially the vector of lower length
+is permutated until it has same or more length as the vector with higher length and operation is executed. For R, when the length
+of one vector is not divisible by the other, meaning the permutated vector will have additional elements, that won't be included in the operation,
+standard R environment shows a warning message. However, we don't have warning message in our compiler yet, it won't be provided.
 
 \paragraph{Scalar Broadcasting}
 When a scalar and vector are combined, the scalar is implicitly broadcast (replicated) to match the vector length:
@@ -1079,7 +1062,7 @@ s \oplus \texttt{c}(v_1, \ldots, v_n) = \texttt{c}(s \oplus v_1, \ldots, s \oplu
 \]
 For example, \texttt{2 * c(1, 2, 3)} produces \texttt{c(2, 4, 6)}.
 
-\subsection{Function Evaluation and Closures}
+\paragraph{Function Evaluation and Closures}
 
 Functions in the typed R-like language are \textbf{closures}: they capture the environment in which they are defined. When a function is called:
 \begin{enumerate}
@@ -1089,7 +1072,7 @@ Functions in the typed R-like language are \textbf{closures}: they capture the e
     \item The function body is evaluated in this new environment
 \end{enumerate}
 
-This closure semantics enables patterns like factory functions and stateful callbacks, as shown in the counter example in Section~\ref{sec:scoping}.
+It'll be discussed more in details in compiler and runtime environment in Chapter~\ref{chapter:compiler}.
 
 \subsection{Built-in Functions}
 

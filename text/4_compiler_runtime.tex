@@ -1,5 +1,7 @@
 \chapter{Compiler and Runtime}
-All implementation related to compiling and its scripts are written in Rust language.
+\label{chapter:compiler}
+This chapter describes implementation of the compilers, highlighting important challenges and decisions made through
+compilation of Typed R to WASM. All implementation related to compiling and its scripts are written in Rust language.
 Rust is chosen for its modern features, memory safety and performance. In coming sections,
 we'll describe the architecture, and design decisions about the implementation of the compiler.
 \section{Compiler Architecture}
@@ -66,7 +68,16 @@ Part that's concerned with only generating code for target architecture.
 \end{figure}
 
 \section{WebAssembly Code Generation}
-This section describes the translation of language constructs to WebAssembly instructions.
+There's not many examples or implementation of a language directly compiling to WASM and it's for a good reason.
+Since the dawn of the programming, we've always had middle-layer or common-ground between compilers and bytecodes. Without it,
+we have ourselves N x M explosion. Imagine every programming language have to implement and finetune support for 
+every architecture there is, from x86 to ARM, to WASM. To avoid this problem we have middle ground representations 
+like bytecode, which is an intermediate, platform-independent code that can be easily compiled to different architectures. Or more commonly,
+LLVM\cite{llvm}, which a lot of languages use to compile to, helps programmers great deal. Just compile to LLVM IR generation,
+and use LLVM to generate any type of low-level code. This is how some static languages run in WASM. Also, JVM also built support for
+WASM so that JVM-based languages all can compile to WASM. Therefore, even though a lot of languages compile to WASM, they usually do it through LLVM or JVM. 
+Even so, the aim of thesis being, compiling our typed subset of R directly to WASM, this section will focus on mappings and making typed R work
+in WASM. 
 
 \subsection{Type Mapping}
 
