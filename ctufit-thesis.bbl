@@ -584,6 +584,51 @@
       \field{title}{Types and Programming Languages}
       \field{year}{2002}
     \endentry
+    \entry{recursive-descent-parser}{inbook}{}{}
+      \name{author}{1}{}{%
+        {{hash=c36d2b7d10c76534f7e9ccd63ea907c4}{%
+           family={Snepscheut},
+           familyi={S\bibinitperiod},
+           given={Jan\bibnamedelimb L.\bibnamedelimi A.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim A\bibinitperiod},
+           prefix={van\bibnamedelima de},
+           prefixi={v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {Springer New York}%
+      }
+      \strng{namehash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{fullhash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{fullhashraw}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{bibnamehash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{authorbibnamehash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{authornamehash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{authorfullhash}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \strng{authorfullhashraw}{c36d2b7d10c76534f7e9ccd63ea907c4}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We have encountered grammars a number of times. We started our discussions of what a computation is by looking at grammars. We defined languages by devising grammars for defining them. We translated right-linear grammars into transition graphs and then into VLSI circuits. In this chapter, we study programs for parsing input strings, that is, programs that determine whether a given input string can be derived from a given grammar. In the case of right-linear grammars, we had a severe restriction on the grammar: every rule has a left-hand side of exactly one nonterminal and a right-hand side of a sequence of zero or more terminals followed by at most one nonterminal. This restriction corresponds to finite machines. In this chapter, the restriction is less severe. The left-hand side is still restricted to be one nonterminal but the right-hand side is unrestricted. This class of grammars is called the class of context-free grammars. Later on, we have to impose further restrictions to admit efficient parsing algorithms; in fact, we discuss only one parsing strategy. This strategy is called top-down parsing. We give an implementation in the form of a set of recursive procedures, and then the parsing method is sometimes referred to as parsing by recursive descent. This method is limited to grammars that satisfy the LL(1) condition, which is discussed later. We begin by discussing the parsing method in the context of the domino game, and we have a look at its implementation in the form of a set of recursive procedures. We explore the theoretical limitations, and we discuss ways of improving the practical feasibility of this method.}
+      \field{booktitle}{What Computing Is All About}
+      \field{isbn}{978-1-4612-2710-6}
+      \field{title}{Recursive Descent Parsing}
+      \field{year}{1993}
+      \field{pages}{101\bibrangedash 120}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1007/978-1-4612-2710-6_6
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-1-4612-2710-6_6
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-1-4612-2710-6_6
+      \endverb
+    \endentry
     \entry{llvm}{inproceedings}{}{}
       \name{author}{2}{}{%
         {{hash=082d304bf1444853e07be11590d172a2}{%

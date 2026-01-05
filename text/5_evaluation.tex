@@ -104,42 +104,6 @@ This validation approach:
     \item Provides confidence in compiler correctness through differential testing
 \end{itemize}
 
-
-\subsection{Type Safety}
-
-We provide an informal argument for type soundness:
-
-\begin{claim}[Progress]
-If $\vdash e : \tau$, then either $e$ is a value or $e \to e'$ for some $e'$.
-\end{claim}
-
-\textbf{Sketch:} By induction on typing derivations. Each well-typed expression is either:
-\begin{itemize}
-    \item A value (literals, closures, vectors)
-    \item Reducible by one of the reduction rules
-    \item The type system ensures all required subexpressions are well-typed
-\end{itemize}
-
-\begin{claim}[Preservation]
-If $\Gamma \vdash e : \tau$ and $e \to e'$, then $\Gamma \vdash e' : \tau$.
-\end{claim}
-
-\textbf{Sketch:} By induction on reduction rules. Each reduction preserves types:
-\begin{itemize}
-    \item $\beta$-reduction: Substitution lemma ensures type preservation
-    \item Arithmetic: Operations preserve numeric types per typing rules
-    \item Vector operations: Element types maintained through construction/indexing
-\end{itemize}
-
-\textbf{WASM Type Validation:}
-The generated WASM is validated by \texttt{wasmtime --validate}, confirming:
-\begin{itemize}
-    \item All type indices are valid
-    \item Stack discipline is maintained
-    \item Reference types are used correctly
-    \item Struct accesses are within bounds
-\end{itemize}
-
 \section{Performance}
 
 \subsection{Compilation Time}
@@ -250,31 +214,31 @@ Medium-term improvements could leverage WebAssembly's evolving capabilities and 
 
 Looking further ahead, several ambitious extensions could transform the compiler into a more complete development environment. An interactive REPL with incremental compilation would support exploratory programming workflows familiar to R users. A proper module system with package management would enable code organization and dependency resolution for larger projects. Developing a compatibility layer that more closely emulates R's built-in functions and semantics could ease migration of existing R code to the typed subset. Finally, adding alternative compilation backends targeting LLVM or Cranelift would enable native code generation alongside WebAssembly, potentially offering even better performance for compute-intensive applications while maintaining the portability benefits of the WebAssembly target.
 
-\subsection{Related Work}
+% \subsection{Related Work}
 
-\textbf{Type Systems for Dynamic Languages:}
-\begin{itemize}
-    \item \textbf{TypeScript} (JavaScript): Gradual typing with structural types
-    \item \textbf{Typed Racket}: Occurrence typing and gradual typing for Scheme
-    \item \textbf{Reticulated Python}: Runtime-enforced gradual typing
-    \item \textbf{Our approach}: Fully static typing with R syntax
-\end{itemize}
+% \textbf{Type Systems for Dynamic Languages:}
+% \begin{itemize}
+%     \item \textbf{TypeScript} (JavaScript): Gradual typing with structural types
+%     \item \textbf{Typed Racket}: Occurrence typing and gradual typing for Scheme
+%     \item \textbf{Reticulated Python}: Runtime-enforced gradual typing
+%     \item \textbf{Our approach}: Fully static typing with R syntax
+% \end{itemize}
 
-\textbf{R Type Systems:}
-\begin{itemize}
-    \item \textbf{typed-R}: Annotations for documentation, not enforced
-    \item \textbf{RTypeInference}: Static analysis tool, no compilation
-    \item \textbf{Ř}: Experimental typed R dialect (discontinued)
-    \item \textbf{Our contribution}: First statically typed R-like language targeting WASM
-\end{itemize}
+% \textbf{R Type Systems:}
+% \begin{itemize}
+%     \item \textbf{typed-R}: Annotations for documentation, not enforced
+%     \item \textbf{RTypeInference}: Static analysis tool, no compilation
+%     \item \textbf{Ř}: Experimental typed R dialect (discontinued)
+%     \item \textbf{Our contribution}: First statically typed R-like language targeting WASM
+% \end{itemize}
 
-\textbf{Functional Language Compilation to WASM:}
-\begin{itemize}
-    \item \textbf{AssemblyScript} (TypeScript-like): Static types, but JavaScript semantics
-    \item \textbf{Grain}: ML-like language with WASM GC
-    \item \textbf{OCaml/wasm}: OCaml backend for WASM
-    \item \textbf{Our approach}: R syntax with closures and mutable captures via reference cells
-\end{itemize}
+% \textbf{Functional Language Compilation to WASM:}
+% \begin{itemize}
+%     \item \textbf{AssemblyScript} (TypeScript-like): Static types, but JavaScript semantics
+%     \item \textbf{Grain}: ML-like language with WASM GC
+%     \item \textbf{OCaml/wasm}: OCaml backend for WASM
+%     \item \textbf{Our approach}: R syntax with closures and mutable captures via reference cells
+% \end{itemize}
 
 \chapter{Conclusion}
 

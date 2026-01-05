@@ -1,13 +1,43 @@
 \chapter{Contents of the attachment}
 % Contents of the attachment
+	\label{source-code-structure}
+	The attached media contains the complete Rty compiler implementation, test suite, and thesis sources. The directory structure is organized as follows:
 
-	\dirtree{%
-		.1 /.
-		.2 readme.txt\DTcomment{stručný popis obsahu média}.
-		.2 exe\DTcomment{adresář se spustitelnou formou implementace}.
-		.2 src.
-		.3 impl\DTcomment{zdrojové kódy implementace}.
-		.3 thesis\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
-		.2 text\DTcomment{text práce}.
-		.3 thesis.pdf\DTcomment{text práce ve formátu PDF}.
-	}
+\dirtree{%
+.1 /.
+.2 README.md\DTcomment{project overview and build instructions}.
+.2 Cargo.toml\DTcomment{Rust package manifest and dependencies}.
+.2 src\DTcomment{compiler source code ($\sim$6,000 lines)}.
+.3 lib.rs\DTcomment{library entry point and compilation orchestration}.
+.3 lexer.rs\DTcomment{lexical analysis (350 lines)}.
+.3 ast.rs\DTcomment{abstract syntax tree definitions}.
+.3 types/\DTcomment{cross-cutting type system}.
+.3 parser/\DTcomment{syntactic analysis (1,200 lines)}.
+.3 ir/\DTcomment{intermediate representation (2,000 lines)}.
+.4 passes\DTcomment{IR transformation passes}.
+.3 backend\DTcomment{WebAssembly code generation (2,500 lines)}.
+.4 mod.rs\DTcomment{WASM generator and module construction}.
+.4 context.rs\DTcomment{local context for code emission}.
+.4 emit/\DTcomment{code emission by construct}.
+.4 wasm/\DTcomment{WASM-specific utilities}.
+.3 driver/\DTcomment{compilation orchestration (500 lines)}.
+.2 runtime\_embed/\DTcomment{runtime library in R}.
+.3 numeric\_ops.R\DTcomment{numeric operations (min, max, abs)}.
+.3 utility\_ops.R\DTcomment{utility functions (seq, sum, rep)}.
+.3 vector\_ops.R\DTcomment{vector operations}.
+.3 ...
+.2 tests\DTcomment{Rust unit and integration tests ($\sim$2,500 lines)}.
+.3 ...
+.2 data\DTcomment{example R programs for testing}.
+.3 basic\DTcomment{arithmetic and basic operations}.
+.3 types\DTcomment{type inference and casting}.
+.3 ...
+.2 benchmarks\DTcomment{performance benchmarks}.
+.2 test.sh\DTcomment{end-to-end validation script}.
+.2 translate\_and\_test.sh\DTcomment{cross-validation with native R}.
+.2 measure\_compile\_time.sh\DTcomment{compilation time measurement}.
+.2 out\DTcomment{compiler output directory (generated)}.
+.3 *.wasm\DTcomment{compiled WebAssembly modules}.
+.3 *.wat\DTcomment{WebAssembly text format}.
+}
+
