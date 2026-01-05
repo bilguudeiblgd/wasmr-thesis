@@ -67,6 +67,24 @@ Part that's concerned with only generating code for target architecture.
 \label{fig:compiler-pipeline}
 \end{figure}
 
+\paragraph{Compiler source code}
+The compiler uses multi-pass architecture. The contents of source is also available at \ref{source-code-structure}
+
+\subparagraph{Stage 1: Scanning}
+The lexer (\texttt{src/lexer.rs}) tokenizes source text into a stream of tokens. It recognizes R-specific operators (\texttt{<-}, \texttt{<<-}, \texttt{:}), tags built-in type names as \texttt{Token::Type}, and supports string interpolation.
+
+\subparagraph{Stage 2: Syntactic Analysis}
+The parser (\texttt{src/parser/}) constructs an untyped Abstract Syntax Tree (AST) using a recursive descent parser\cite{recursive-descent-parser} with operator precedence. Expression parsing handles function definitions as expressions, and type annotations are parsed but not validated. The parser produces \texttt{Stmt} and \texttt{Expr} nodes defined in \texttt{src/ast.rs}.
+
+\subparagraph{Stage 3: Type Resolution and IR Construction}
+The \texttt{TypeResolver} (\texttt{src/ir/type\_resolver.rs}) performs scope analysis by building a scope stack where only functions create scopes, infers types for untyped expressions, validates type annotations and operation compatibility, and produces typed IR nodes with concrete types. The IR (\texttt{src/ir/types.rs}) consists of \texttt{IRExpr} (expressions with associated \texttt{ty: Type} field), \texttt{IRStmt} (statements with type information), and built-in call resolution to \texttt{BuiltinKind} enum.
+
+\subparagraph{Stage 4: IR Transformation Passes}
+A pass manager \newline(\texttt{src/ir/passes/manager.rs}) coordinates three transformation passes. The \textbf{Variable Collection Pass} (\texttt{variable\_collection.rs}) assigns WASM local indices to all variables, tracks parameters, user variables, and compiler-generated temporaries, and populates \texttt{FunctionMetadata} for each function. The \textbf{Captured Variables Analysis} (\texttt{captured\_vars.rs}) identifies variables captured from parent scopes, computes transitive captures through nested functions, and marks variables requiring reference cells for superassignment. The \textbf{Function Flattening Pass} (\texttt{function\_flattening.rs}) lifts nested functions to top level, replaces them with closure construction expressions, and maintains capture lists for environment building.
+
+\subparagraph{Stage 5: Code Generation}
+The backend (\texttt{src/backend/}) generates WebAssembly where \texttt{WasmGenerator} constructs WASM module sections, registers type sections for structs, arrays, and functions, emits function code with local context tracking, and initializes memory for runtime data.
+
 \section{WebAssembly Code Generation}
 There's not many examples or implementation of a language directly compiling to WASM and it's for a good reason.
 Since the dawn of the programming, we've always had middle-layer or common-ground between compilers and bytecodes. Without it,
@@ -114,6 +132,8 @@ This representation:
     \item Allows mutable arrays for in-place updates
     \item Type-specialized structs for different element types (i32, f64, anyref)
 \end{itemize}
+Moreover, vectors can be constructed through functions embedded into runtime and built-in functions
+like \texttt{c, seq, rep}. WASM GC also frees of headache of book-keeping for GC.
 
 \paragraph{Function References}
 
@@ -142,6 +162,9 @@ Literals compile to immediate value instructions:
     \item Floating-point literals: \texttt{f64.const x}
     \item Boolean literals: \texttt{i32.const 0} (false) or \texttt{i32.const 1} (true)
 \end{itemize}
+
+As discussed earlier, R uses vectors even for scalar values. However, for Typed-R, we'll
+keep scalar values for better performance.
 
 \paragraph{Variables}
 
@@ -219,6 +242,40 @@ Function calls compile differently based on callee type:
     \end{enumerate}
 \end{itemize}
 
+\paragraph{If}
+Control flows usually are in statements in programming languages. Generally, I treat if as statement
+for compilation to WASM but for compiler implementation if is an \texttt{Expr} that can return a value.
+Implementation-wise \texttt{if} is represented as follows.
+\begin{verbatim}
+    If {
+        condition: Box<Expr>,
+        then_branch: Block,
+        else_branch: Option<Block>,
+    }
+\end{verbatim}
+As we explained before, \texttt{Block} can either return \texttt{Expr} or nothing. When \texttt{Expr} is returned
+it's important to check if the type returned from then and else branch matches. Then we can go on to return the expression.
+The check for the type is done in compile-time so there's no WASM generated check.
+
+\textbf{if} compile to WebAssembly block structures:
+\begin{lstlisting}[language=wat, caption={If-else compilation}]
+; Evaluate condition
+(condition code)
+
+; If-else structure
+(if (result ...)
+  (then
+    ; then-branch code
+    ; when expr, just leave the expr on stack
+  )
+  (else
+    ; else-branch code
+    ; when expr, just leave the expr on stack
+  )
+)
+\end{lstlisting}
+If \texttt{if} returns expression, then it's just left on the stack for the next consumer. Code-gen is quite simple for it.
+
 \subsection{Statement Compilation}
 
 \paragraph{Assignment}
@@ -238,23 +295,8 @@ Super-assignment (\texttt{<<-}) for captured variables:
     \item Update cell contents using \texttt{struct.set}
 \end{enumerate}
 
-\paragraph{Control Flow}
-
-\textbf{If statements} compile to WebAssembly block structures:
-\begin{lstlisting}[language=wat, caption={If-else compilation}]
-; Evaluate condition
-(condition code)
-
-; If-else structure
-(if (result ...)
-  (then
-    ; then-branch code
-  )
-  (else
-    ; else-branch code
-  )
-)
-\end{lstlisting}
+\paragraph{Loops}
+Loops are very straight-forward to compile.
 
 \textbf{While loops} compile to loop blocks with conditional branching:
 \begin{lstlisting}[language=wat, caption={While loop compilation}]
@@ -306,6 +348,24 @@ Super-assignment (\texttt{<<-}) for captured variables:
 For loops over vectors use similar structure but load vector elements by index.
 
 \subsection{Function Compilation}
+Function compilation is one of the most important. We are taking an environment 
+where functions are first-class citizens to static-like function environment in WASM.
+
+For example, how should one compile this?
+
+\begin{lstlisting}[language=R]
+        x <- 5L
+        f <- function(): int {
+            g <- function(): int {
+                x + 1L
+            }
+            g()
+        }
+\end{lstlisting}
+
+In WASM functions cannot be nested. So we need to propogate the environment information somehow
+through the function parameters or maybe in the \texttt{Memory}.
+(will write more.)
 
 Function compilation involves multiple steps:
 
@@ -444,57 +504,21 @@ The \texttt{\_start} function is exported as the entry point, compatible with WA
 
 \subsection{Compilation Limitations}
 
-Current implementation limitations:
-
-\begin{itemize}
-    \item \textbf{String operations}: Limited string manipulation functions
-    \item \textbf{Error handling}: No exception or error handling mechanism
-    \item \textbf{Standard library}: Minimal built-in function set
-    \item \textbf{I/O}: Only print output via WASI, no file I/O or input reading
-    \item \textbf{Numeric coercion}: Limited implicit type conversions
-    \item \textbf{Vector operations}: Subset of R's vector operations implemented
-    \item \textbf{List types}: Declared but not fully implemented
-\end{itemize}
+The current implementation represents a proof-of-concept compiler with several deliberate limitations. Most notably, the compiler lacks any exception or error handling mechanism, meaning runtime errors simply terminate execution without graceful recovery. The standard library remains minimal, providing only essential built-in functions like \texttt{print}, \texttt{length}, \texttt{sum}, and vector construction. I/O capabilities are restricted to print output via WASI; file operations and user input are not supported. Type coercion is limited compared to R's flexible type system, supporting only the basic numeric promotion hierarchy (logical $<:$ int $<:$ double). Vector operations cover common arithmetic and indexing but lack many of R's specialized functions like \texttt{apply}, \texttt{sapply}, or statistical operations. List types, while declared in the type system, remain largely unimplemented in the code generator.
 
 \subsection{Design Decisions}
 
-Key design decisions and rationale:
+Several architectural decisions shaped the compiler's implementation, each involving trade-offs between performance, simplicity, and compatibility with R semantics. The choice of static typing fundamentally enables efficient ahead-of-time compilation and early error detection, though at the cost of R's dynamic flexibility. This trade-off aligns with the thesis goal of exploring compilation rather than interpretation.
 
-\begin{itemize}
-    \item \textbf{Static typing}: Enables efficient ahead-of-time compilation and early error detection, trading off R's dynamic flexibility
+Memory management leverages the WebAssembly GC proposal, which simplifies object lifecycle management and enables efficient heap object representation without manual deallocation. This choice requires newer WebAssembly runtimes but eliminates the complexity of implementing a custom garbage collector or reference counting system. The scoping model follows R's semantics where only functions create scopes while blocks, if-statements, and loops share their enclosing function's scope. This design simplifies closure implementation by avoiding the need to track block-level environments.
 
-    \item \textbf{WebAssembly GC}: Using the GC proposal simplifies memory management and enables efficient object representation, though requiring newer WebAssembly runtimes
+For function calls, the compiler uses typed function references rather than function tables. Typed funcrefs enable type-safe indirect calls and eliminate table management overhead, though this feature requires WebAssembly reference types support. Closures are represented as structs containing a function reference and captured environment, providing cleaner semantics than stack manipulation approaches. Variables captured with super-assignment semantics use reference cells (GC structs wrapping mutable values), enabling efficient updates through multiple closure layers.
 
-    \item \textbf{Lexical-only scoping}: Only functions create scopes (not blocks), matching R semantics and simplifying closure implementation
-
-    \item \textbf{Typed function references}: Using typed funcrefs instead of function tables enables type-safe indirect calls and eliminates table management overhead
-
-    \item \textbf{Struct-based closures}: Representing closures as structs with explicit environments rather than using WebAssembly stack manipulation provides cleaner semantics
-
-    \item \textbf{Component-wise vector operations}: Inlining vector operations as loops rather than runtime calls improves performance for common operations
-
-    \item \textbf{Reference cells for mutable captures}: Using GC structs for mutably-captured variables (super-assignment) enables efficient closure semantics
-\end{itemize}
+Vector operations are inlined as loops rather than compiled to runtime function calls. While this increases code size, it improves performance for common element-wise operations by avoiding function call overhead and enabling better optimization by the WebAssembly runtime.
 
 \subsection{Performance Considerations}
 
-Optimization strategies employed:
+The compiler employs several optimization strategies to generate efficient WebAssembly code. Type specialization creates separate vector struct types for i32, f64, and anyref element types, avoiding runtime type checks and enabling more efficient memory layouts. When function call targets are known at compile time, the compiler generates direct \texttt{call} instructions rather than slower indirect \texttt{call\_ref} instructions, reducing call overhead significantly.
 
-\begin{itemize}
-    \item \textbf{Type specialization}: Separate vector struct types for i32, f64, and anyref avoid runtime type checks
+Local variable allocation reuses slots for temporary variables when their lifetimes don't overlap, minimizing the function's local declaration section and potentially improving WebAssembly JIT compilation. As discussed earlier, component-wise vector operations are inlined as loops rather than calling runtime functions, trading code size for execution speed. The compiler also caches function signature type indices to avoid recreating identical types in the WebAssembly type section, reducing module size and improving instantiation time. These optimizations focus on low-hanging fruit that provide measurable benefits without requiring complex analysis passes.
 
-    \item \textbf{Direct calls}: Known function calls use direct \texttt{call} instructions instead of slower indirect calls
-
-    \item \textbf{Local variable reuse}: Temporary variables reuse local slots when possible
-
-    \item \textbf{Inline vector operations}: Component-wise operations inlined rather than calling runtime functions
-
-    \item \textbf{Cached type indices}: Function signature type indices cached to avoid recreating identical types
-\end{itemize}
-
-
-\section{Runtime System}
-Vector representation, memory management, and built-in operations.
-
-\section{Implementation Details}
-Key implementation choices and limitations.

@@ -4,32 +4,9 @@
 
 \textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
 
-\subsection{Key Characteristics}
+R is fundamentally designed around vector operations, where everything, even scalar values, is represented as a vector. 
+This design manifests in the language's support for \textbf{vectorization}, enabling operations to apply element-wise across data structures without explicit loops, as seen in expressions like \texttt{c(1,2,3) + c(4,5,6)} $\Rightarrow$ \texttt{c(5,7,9)}. The language employs \textbf{dynamic typing} with types determined at runtime rather than through variable declarations, facilitating rapid prototyping and interactive data exploration at the cost of static verification. Combined with \textbf{lexical scoping} and closures, where functions capture their defining environment, R supports functional programming patterns that enable higher-order abstractions and metaprogramming capabilities essential for statistical computing. The language's \textbf{lazy evaluation} strategy delays argument evaluation until values are required, allowing non-standard evaluation mechanisms that support domain-specific sublanguages. To preserve referential transparency, R implements \textbf{copy-on-modify semantics}, implicitly copying objects upon modification to prevent unexpected side effects, though this approach can introduce performance overhead in memory-intensive workloads.
 
-\begin{itemize}
-  \item \textbf{Dynamic typing:} Variables have no declared types; types are determined at runtime. This enables rapid prototyping but prevents static verification and certain compiler optimizations.
-
-  \item \textbf{Vectorization:} Operations apply element-wise to vectors, matrices, and arrays. For example,
-  \[
-    \texttt{c(1,2,3) + c(4,5,6)} \;\Rightarrow\; \texttt{c(5,7,9)}
-  \]
-  without the need for explicit loops.
-
-  \item \textbf{Lexical scoping:} R uses lexical (static) scoping with closures. Functions capture their defining environment, enabling functional programming patterns and higher-order abstractions.
-
-  \item \textbf{Lazy evaluation:} Function arguments are evaluated lazily (call-by-need), allowing non-standard evaluation mechanisms that support domain-specific sublanguages.
-
-  \item \textbf{Copy-on-modify semantics:} R employs implicit copying to preserve referential transparency. While this simplifies reasoning about programs, it may introduce performance overhead in memory-intensive workloads.
-\end{itemize}
-
-\subsection{Assignment Operators}
-
-R provides multiple assignment operators with distinct scoping behavior:
-
-\begin{itemize}
-  \item \texttt{\textless{}-}: Regular assignment in the current environment.
-  \item \texttt{\textless{}\textless{}-}: Superassignment, which modifies the nearest existing binding in an enclosing environment.
-\end{itemize}
 
 \subsection{Type System}
 R employs a dynamic type system with several foundational types, all of which are first-class objects. Unlike statically-typed languages, type information is associated with values at runtime rather than with variable declarations.
@@ -94,33 +71,6 @@ c(TRUE, 1L, 2.5, "text")  # returns character vector:
 # "TRUE" "1" "2.5" "text"
 \end{verbatim}
 This automatic coercion simplifies interactive use but can lead to unexpected behavior if types are not carefully managed.
-
-\subsection{Peculiarities}
-As every programming language comes with their nuances and uniqueness, R is no short of those. Below, the ones mention worthy examples
-
-
-\begin{itemize}
-    \item Vectors and lists are indexed by 1. For example,
-    \begin{verbatim}
-        v <- c(10,20,30) // initializes a vector of 10,20,30
-        v[1]             // returns 10
-        v[2]             // returns 20
-    \end{verbatim}
-
-    \item Even a scalar is represented as a vector of 1 element. 
-    \begin{verbatim}
-        x <- 5           // assign 5
-        is.vector(x)     // return TRUE
-    \end{verbatim}
-    The reason for it is to recycle the vectors easily. The language is designed for vector operations
-    \begin{verbatim}
-        x <- 5           // assign 5
-        v <- c(10,20,30) // initializes a vector of 10,20,30
-        x + v            // returns a vector of 15,25,35
-    \end{verbatim}
-    
-\end{itemize}
-
 
 \section{WebAssembly}
 WebAssembly is a low-level assembly-like language that is made to

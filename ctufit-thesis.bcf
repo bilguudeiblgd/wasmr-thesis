@@ -2415,10 +2415,12 @@
     <bcf:citekey order="20" intorder="1">R_towards_type_system</bcf:citekey>
     <bcf:citekey order="21" intorder="1">typr2025</bcf:citekey>
     <bcf:citekey order="22" intorder="1">bidirectional_typing</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">types_and_pl</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">llvm</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">R_towards_type_system</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">R_towards_type_system</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">bidirectional_typing</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">types_and_pl</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">recursive-descent-parser</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">llvm</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">R_towards_type_system</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">R_towards_type_system</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

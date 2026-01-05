@@ -403,13 +403,7 @@ f <- function(x: int): int {
 \subparagraph{Scoping and Closures}
 \label{sec:scoping}
 
-The language uses lexical scoping where:
-\begin{itemize}
-    \item Only functions create new scopes (blocks, if-statements, and loops do not)
-    \item Functions can capture variables from enclosing function scopes
-    \item Captured variables are implemented using closure environments in WebAssembly
-    \item Super-assignment (\texttt{<<-}) searches enclosing function scopes to modify variables
-\end{itemize}
+Only functions create new scopes; blocks, if-statements, and loops share their enclosing function's scope. A \textbf{closure} is a function that captures variables from its defining environment. When a function references a variable from an outer function scope, that variable remains accessible even after the outer function returns. Super-assignment (\texttt{<<-}) modifies captured variables by searching enclosing function scopes.
 
 Example demonstrating closure:
 \begin{lstlisting}[language=R, caption={Closure example}]
@@ -527,7 +521,7 @@ Vectors support component-wise arithmetic operations when both operands have com
 
 \paragraph{Function Types}
 
-Function types represent callable values with parameter and return types:
+Function types represent callable values with parameter and return types. 
 
 \begin{itemize}
     \item \texttt{int -> int}: Function taking an integer, returning an integer
@@ -535,6 +529,7 @@ Function types represent callable values with parameter and return types:
     \item \texttt{(int -> int) -> int}: Higher-order function taking a function as parameter
     \item \texttt{int, (int, int -> int) -> int}: Function taking an integer and a function
 \end{itemize}
+Given \texttt{int -> int -> int}, for example, the grammar is ambiguous. Therefore, in our syntax, we use parenthesis so that it's well-defined. 
 
 \subsection{Subtyping and Type Promotion}
 Subtyping relation between logical, int, double and vectors are shown below \ref{fig:subtyping-hierarchy}.
@@ -623,22 +618,8 @@ we don't support S3 system, or any way to do OOP in Typed R.
 \clearpage
 \subsection{Type Checking}
 
-The type checker performs bidirectional type inference\cite{bidirectional_typing}:
+The type checker performs bidirectional type inference\cite{bidirectional_typing}. \textbf{Bottom-up inference} infers expression types from literal values and operator signatures, while \textbf{top-down checking} uses function return types and variable annotations to provide expected types. \textbf{Unification} solves type constraints to determine concrete types, incorporating subtyping rules to allow implicit type promotion.
 
-\begin{itemize}
-    \item \textbf{Bottom-up inference:} Expression types are inferred from literal values and operator signatures
-    \item \textbf{Top-down checking:} Function return types and variable annotations provide expected types
-    \item \textbf{Unification:} Type constraints are solved to determine concrete types
-\end{itemize}
-
-Type annotations are required in the following contexts:
-\begin{itemize}
-    \item Function parameters
-    \item Function return types (when not inferrable from return statements)
-    \item Ambiguous variable declarations
-\end{itemize}
-
-Example: \texttt{3 + 2.5} evaluates as \texttt{3.0 + 2.5 = 5.5} after promoting \texttt{3} to \texttt{double}.
 
 \begin{figure}[htbp]
 \centering
@@ -713,6 +694,12 @@ Result: \textcolor{green!70!black}{\textbf{Success!}}
 \caption{Bidirectional type checking for variable assignment. The type annotation \texttt{double} provides the expected type (top-down), while the literal \texttt{3.5} has its type inferred as \texttt{double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}
 \label{fig:type-checking-simple}
 \end{figure}
+
+The basic algorithm works as follows: when type-checking an expression, if the type can be inferred from the expression itself (bottom-up), that inferred type is used. If an explicit type annotation is provided (top-down), the annotation is used as the expected type. When both are present, unification checks that the inferred type is compatible with (a subtype of) the annotated type. If neither inference nor annotation provides type information, type checking fails.
+
+Type annotations are required for function parameters, function return types (when not inferrable from return statements), and ambiguous variable declarations. For example, in \texttt{a: double <- 3.5}, the literal \texttt{3.5} infers as \texttt{double} (bottom-up), the annotation expects \texttt{double} (top-down), and unification confirms they match (see Figure~\ref{fig:type-checking-simple}). The expression \texttt{3 + 2.5} demonstrates type promotion: \texttt{3} infers as \texttt{int} but is promoted to \texttt{double} through subtyping to match \texttt{2.5}, evaluating as \texttt{3.0 + 2.5 = 5.5}.
+
+We do not formalize the complete type inference algorithm here, as bidirectional type inference is well-studied in programming language literature\cite{bidirectional_typing}. Our implementation follows standard techniques, extended with the subtyping hierarchy described in Section~\ref{fig:subtyping-hierarchy}.
 
 \subsection{Typing Rules}
 
