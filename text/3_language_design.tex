@@ -3,12 +3,10 @@
 In this chapter, we'll design a subset of R with types and see how types and their operations could map to WASM generation.
 \section{Design Goals}
 Some reader at this point might be wondering why subset of R and why with types, why not just compile R to WASM. 
-R is notoriously hard to compile to statically typed byte-code. A first reason is typing. 
+R is notoriously hard to compile to statically typed byte-code. The first reason is typing. 
 \newline
 
-\subsection{What makes R hard to compile}
-\paragraph{Dynamic typing}
-Let's take the following code.
+\noindent Let's take the following code.
 \begin{lstlisting}
   x <- some_function()
 \end{lstlisting}
@@ -42,30 +40,20 @@ Moreover, we will see the same issue of dynamic dispatching when R variables cha
 This bounds us to either writing generic functions or using wrappers like a tagged union, which will 
 limit our performance and waste memory.
 
-\paragraph{Changes in Runtime}
-Change in built-in functions.
-\begin{lstlisting}
-  `+` <- function(x, y) x * y  # redefine addition!
-\end{lstlisting}
-This makes the job of compiler very hard.
-
-\paragraph{Lazy Evaluation}
-R uses lazy evaluation for function arguments; they're only evaluated when actually used:
+Moreover, R uses lazy evaluation for function arguments; they're only evaluated when actually used:
 \begin{lstlisting}
   f <- function(x, y) { if (x > 0) y else 0 }
   f(5, expensive_computation())  # expensive_computation() never runs!
 \end{lstlisting}
-This requires complex bookkeeping that's hard to optimize.
-
-\paragraph{Reflection and Metaprogramming}
-R code can inspect and modify itself at runtime:
+This requires complex bookkeeping that's hard to optimize. Then, we have 
+one of the main challenging feature with any attempts of ahead-of-compilation.
+The reflection. R code can inspect and modify itself at runtime:
 \begin{lstlisting}
   x <- quote(a + b)  # capture unevaluated expression
   eval(x)            # evaluate it later
 \end{lstlisting}
 
-\paragraph{Non-Standard Evaluation (NSE)}
-Many R functions evaluate arguments in non-standard ways:
+\noindent Lastly, many R functions evaluate arguments in non-standard ways:
 \begin{lstlisting}
   subset(df, age > 30)  # 'age' isn't a variable, it's a column name!
 \end{lstlisting}
@@ -77,7 +65,8 @@ for me to define the subset of R, which I can compile and limit the scope withou
 
 \section{Typed R-like Language}
 This section presents the design of a statically-typed programming language inspired by R's syntax, which we refer to as the \textit{Typed R-like Language}. The language maintains R's characteristic features such as the left-assignment operator (\texttt{<-}), first-class functions, and vector-oriented programming, while introducing a static type system to enable ahead-of-time compilation to WebAssembly.
-Below is table \ref{tab:r-typed-r-comparison0} comparing R and typed R in terms of features and design.
+
+Table \ref{tab:r-typed-r-comparison0} compares the data types supported by R and Typed R, showing which primitive and composite types are available in each language.
 
 \begin{table}[h]
 \centering
@@ -104,6 +93,8 @@ Arrays & \checkmark & $\times$ \\
 \caption{Comparison of language features supported by R and Typed R}
 \label{tab:r-typed-r-comparison0}
 \end{table}
+
+Table \ref{tab:r-typed-r-comparison1} presents a broader comparison of language features, including type system properties, functional programming capabilities, and advanced features that distinguish Typed R from standard R.
 
 \begin{table}[h]
 \centering
@@ -139,17 +130,16 @@ Method dispatch (S3/S4/R6) & \checkmark & $\times$  \\
 \label{tab:r-typed-r-comparison1}
 \end{table}
 
-The design philosophy emphasizes a familiar R-like syntax while ensuring type safety and efficient compilation to WebAssembly. Unlike dynamically-typed R, all type information is resolved at compile time, enabling optimized code generation and early error detection.
-
+The design philosophy emphasizes a familiar R-like syntax while ensuring type safety and efficient compilation to WebAssembly. Unlike dynamically-typed R,
+all type information is resolved at compile time, enabling optimized code generation and early error detection. It's also worth to mention that
+implementation of those features take a lot of engineering time and effort. Therefore, I have only implemented
+what I see as essential and most used for demonstrating the point of this thesis.
+\clearpage
 \section{Syntax}
 
 The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. This section describes the core syntactic constructs.
 
-\paragraph{Examples of Typed R}
-
-\subparagraph{Variable Declaration and Assignment}
-
-Variables are declared using the left-assignment operator with optional type annotations:
+Let's start with examples before diving into formalities of the language. Starting with variables, they are declared using the left-assignment operator with optional type annotations:
 
 \begin{lstlisting}[language=R, caption={Variable assignment examples}]
 # Simple assignment with type inference
@@ -192,11 +182,13 @@ vec <- c(1, 2, 3)
 %   (start $main)
 % )
 % \end{lstlisting}
+After variable assignment, we have very interesting syntax for 
+super assignment. R distinguishes between assigning a variable
+in the scope or outside the scope with different syntax, unlike
+other popular dynamic languages like Python or Javascript. In Typed R,
+we'll do the same. 
 
-\subparagraph{Variable super-assignment}
-The super-assignment operator \texttt{<<-} modifies variables in enclosing function scopes:
-
-\begin{lstlisting}[language=R, caption={Super-assignment example}]
+\begin{lstlisting}[language=R, caption={Super-assignment example}, label={r_superassignment}]
 outer <- function() {
     x <- 0
     inner <- function() {
@@ -206,10 +198,8 @@ outer <- function() {
     return(x)  # Returns 10
 }
 \end{lstlisting}
-\textit{In this case we see that it's identical to its R version}
-
-
-\subparagraph{Function Definitions}
+I should also note that on Code fragment~\ref{r_superassignment} above, Typed R looks
+exactly same as R. For trivial cases like this, type inference can help a lot, which we will talk in next chapter.
 
 Functions are first-class values defined using the \texttt{function} keyword:
 
@@ -255,8 +245,6 @@ apply_twice <- function(f: int -> int, x: int): int {
   
 % )
 % \end{lstlisting}
-
-\subparagraph{Conditional Statements}
 
 The language supports \texttt{if-else} statements and expressions:
 
@@ -315,8 +303,6 @@ result <- if (x > 0) { 1 } else { -1 }
 %   (start $main)
 % )
 % \end{lstlisting}
-
-\subparagraph{Loops}
 
 Two loop constructs are provided: \texttt{for} and \texttt{while}.
 
@@ -388,7 +374,6 @@ while (i <= 5) {
 % \end{lstlisting}
 
 
-\subparagraph{Blocks and Tail Expressions}
 
 Blocks consist of zero or more statements followed by an optional tail expression. The tail expression (final expression without semicolon) determines the block's value:
 
@@ -399,9 +384,6 @@ f <- function(x: int): int {
     z  # Tail expression - returned automatically
 }
 \end{lstlisting}
-
-\subparagraph{Scoping and Closures}
-\label{sec:scoping}
 
 Only functions create new scopes; blocks, if-statements, and loops share their enclosing function's scope. A \textbf{closure} is a function that captures variables from its defining environment. When a function references a variable from an outer function scope, that variable remains accessible even after the outer function returns. Super-assignment (\texttt{<<-}) modifies captured variables by searching enclosing function scopes.
 
@@ -486,7 +468,7 @@ compiler won't work due to lack of type information.
 num    ::= & \; \texttt{int} \mid \texttt{double} \mid \texttt{bool} && \text{(numeric types)}
 \end{align*}
 
-\paragraph{Primitive Types}
+\subsection{Primitive Types}
 
 The language provides the following primitive types:
 
@@ -496,13 +478,13 @@ The language provides the following primitive types:
     \item \texttt{logical}: Boolean values (\texttt{TRUE} or \texttt{FALSE})
     \item \texttt{void}: Absence of value (used for functions with no return)
 \end{itemize}
-\paragraph{Logical}
+\subsection{Logical}
 Logicals will be represented as \texttt{int32} in WebAssembly, as it doesn't provide explicit type for logicals there.
 
 
-\paragraph{Composite Types}
+\subsection{Composite Types}
 
-\subparagraph{Vector Types}
+\subsubsection{Vector Types}
 
 Vectors are homogeneous arrays parameterized by element type:
 
@@ -519,7 +501,7 @@ v3: vector<double> <- v2 + c(1.0, 2.0, 3.0)
 
 Vectors support component-wise arithmetic operations when both operands have compatible vector types.
 
-\paragraph{Function Types}
+\subsection{Function Types}
 
 Function types represent callable values with parameter and return types. 
 
@@ -711,7 +693,7 @@ This is read as: ``under typing context $\Gamma$, expression $e$ has type $\tau$
 
 Our type system follows standard approaches from programming language theory~\cite{types_and_pl}, extended with subtyping for numeric promotion and vector operations.
 
-\paragraph{Typing Contexts}
+\subsection{Typing Contexts}
 
 A \textbf{typing context} (or type environment) is a finite mapping from variable names to types:
 \[
@@ -720,11 +702,11 @@ A \textbf{typing context} (or type environment) is a finite mapping from variabl
 
 The empty context $\emptyset$ contains no bindings. The notation $\Gamma, x:\tau$ extends context $\Gamma$ with a new binding of variable $x$ to type $\tau$. We write $x:\tau \in \Gamma$ to indicate that $\Gamma$ contains the binding $x:\tau$.
 
-\paragraph{Subtyping}
+\subsection{Subtyping}
 
 Subtyping defines when one type can be safely used where another is expected. We write $\tau_1 <: \tau_2$ to mean ``$\tau_1$ is a subtype of $\tau_2$'' (equivalently, $\tau_1$ can be used wherever $\tau_2$ is expected).
 
-\paragraph{Reflexivity and Base Cases}
+\subsubsection{Reflexivity and Base Cases}
 Every type is a subtype of itself, and we define the numeric promotion hierarchy:
 
 \begin{mathpar}
@@ -747,7 +729,7 @@ Every type is a subtype of itself, and we define the numeric promotion hierarchy
 
 \textbf{Explanation:} \textsc{S-Refl} states that any type is a subtype of itself (reflexivity). \textsc{S-LogicalInt} allows logical values (represented as 0 or 1) to be used as integers. \textsc{S-IntDouble} allows integers to be promoted to doubles, enabling mixed arithmetic like \texttt{3 + 2.5}.
 
-\paragraph{Transitivity}
+\subsubsection{Transitivity}
 Subtyping is transitive, allowing chains like $\texttt{logical} <: \texttt{int} <: \texttt{double}$:
 
 \begin{mathpar}
@@ -758,7 +740,7 @@ Subtyping is transitive, allowing chains like $\texttt{logical} <: \texttt{int} 
 
 \textbf{Explanation:} If $\tau_1$ can be used as $\tau_2$, and $\tau_2$ can be used as $\tau_3$, then $\tau_1$ can be used as $\tau_3$. This gives us $\texttt{logical} <: \texttt{double}$ automatically.
 
-\paragraph{Vector Covariance}
+\subsubsection{Vector Covariance}
 Vectors are \textbf{covariant} in their element type:
 
 \begin{mathpar}
@@ -769,7 +751,7 @@ Vectors are \textbf{covariant} in their element type:
 
 \textbf{Explanation:} If element type $\tau_1$ is a subtype of $\tau_2$, then a vector of $\tau_1$ can be used where a vector of $\tau_2$ is expected. For example, \texttt{vector<int>} $<:$ \texttt{vector<double>}, so an integer vector can be passed to a function expecting a double vector.
 
-\paragraph{Subsumption}
+\subsubsection{Subsumption}
 The \textbf{subsumption rule} connects subtyping to the type system, allowing implicit type promotion:
 
 \begin{mathpar}
@@ -780,7 +762,7 @@ The \textbf{subsumption rule} connects subtyping to the type system, allowing im
 
 \textbf{Explanation:} If expression $e$ has type $\tau_1$ and $\tau_1$ is a subtype of $\tau_2$, then $e$ can also be given type $\tau_2$. This rule enables all implicit conversions in the language. For example, if \texttt{x} has type \texttt{int}, we can use it where \texttt{double} is expected.
 
-\paragraph{Literals and Variables}
+\subsubsection{Literals and Variables}
 
 These rules assign types to the basic building blocks of expressions.
 
@@ -816,7 +798,7 @@ These rules assign types to the basic building blocks of expressions.
     \item \textsc{T-Var}: A variable $x$ has whatever type the context $\Gamma$ says it has. This rule performs a lookup in the typing environment.
 \end{itemize}
 
-\paragraph{Arithmetic Operators}
+\subsubsection{Arithmetic Operators}
 
 Arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%}) follow the same typing pattern. We show rules for addition; other operators are analogous.
 
@@ -834,7 +816,7 @@ Arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%
 
 \textbf{Explanation:} When both operands have the same numeric type, the result has that type. Note that mixed-type arithmetic like \texttt{3 + 2.5} is handled by first applying subsumption (\textsc{T-Sub}) to promote \texttt{3} from \texttt{int} to \texttt{double}, then applying \textsc{T-AddDouble}.
 
-\paragraph{Comparison Operators}
+\subsubsection{Comparison Operators}
 
 Comparison operators (\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}) compare values and produce logical results:
 
@@ -848,7 +830,7 @@ where $\odot \in \{\texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}
 
 \textbf{Explanation:} Comparisons require both operands to have the same type (after potential promotion via subsumption) and always produce a \texttt{logical} result. For example, \texttt{3 < 5} produces \texttt{TRUE}.
 
-\paragraph{Logical Operators}
+\subsubsection{Logical Operators}
 
 Logical operators work on boolean values:
 
@@ -872,7 +854,7 @@ Logical operators work on boolean values:
 
 \textbf{Explanation:} Logical AND (\texttt{\&}), OR (\texttt{|}), and NOT (\texttt{!}) require logical operands and produce logical results.
 
-\paragraph{Vector Construction}
+\subsubsection{Vector Construction}
 The \texttt{c()} function creates vectors from elements:
 
 \begin{mathpar}
@@ -883,7 +865,7 @@ The \texttt{c()} function creates vectors from elements:
 
 \textbf{Explanation:} All elements must have the same type $\tau$ (after promotion). The result is a vector parameterized by that element type. For example, \texttt{c(1, 2, 3)} has type \texttt{vector<double>}.
 
-\paragraph{Range Construction}
+\subsubsection{Range Construction}
 The colon operator creates sequences:
 
 \begin{mathpar}
@@ -901,7 +883,7 @@ where $\tau_1 \sqcup \tau_2$ denotes the \textbf{least upper bound} (join) of th
 
 \textbf{Explanation:} The range \texttt{1:5} creates the sequence from 1 to 5. The element type is the wider of the two bound types: \texttt{1L:5L} produces \texttt{vector<int>}, while \texttt{1:5} or \texttt{1L:5.0} produces \texttt{vector<double>}.
 
-\paragraph{Vector Indexing}
+\subsubsection{Vector Indexing}
 Elements are accessed using bracket notation:
 
 \begin{mathpar}
@@ -912,7 +894,7 @@ Elements are accessed using bracket notation:
 
 \textbf{Explanation:} Indexing a vector of type \texttt{vector<$\tau$>} produces a value of type $\tau$. The index can be an integer or double; doubles are truncated to integers at runtime. Following R convention, indexing is 1-based.
 
-\paragraph{Vector Arithmetic}
+\subsubsection{Vector Arithmetic}
 Binary operators extend component-wise to vectors:
 
 \begin{mathpar}
@@ -925,7 +907,7 @@ where $\oplus \in \{+, -, *, /, \texttt{\%\%}\}$.
 
 \textbf{Explanation:} When both operands are vectors of the same numeric type, the operation applies element-wise. For example, \texttt{c(1,2) + c(3,4)} produces \texttt{c(4,6)}.
 
-\paragraph{Scalar-Vector Operations}
+\subsubsection{Scalar-Vector Operations}
 Scalars broadcast to match vector length:
 
 \begin{mathpar}
@@ -936,9 +918,7 @@ Scalars broadcast to match vector length:
 
 \textbf{Explanation:} A scalar is implicitly replicated to match the vector length. For example, \texttt{2 * c(1,2,3)} produces \texttt{c(2,4,6)}. The symmetric case (vector $\oplus$ scalar) follows analogously.
 
-\subsubsection{Functions}
-
-\paragraph{Function Definition}
+\subsubsection{Function Definition}
 Functions are first-class values with explicit parameter and return types:
 
 \begin{mathpar}
@@ -949,7 +929,7 @@ Functions are first-class values with explicit parameter and return types:
 
 \textbf{Explanation:} To type-check a function, we extend the context with the parameter bindings and check that the body $e$ has the declared return type $\tau$. The function itself has a \textbf{function type} $(\tau_1, \ldots, \tau_n) \to \tau$ indicating it takes $n$ arguments of types $\tau_1, \ldots, \tau_n$ and returns type $\tau$.
 
-\paragraph{Function Application}
+\subsubsection{Function Application}
 Function calls check argument types against parameter types:
 
 \begin{mathpar}
@@ -960,7 +940,7 @@ Function calls check argument types against parameter types:
 
 \textbf{Explanation:} To call a function, the callee $e_0$ must have a function type, and each argument must match the corresponding parameter type (or be promotable via subsumption). The result has the function's return type.
 
-\paragraph{Conditional Expressions}
+\subsubsection{Conditional Expressions}
 If-else expressions require matching branch types:
 
 \begin{mathpar}
@@ -971,7 +951,7 @@ If-else expressions require matching branch types:
 
 \textbf{Explanation:} The condition must be logical. Both branches must have the same type $\tau$, which becomes the type of the entire expression. This enables using if-else as an expression: \texttt{x <- if (cond) \{ 1 \} else \{ 2 \}}.
 
-\paragraph{Assignment}
+\subsubsection{Assignment}
 Assignment binds a value to a variable, extending the context:
 
 \begin{mathpar}
@@ -982,7 +962,7 @@ Assignment binds a value to a variable, extending the context:
 
 \textbf{Explanation:} We use $\dashv \Gamma'$ to indicate the \textbf{output context} after the statement. Assignment evaluates $e$, binds the result to $x$, and produces an updated context where $x$ has type $\tau$. The assignment itself also has type $\tau$ (assignments are expressions in R).
 
-\paragraph{Super-Assignment}
+\subsubsection{Super-Assignment}
 Super-assignment modifies a variable in an enclosing scope:
 
 \begin{mathpar}
@@ -995,7 +975,7 @@ where $\tau' <: \tau$ (the assigned value must be compatible with the existing b
 
 \textbf{Explanation:} Super-assignment requires that $x$ already exists in some enclosing function scope ($\Gamma_{outer}$). The expression type must be compatible with the existing variable's type.
 
-\paragraph{Blocks}
+\subsubsection{Blocks}
 A block is a sequence of statements with an optional tail expression:
 
 \begin{mathpar}
@@ -1006,7 +986,7 @@ A block is a sequence of statements with an optional tail expression:
 
 \textbf{Explanation:} Statements are checked in sequence, with each statement potentially extending the context for subsequent statements. The block's type is determined by its final expression (the tail expression).
 
-\paragraph{Return Statement}
+\subsubsection{Return Statement}
 
 \begin{mathpar}
 \inferrule*[right=T-Return]
@@ -1021,7 +1001,7 @@ A block is a sequence of statements with an optional tail expression:
 
 This section describes the key runtime behaviors that affect how programs execute and how the compiler generates code.
 
-\paragraph{Evaluation Order and Type Promotion}
+\subsection{Evaluation Order and Type Promotion}
 
 Expressions are evaluated left-to-right. When operands have different numeric types, the narrower type is promoted to the wider type before the operation:
 \begin{itemize}
@@ -1031,7 +1011,7 @@ Expressions are evaluated left-to-right. When operands have different numeric ty
 
 For example, \texttt{TRUE + 2.5} evaluates as \texttt{1.0 + 2.5 = 3.5} (logical $\to$ int $\to$ double).
 
-\paragraph{Vector Operations}
+\subsection{Vector Operations}
 
 Vector operations apply element-wise. When vectors have different element types, promotion occurs element-by-element:
 \[
@@ -1042,14 +1022,14 @@ is permutated until it has same or more length as the vector with higher length 
 of one vector is not divisible by the other, meaning the permutated vector will have additional elements, that won't be included in the operation,
 standard R environment shows a warning message. However, we don't have warning message in our compiler yet, it won't be provided.
 
-\paragraph{Scalar Broadcasting}
+\subsection{Scalar Broadcasting}
 When a scalar and vector are combined, the scalar is implicitly broadcast (replicated) to match the vector length:
 \[
 s \oplus \texttt{c}(v_1, \ldots, v_n) = \texttt{c}(s \oplus v_1, \ldots, s \oplus v_n)
 \]
 For example, \texttt{2 * c(1, 2, 3)} produces \texttt{c(2, 4, 6)}.
 
-\paragraph{Function Evaluation and Closures}
+\subsection{Function Evaluation and Closures}
 
 Functions in the typed R-like language are \textbf{closures}: they capture the environment in which they are defined. When a function is called:
 \begin{enumerate}

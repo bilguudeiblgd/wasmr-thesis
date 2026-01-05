@@ -2,22 +2,16 @@
 The R programming language is ubiquitous for statistical computing and data analysis, offering powerful abstraction for data manipulation and visualization. Inspired by S-Language, the R language has been important part for industries working with statistics and been pioneer for introducing widespread tools currently used by the community such as DataFrame.
 
 Traditionally, R is an interpretered language that runs on most major operating systems.
-By interpretered language, we mean that the language source code is not translated to certain binary to be executed by processor 
-like compiled languages. Instead interpreter is a program, usually written in low-level languages such as C, C++  or Rust, which 
-takes the source code, does lexing and parsing to get AST and directly executes the program from its AST representation by evaluating 
-from top node\cite{crafting_interpreters}. Figure~\ref{r-being-interpretted} shows overview of R code being interpretted.
+By interpretered language, we mean that the language source code is not translated to certain binary to be executed by processor
+like compiled languages. Instead interpreter is a program, usually written in low-level languages such as C, C++  or Rust, which
+takes the source code, does lexing and parsing to get AST and directly executes the program from its AST representation by evaluating
+from top node \cite{crafting_interpreters,rbytecodebook}.
 
-\begin{figure}[h!]
-    \includegraphics[width=370px]{images/r-ast-eval-process.png}
-    \caption{Overview. \href{https://coolbutuseless.github.io/book/rbytecodebook/05-how-r-executes-code.html}{Taken from R Bytecode Book website}}
-    \label{r-being-interpretted}
-\end{figure}
-
-Nowadays, the industry has been expanding the environments where we can run our programs. 
-The interpreter program we discussed about, is compiled to bytecode, and then binary that 
+Nowadays, the industry has been expanding the environments where we can run our programs.
+The interpreter program we discussed about, is compiled to bytecode, and then binary that
 the processor can execute. However, with invention of WebAssembly, we can take this interpreter
-and compile it to so-called WASM bytecode, and run it on web. This is exactly what webR\cite{webR} did.
-This way, R code we write, can seamlessly run on the web environment on most browsers.
+and compile it to so-called WASM bytecode, and run it on web. This is exactly what webR \cite{webR} did.
+This way, R code we write, can seamlessly run on most browsers.
 
 Compiling the interpreter to WASM introduces certain challenges. 
 Since the interpreter consists of a substantial amount of code, 
@@ -25,18 +19,18 @@ every R program executed in the browser must include the entire interpreter comp
 This increases the overall memory footprint and can negatively impact performance, 
 particularly in resource-constrained environments.
 
-Thus, this thesis explores direct compilation of R-like language to WebAssembly. I create
-subset of R with type annotations, in order to make compilation possible to WASM, as it needs static typing. Then
-explore the challenges of mapping a dynamic high-level language to WASM, and finally evaluate the performance and correctness of my compiler.
+Thus, this thesis explores direct compilation of R-like language to WebAssembly. A subset of R with type annotations is created
+to make compilation possible to WASM, as it needs static typing. The thesis then
+explores the challenges of mapping a dynamic high-level language to WASM, and finally evaluates the performance and correctness of the compiler.
 
-The structure of the thesis will follow the same premise. I'll introduce the reader to the concepts
-of R, WASM and previous works. Then I'll state the rationale for creating typed R in Chapter 3, where I also introduce
-the language itself, both formally and informally with examples. We'll then go over the building of the compiler and runtime, and lastly will discuss
+The structure of the thesis follows this premise. Chapter 2 introduces the concepts
+of R, WASM and previous works. Chapter 3 states the rationale for creating Typed R and introduces
+the language itself, both formally and informally with examples. Chapter 4 describes the building of the compiler and runtime, and lastly Chapter 5 discusses
 the evaluation of the compiler and the performance of the generated binary in comparison to standard R environment and WebR.
 \section{Aim}
-It's important to note this focuses on exploring possibility and options of compiling R to WASM.
+It's important to note this thesis focuses on exploring possibility and options of compiling R to WASM.
 Creation of type system and annotations are a vehicle to reach there and not full focus of this thesis, as there
-are better typing proposals\cite{typr2025}\cite{R_towards_type_system}\cite{empirical_r_types}.
+are better typing proposals \cite{typr2025,R_towards_type_system,empirical_r_types}.
 Primarily the aim is to define a statically-typed subset of R, that is simple enough to be able to be compiled to WASM,
-but also expressive enough to show R's core such as mathematical operations and vectors. Then show by implement an efficient
-compiler for typed R to WASM and evaluating the generation of WASM.
+but also expressive enough to show R's core such as mathematical operations and vectors. Then show by implementing a working and an efficient
+compiler for Typed R to WASM and evaluating the generation of WASM.

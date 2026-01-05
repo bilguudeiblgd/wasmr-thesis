@@ -1,11 +1,11 @@
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \setcounter {tocdepth}{-1}
-\contentsline {chapter}{{Acknowledgments}}{iii}{chapter*.1}%
-\contentsline {chapter}{\thectufitdeclarationlabel }{iv}{chapter*.2}%
-\contentsline {chapter}{Abstract}{v}{chapter*.3}%
-\contentsline {chapter}{Abstrakt}{vi}{chapter*.4}%
-\contentsline {chapter}{\thectufitabbreviationlabel }{xi}{chapter*.9}%
+\contentsline {chapter}{{Acknowledgments}}{iv}{chapter*.1}%
+\contentsline {chapter}{\thectufitdeclarationlabel }{v}{chapter*.2}%
+\contentsline {chapter}{Abstract}{vi}{chapter*.3}%
+\contentsline {chapter}{Abstrakt}{vii}{chapter*.4}%
+\contentsline {chapter}{\thectufitabbreviationlabel }{xiii}{chapter*.9}%
 \setcounter {tocdepth}{3}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Aim}{2}{section.1.1}%
@@ -13,117 +13,97 @@
 \contentsline {section}{\numberline {2.1}The R Programming Language}{3}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Type System}{3}{subsection.2.1.1}%
 \contentsline {section}{\numberline {2.2}WebAssembly}{5}{section.2.2}%
-\contentsline {paragraph}{Module system}{5}{paragraph*.11}%
-\contentsline {paragraph}{Stack-based machine}{6}{paragraph*.12}%
-\contentsline {paragraph}{Structured control flow}{7}{paragraph*.14}%
-\contentsline {paragraph}{Linear memory model}{7}{paragraph*.15}%
-\contentsline {paragraph}{Type system and Determinism}{8}{paragraph*.16}%
-\contentsline {subsection}{\numberline {2.2.1}WASM Garbage Collection proposal}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.1}WebAssembly Garbage Collection proposal}{8}{subsection.2.2.1}%
 \contentsline {section}{\numberline {2.3}Previous works}{8}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Language Design and Type System}{10}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Design Goals}{10}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}What makes R hard to compile}{10}{subsection.3.1.1}%
-\contentsline {paragraph}{Dynamic typing}{10}{paragraph*.17}%
-\contentsline {paragraph}{Changes in Runtime}{11}{paragraph*.18}%
-\contentsline {paragraph}{Lazy Evaluation}{11}{paragraph*.19}%
-\contentsline {paragraph}{Reflection and Metaprogramming}{11}{paragraph*.20}%
-\contentsline {paragraph}{Non-Standard Evaluation (NSE)}{12}{paragraph*.21}%
-\contentsline {section}{\numberline {3.2}Typed R-like Language}{12}{section.3.2}%
+\contentsline {chapter}{\numberline {3}Language Design and Type System}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Design Goals}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Typed R-like Language}{10}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Syntax}{13}{section.3.3}%
-\contentsline {paragraph}{Examples of Typed R}{13}{paragraph*.24}%
-\contentsline {subparagraph}{Variable Declaration and Assignment}{13}{subparagraph*.25}%
-\contentsline {subparagraph}{Variable super-assignment}{13}{subparagraph*.26}%
-\contentsline {subparagraph}{Function Definitions}{14}{subparagraph*.27}%
-\contentsline {subparagraph}{Conditional Statements}{14}{subparagraph*.28}%
-\contentsline {subparagraph}{Loops}{15}{subparagraph*.29}%
-\contentsline {subparagraph}{Blocks and Tail Expressions}{15}{subparagraph*.30}%
-\contentsline {subparagraph}{Scoping and Closures}{15}{subparagraph*.31}%
 \contentsline {subsection}{\numberline {3.3.1}Abstract Grammar}{16}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{17}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{16}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Type System}{17}{section.3.4}%
-\contentsline {paragraph}{Primitive Types}{18}{paragraph*.32}%
-\contentsline {paragraph}{Logical}{18}{paragraph*.33}%
-\contentsline {paragraph}{Composite Types}{18}{paragraph*.34}%
-\contentsline {subparagraph}{Vector Types}{18}{subparagraph*.35}%
-\contentsline {paragraph}{Function Types}{18}{paragraph*.36}%
-\contentsline {subsection}{\numberline {3.4.1}Subtyping and Type Promotion}{19}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Type Checking}{20}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Typing Rules}{21}{subsection.3.4.3}%
-\contentsline {paragraph}{Typing Contexts}{21}{paragraph*.39}%
-\contentsline {paragraph}{Subtyping}{21}{paragraph*.40}%
-\contentsline {paragraph}{Reflexivity and Base Cases}{21}{paragraph*.41}%
-\contentsline {paragraph}{Transitivity}{22}{paragraph*.42}%
-\contentsline {paragraph}{Vector Covariance}{22}{paragraph*.43}%
-\contentsline {paragraph}{Subsumption}{22}{paragraph*.44}%
-\contentsline {paragraph}{Literals and Variables}{23}{paragraph*.45}%
-\contentsline {paragraph}{Arithmetic Operators}{23}{paragraph*.46}%
-\contentsline {paragraph}{Comparison Operators}{23}{paragraph*.47}%
-\contentsline {paragraph}{Logical Operators}{24}{paragraph*.48}%
-\contentsline {paragraph}{Vector Construction}{24}{paragraph*.49}%
-\contentsline {paragraph}{Range Construction}{24}{paragraph*.50}%
-\contentsline {paragraph}{Vector Indexing}{25}{paragraph*.51}%
-\contentsline {paragraph}{Vector Arithmetic}{25}{paragraph*.52}%
-\contentsline {paragraph}{Scalar-Vector Operations}{25}{paragraph*.53}%
-\contentsline {subsubsection}{\numberline {3.4.3.1}Functions}{26}{subsubsection.3.4.3.1}%
-\contentsline {paragraph}{Function Definition}{26}{paragraph*.54}%
-\contentsline {paragraph}{Function Application}{26}{paragraph*.55}%
-\contentsline {paragraph}{Conditional Expressions}{26}{paragraph*.56}%
-\contentsline {paragraph}{Assignment}{26}{paragraph*.57}%
-\contentsline {paragraph}{Super-Assignment}{27}{paragraph*.58}%
-\contentsline {paragraph}{Blocks}{27}{paragraph*.59}%
-\contentsline {paragraph}{Return Statement}{27}{paragraph*.60}%
+\contentsline {subsection}{\numberline {3.4.1}Primitive Types}{17}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Logical}{17}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Composite Types}{18}{subsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}Vector Types}{18}{subsubsection.3.4.3.1}%
+\contentsline {subsection}{\numberline {3.4.4}Function Types}{18}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Subtyping and Type Promotion}{18}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Type Checking}{20}{subsection.3.4.6}%
+\contentsline {subsection}{\numberline {3.4.7}Typing Rules}{21}{subsection.3.4.7}%
+\contentsline {subsection}{\numberline {3.4.8}Typing Contexts}{21}{subsection.3.4.8}%
+\contentsline {subsection}{\numberline {3.4.9}Subtyping}{21}{subsection.3.4.9}%
+\contentsline {subsubsection}{\numberline {3.4.9.1}Reflexivity and Base Cases}{21}{subsubsection.3.4.9.1}%
+\contentsline {subsubsection}{\numberline {3.4.9.2}Transitivity}{22}{subsubsection.3.4.9.2}%
+\contentsline {subsubsection}{\numberline {3.4.9.3}Vector Covariance}{22}{subsubsection.3.4.9.3}%
+\contentsline {subsubsection}{\numberline {3.4.9.4}Subsumption}{22}{subsubsection.3.4.9.4}%
+\contentsline {subsubsection}{\numberline {3.4.9.5}Literals and Variables}{23}{subsubsection.3.4.9.5}%
+\contentsline {subsubsection}{\numberline {3.4.9.6}Arithmetic Operators}{23}{subsubsection.3.4.9.6}%
+\contentsline {subsubsection}{\numberline {3.4.9.7}Comparison Operators}{23}{subsubsection.3.4.9.7}%
+\contentsline {subsubsection}{\numberline {3.4.9.8}Logical Operators}{24}{subsubsection.3.4.9.8}%
+\contentsline {subsubsection}{\numberline {3.4.9.9}Vector Construction}{24}{subsubsection.3.4.9.9}%
+\contentsline {subsubsection}{\numberline {3.4.9.10}Range Construction}{24}{subsubsection.3.4.9.10}%
+\contentsline {subsubsection}{\numberline {3.4.9.11}Vector Indexing}{25}{subsubsection.3.4.9.11}%
+\contentsline {subsubsection}{\numberline {3.4.9.12}Vector Arithmetic}{25}{subsubsection.3.4.9.12}%
+\contentsline {subsubsection}{\numberline {3.4.9.13}Scalar-Vector Operations}{25}{subsubsection.3.4.9.13}%
+\contentsline {subsubsection}{\numberline {3.4.9.14}Function Definition}{25}{subsubsection.3.4.9.14}%
+\contentsline {subsubsection}{\numberline {3.4.9.15}Function Application}{26}{subsubsection.3.4.9.15}%
+\contentsline {subsubsection}{\numberline {3.4.9.16}Conditional Expressions}{26}{subsubsection.3.4.9.16}%
+\contentsline {subsubsection}{\numberline {3.4.9.17}Assignment}{26}{subsubsection.3.4.9.17}%
+\contentsline {subsubsection}{\numberline {3.4.9.18}Super-Assignment}{26}{subsubsection.3.4.9.18}%
+\contentsline {subsubsection}{\numberline {3.4.9.19}Blocks}{27}{subsubsection.3.4.9.19}%
+\contentsline {subsubsection}{\numberline {3.4.9.20}Return Statement}{27}{subsubsection.3.4.9.20}%
 \contentsline {section}{\numberline {3.5}Evaluation Model}{27}{section.3.5}%
-\contentsline {paragraph}{Evaluation Order and Type Promotion}{28}{paragraph*.61}%
-\contentsline {paragraph}{Vector Operations}{28}{paragraph*.62}%
-\contentsline {paragraph}{Scalar Broadcasting}{28}{paragraph*.63}%
-\contentsline {paragraph}{Function Evaluation and Closures}{28}{paragraph*.64}%
-\contentsline {subsection}{\numberline {3.5.1}Built-in Functions}{29}{subsection.3.5.1}%
-\contentsline {chapter}{\numberline {4}Compiler and Runtime}{30}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Compiler Architecture}{30}{section.4.1}%
-\contentsline {paragraph}{Front-end}{30}{paragraph*.66}%
-\contentsline {paragraph}{Middle-end}{30}{paragraph*.67}%
-\contentsline {paragraph}{Back-end}{31}{paragraph*.68}%
-\contentsline {paragraph}{Compiler source code}{31}{paragraph*.70}%
-\contentsline {subparagraph}{Stage 1: Scanning}{31}{subparagraph*.71}%
-\contentsline {subparagraph}{Stage 2: Syntactic Analysis}{31}{subparagraph*.72}%
-\contentsline {subparagraph}{Stage 3: Type Resolution and IR Construction}{32}{subparagraph*.73}%
-\contentsline {subparagraph}{Stage 4: IR Transformation Passes}{32}{subparagraph*.74}%
-\contentsline {subparagraph}{Stage 5: Code Generation}{32}{subparagraph*.75}%
-\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Type Mapping}{33}{subsection.4.2.1}%
-\contentsline {paragraph}{Vector Representation}{33}{paragraph*.76}%
-\contentsline {paragraph}{Function References}{33}{paragraph*.77}%
-\contentsline {subsection}{\numberline {4.2.2}Expression Compilation}{34}{subsection.4.2.2}%
-\contentsline {paragraph}{Literals}{34}{paragraph*.78}%
-\contentsline {paragraph}{Variables}{34}{paragraph*.79}%
-\contentsline {paragraph}{Binary Operations}{34}{paragraph*.80}%
-\contentsline {paragraph}{Function Calls}{35}{paragraph*.81}%
-\contentsline {paragraph}{If}{36}{paragraph*.82}%
-\contentsline {subsection}{\numberline {4.2.3}Statement Compilation}{37}{subsection.4.2.3}%
-\contentsline {paragraph}{Assignment}{37}{paragraph*.83}%
-\contentsline {paragraph}{Loops}{37}{paragraph*.84}%
-\contentsline {subsection}{\numberline {4.2.4}Function Compilation}{38}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Runtime System}{40}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Memory Management}{40}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Vector Operations}{40}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Built-in Function Implementations}{41}{subsection.4.3.3}%
-\contentsline {paragraph}{Print Function}{41}{paragraph*.85}%
-\contentsline {paragraph}{Sequence Generation}{41}{paragraph*.86}%
-\contentsline {subsection}{\numberline {4.3.4}WASI Integration}{41}{subsection.4.3.4}%
-\contentsline {section}{\numberline {4.4}Implementation Details}{42}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{42}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{42}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{43}{subsection.4.4.3}%
-\contentsline {chapter}{\numberline {5}Evaluation}{44}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Correctness}{44}{section.5.1}%
-\contentsline {paragraph}{Unit Tests:}{44}{paragraph*.87}%
-\contentsline {paragraph}{Integration Tests:}{44}{paragraph*.88}%
-\contentsline {paragraph}{Validation Tests (\texttt {./test.sh}):}{44}{paragraph*.89}%
+\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{27}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{27}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Scalar Broadcasting}{28}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Function Evaluation and Closures}{28}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Built-in Functions}{28}{subsection.3.5.5}%
+\contentsline {chapter}{\numberline {4}Compiler and Runtime}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Compiler Architecture}{29}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Front-end}{29}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Middle-end}{29}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Back-end}{30}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Compiler source code}{30}{subsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.4.1}Stage 1: Scanning}{30}{subsubsection.4.1.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.4.2}Stage 2: Syntactic Analysis}{31}{subsubsection.4.1.4.2}%
+\contentsline {subsubsection}{\numberline {4.1.4.3}Stage 3: Type Resolution and IR Construction}{31}{subsubsection.4.1.4.3}%
+\contentsline {subsubsection}{\numberline {4.1.4.4}Stage 4: IR Transformation Passes}{31}{subsubsection.4.1.4.4}%
+\contentsline {subsubsection}{\numberline {4.1.4.5}Stage 5: Code Generation}{31}{subsubsection.4.1.4.5}%
+\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{31}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Type Mapping}{32}{subsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.1.1}Vector Representation}{32}{subsubsection.4.2.1.1}%
+\contentsline {subsubsection}{\numberline {4.2.1.2}Function References}{33}{subsubsection.4.2.1.2}%
+\contentsline {subsection}{\numberline {4.2.2}Expression Compilation}{33}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}Literals}{33}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}Variables}{33}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}Binary Operations}{34}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}Function Calls}{35}{subsubsection.4.2.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.2.5}If}{35}{subsubsection.4.2.2.5}%
+\contentsline {subsection}{\numberline {4.2.3}Statement Compilation}{36}{subsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.1}Assignment}{36}{subsubsection.4.2.3.1}%
+\contentsline {subsubsection}{\numberline {4.2.3.2}Loops}{36}{subsubsection.4.2.3.2}%
+\contentsline {subsection}{\numberline {4.2.4}Function Compilation}{37}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Runtime System}{39}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Memory Management}{39}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Vector Operations}{39}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Built-in Function Implementations}{40}{subsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.3.1}Print Function}{40}{subsubsection.4.3.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.3.2}Sequence Generation}{40}{subsubsection.4.3.3.2}%
+\contentsline {subsection}{\numberline {4.3.4}WASI Integration}{40}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Implementation Details}{41}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{41}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{41}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{42}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Evaluation}{43}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Correctness}{43}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Unit Tests}{43}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Integration Tests}{43}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Validation Tests}{44}{subsection.5.1.3}%
 \contentsline {section}{\numberline {5.2}Performance}{45}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Compilation Time}{45}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{46}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Discussion}{47}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Results}{47}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{45}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Discussion}{46}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Results}{46}{subsection.5.3.1}%
 \contentsline {subsection}{\numberline {5.3.2}Limitations}{47}{subsection.5.3.2}%
 \contentsline {subsection}{\numberline {5.3.3}Future Work}{47}{subsection.5.3.3}%
 \contentsline {chapter}{\numberline {6}Conclusion}{49}{chapter.6}%
@@ -172,4 +152,6 @@
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{Contents of the attachment}{55}{appendix*.94}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Contents of the attachment}{55}{appendix*.21}%

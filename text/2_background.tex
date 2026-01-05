@@ -2,15 +2,14 @@
 
 \section{The R Programming Language}
 
-\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
+\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language \cite{r_paper}. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
 
 R is fundamentally designed around vector operations, where everything, even scalar values, is represented as a vector. 
 This design manifests in the language's support for \textbf{vectorization}, enabling operations to apply element-wise across data structures without explicit loops, as seen in expressions like \texttt{c(1,2,3) + c(4,5,6)} $\Rightarrow$ \texttt{c(5,7,9)}. The language employs \textbf{dynamic typing} with types determined at runtime rather than through variable declarations, facilitating rapid prototyping and interactive data exploration at the cost of static verification. Combined with \textbf{lexical scoping} and closures, where functions capture their defining environment, R supports functional programming patterns that enable higher-order abstractions and metaprogramming capabilities essential for statistical computing. The language's \textbf{lazy evaluation} strategy delays argument evaluation until values are required, allowing non-standard evaluation mechanisms that support domain-specific sublanguages. To preserve referential transparency, R implements \textbf{copy-on-modify semantics}, implicitly copying objects upon modification to prevent unexpected side effects, though this approach can introduce performance overhead in memory-intensive workloads.
 
 
 \subsection{Type System}
-R employs a dynamic type system with several foundational types, all of which are first-class objects. Unlike statically-typed languages, type information is associated with values at runtime rather than with variable declarations.
-Atomic Types
+R has a dynamic type system with several foundational types, all of which are first-class objects. Unlike statically-typed languages, type information is associated with values at runtime rather than with variable declarations.
 R provides six atomic vector types:
 \begin{itemize}
 \item \textbf{Logical:} Boolean values \texttt{TRUE}, \texttt{FALSE}, and \texttt{NA} (missing).
@@ -44,7 +43,7 @@ x <- charToRaw("A")
 typeof(x)      # returns "raw"
 \end{verbatim}
 \end{itemize}
-Composite Types
+
 Beyond atomic vectors, R supports several composite data structures:
 \begin{itemize}
 \item \textbf{List:} Heterogeneous collections that can hold elements of different types.
@@ -64,7 +63,7 @@ e <- new.env()
 typeof(e)      # returns "environment"
 \end{verbatim}
 \end{itemize}
-Type Coercion
+
 R performs implicit type coercion following a hierarchy: logical → integer → double → character. When combining types, R automatically converts to the most general type:
 \begin{verbatim}
 c(TRUE, 1L, 2.5, "text")  # returns character vector:
@@ -74,23 +73,23 @@ This automatic coercion simplifies interactive use but can lead to unexpected be
 
 \section{WebAssembly}
 WebAssembly is a low-level assembly-like language that is made to
-run in modern browser\cite{mdn_webassembly}. It's designed to work together with
+run in modern browser \cite{mdn_webassembly}. It's designed to work together with
 JavaScript, the language of the web environment, offering flexibility and performance.
 Currently most modern languages support WASM as compilation target; for example, Rust through
 rustc, C/C++ through Emscripten.
 
-Practically, WebAssembly offers myriad of possibilities to developers. 
+Practically, WebAssembly offers myriad of possibilities to developers.
 From Image-processing libraries in hidden behind C to desktop apps written in C\#, with WASM
-, they can run on the web with near native-like performance. Notable examples 
-of adoption of WASM are Figma\cite{figma_wasm}, Autodesk AutoCAD Web App\cite{autocad_wasm}, and Google Earth\cite{google_earth_wasm}.
+, they can run on the web with near native-like performance. Notable examples
+of adoption of WASM are Figma \cite{figma_wasm}, Autodesk AutoCAD Web App \cite{autocad_wasm}, and Google Earth \cite{google_earth_wasm}.
 
 Moreover, for readability, WebAssembly also has so-called Web Assembly Text Format, in short WAT.
-It's a form where bytecode itself is more readable, with more syntactic sugars. Let's iterate over properties of WASM and how it's structured and written in WAT format.
+It's a form where bytecode itself is more readable, with more syntactic sugars. Let's iterate over properties of WASM and how it's structured and written in WAT format. From personal, experience WAT format really eases development and debugging process by removing friction of using different tools to analyze the bytecode.
+Moreover, WASM's ecosystem provides useful tools like \texttt{wasm2wat, wat2wasm, wasm-tools validate} etc, which makes development better.
 
-\paragraph{Module system}
-WebAssembly code is organized into modules. 
-Modules declare imports (functions, memory, tables, globals from the host environment) 
-and exports (making internal definitions available externally)\cite{wasm_specs}:
+Let's talk about essential characteristics of WASM. First of all, WebAssembly code is organized into modules.
+Modules declare imports (functions, memory, tables, globals from the host environment)
+and exports (making internal definitions available externally) \cite{wasm_specs}:
 \begin{lstlisting}[caption={Module demonstrating import and export mechanisms}]
 (module
   ;; Import a logging function from the host
@@ -123,9 +122,8 @@ and exports (making internal definitions available externally)\cite{wasm_specs}:
 )
 \end{lstlisting}
 
-\paragraph{Stack-based machine}
-With goals of being fast, efficient, and portable, WebAssembly, at its heart, is a stack-based virtual machine
-running on the web(Possible to run on a machine through NodeJS or Wasmtime). Stack-based machine in this context is a process virtual machine that works as 
+Moreover, with goals of being fast, efficient, and portable, WebAssembly, at its heart, is a stack-based virtual machine
+running on the web(Possible to run on a machine through NodeJS or Wasmtime). Stack-based machine in this context is a process virtual machine that works as
 virtualization of computer system on top of a computer. Its workings is primarily based on
 interacting with the stack. For example:
 
@@ -152,11 +150,9 @@ interacting with the stack. For example:
 )
 \end{lstlisting}
 
-\paragraph{Structured control flow}
-
 Unlike raw bytecode with goto-style jumps, WebAssembly uses structured 
 control flow constructs: block, loop, if, and br (branch). 
-Each construct creates a label that branches can target.\cite{wasm_specs}
+Each construct creates a label that branches can target \cite{wasm_specs}.
 
 \begin{lstlisting}[caption={Conditional execution using structured control flow}]
 (module
@@ -178,8 +174,7 @@ Each construct creates a label that branches can target.\cite{wasm_specs}
 \end{lstlisting}
 
 
-\paragraph{Linear memory model}
-WebAssembly provides a contiguous, resizable array of bytes called linear memory. Memory is accessed via load/store instructions with explicit alignment and offset.\cite{wasm_specs}
+WebAssembly provides a contiguous, resizable array of bytes called linear memory. Memory is accessed via load/store instructions with explicit alignment and offset \cite{wasm_specs}.
 \begin{lstlisting}[caption={Accessing linear memory with load and store instructions}]
 (module
   (memory 1)              ;; declare 1 page (64KB) of memory
@@ -196,33 +191,31 @@ WebAssembly provides a contiguous, resizable array of bytes called linear memory
 )
 \end{lstlisting}
 
-\paragraph{Type system and Determinism}
-A decoded module is type-safe and checked in module instantiation. 
-Moreover, WebAssembly specification fully defines
-valid programs and their behaviour.\cite{wasm_specs}
-
-\subsection{WASM Garbage Collection proposal}
+There's still more to discuss about features and characteristics of of WASM.
+We can take a look at instructions, traps, data segment, element segment, tables but they are not of 
+utmost importance for reading this thesis. The reader may look explore more in details in WASM specs\cite{wasm_specs}.
+\subsection{WebAssembly Garbage Collection proposal}
 WASM Garbage collection proposal, in short GC, is a new proposal that tries to provide efficient support
 for high-level languages. Since WASM announcement, community were coming up with their own 
 GC as a way to compile high-level languages to WASM. With GC proposal, it helps to take load off of developers
 who are porting their languages to WASM. In this proposal, they introduced structs and arrays, which we'll heavily 
-use in the implementation of this thesis.
+use in the implementation of this thesis. 
 
 \section{Previous works}
 Work related to R about compilers and interpreter has been nothing but inspiring. The R
-has started with what we now call Tree-Walk interpreter\cite{r_paper}. Then around April 2011, with release of R 2.13.0
-come the bytecode compiler by Luke Tierney, which was written almost entirely in R\cite{r_version_213_notes}. Essentially, it's faster 
-to compile R into some intermediate bytecode and then have it executed by VM\cite{tierney2019bytecode}.
-Thus, standard R environment execution became either with AST interpreter or with Bytecode Compiler\cite{rbytecodebook}.
-From then on all standard functions and packages in base R ws pre-compiled into bytecode. Lastly, JIT bytecode compiler 
-became the default from R.3.4.1\cite{RJ-2017-1-ch}.
+has started with what we now call Tree-Walk interpreter \cite{r_paper}. Then around April 2011, with release of R 2.13.0
+come the bytecode compiler by Luke Tierney, which was written almost entirely in R \cite{r_version_213_notes}. Essentially, it's faster
+to compile R into some intermediate bytecode and then have it executed by VM \cite{tierney2019bytecode}.
+Thus, standard R environment execution became either with AST interpreter or with Bytecode Compiler \cite{rbytecodebook}.
+From then on all standard functions and packages in base R ws pre-compiled into bytecode. Lastly, JIT bytecode compiler
+became the default from R.3.4.1 \cite{RJ-2017-1-ch}.
 
 On top of standard implementations, execution on different environments have also been explored.
-WebR\cite{webR}, most notably, is a recent work that compiles the R interpreter to WebAssembly using the Emscripten compiler 
+WebR \cite{webR}, most notably, is a recent work that compiles the R interpreter to WebAssembly using the Emscripten compiler
 to run R code on the web. Though as hinted at introduction, compiling the interpreter to WASM
 has its tradeoffs.
 
-In terms of type system and type annotations around the R, there has been a discussion around type system in R as well\cite{R_towards_type_system}.
-There are even implementations for type system for R\cite{typr2025}, although it's not adopted by R community. However, the purpose of the thesis
-is exploring the compilation of R to WASM. In that we use type annotations, but it's important to note that 
+In terms of type system and type annotations around the R, there has been a discussion around type system in R as well \cite{R_towards_type_system}.
+There are even implementations for type system for R \cite{typr2025}, although it's not adopted by R community. However, the purpose of the thesis
+is exploring the compilation of R to WASM. In that we use type annotations, but it's important to note that
 we won't dig deep into type systems at all.
