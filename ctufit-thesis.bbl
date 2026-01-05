@@ -83,6 +83,38 @@
       \verb https://coolbutuseless.github.io/book/rbytecodebook/
       \endverb
     \endentry
+    \entry{pyodide_mozilla}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=4778156ee049a7c63b5dfde9beea6d36}{%
+           family={Droettboom},
+           familyi={D\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Mozilla Hacks}%
+      }
+      \strng{namehash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{fullhash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{fullhashraw}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{bibnamehash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{authorbibnamehash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{authornamehash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{authorfullhash}{4778156ee049a7c63b5dfde9beea6d36}
+      \strng{authorfullhashraw}{4778156ee049a7c63b5dfde9beea6d36}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Pyodide: Bringing the scientific Python stack to the browser}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://hacks.mozilla.org/2019/04/pyodide-bringing-the-scientific-python-stack-to-the-browser/
+      \endverb
+      \verb{url}
+      \verb https://hacks.mozilla.org/2019/04/pyodide-bringing-the-scientific-python-stack-to-the-browser/
+      \endverb
+    \endentry
     \entry{webR}{software}{}{}
       \name{author}{1}{}{%
         {{hash=15a342111fe4be774d071e43ad43a58a}{%
@@ -97,8 +129,8 @@
       \strng{authornamehash}{15a342111fe4be774d071e43ad43a58a}
       \strng{authorfullhash}{15a342111fe4be774d071e43ad43a58a}
       \strng{authorfullhashraw}{15a342111fe4be774d071e43ad43a58a}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -127,8 +159,8 @@
       \strng{authornamehash}{21db9c6b7f9cc541b0d55769c3f00d41}
       \strng{authorfullhash}{21db9c6b7f9cc541b0d55769c3f00d41}
       \strng{authorfullhashraw}{21db9c6b7f9cc541b0d55769c3f00d41}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -169,8 +201,8 @@
       \strng{authornamehash}{9f64a80954f8170a3a8afaa657e9268a}
       \strng{authorfullhash}{9f64a80954f8170a3a8afaa657e9268a}
       \strng{authorfullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{R is a fascinating language: It is dynamically typed, vectorized, both lazy and side-effecting, and it fosters an interactive style of programming. This unique combination of features makes it easy to use, but prone to errors and strange behaviour. R is the tool of choice for many data analysts, and our aim is to empower them with a language that is not simply easy to use, but easy to use well, so as to increase their confidence in the data analyses they undertake. To that end, we are developing a type system for R that is simple enough to be attractive to programmers while being expressive enough to capture existing programming paradigms. In this paper, we outline past, present, and future work as we build up to a type system for R.}
@@ -226,8 +258,8 @@
       \strng{authornamehash}{507513246dfbdbc99858bc7ec790d7a4}
       \strng{authorfullhash}{507513246dfbdbc99858bc7ec790d7a4}
       \strng{authorfullhashraw}{507513246dfbdbc99858bc7ec790d7a4}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The R programming language is widely used in a variety of domains. It was designed to favor an interactive style of programming with minimal syntactic and conceptual overhead. This design is well suited to data analysis, but a bad fit for tools such as compilers or program analyzers. In particular, R has no type annotations, and all operations are dynamically checked at run-time. The starting point for our work are the two questions: what expressive power is needed to accurately type R code? and which type system is the R community willing to adopt? Both questions are difficult to answer without actually experimenting with a type system. The goal of this paper is to provide data that can feed into that design process. To this end, we perform a large corpus analysis to gain insights in the degree of polymorphism exhibited by idiomatic R code and explore potential benefits that the R community could accrue from a simple type system. As a starting point, we infer type signatures for 25,215 functions from 412 packages among the most widely used open source R libraries. We then conduct an evaluation on 8,694 clients of these packages, as well as on end-user code from the Kaggle data science competition website.}
@@ -272,8 +304,8 @@
       \strng{authornamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
       \strng{authorfullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
       \strng{authorfullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{1061-8600}
@@ -299,8 +331,8 @@
       \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -330,8 +362,8 @@
       \strng{authornamehash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
       \strng{authorfullhash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
       \strng{authorfullhashraw}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -361,8 +393,8 @@
       \strng{authornamehash}{5db0a5e9d039c15d2eee8f30764a6b4e}
       \strng{authorfullhash}{5db0a5e9d039c15d2eee8f30764a6b4e}
       \strng{authorfullhashraw}{5db0a5e9d039c15d2eee8f30764a6b4e}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -392,8 +424,8 @@
       \strng{authornamehash}{c5408b0e1fc370c8bed3024a9b7a62f9}
       \strng{authorfullhash}{c5408b0e1fc370c8bed3024a9b7a62f9}
       \strng{authorfullhashraw}{c5408b0e1fc370c8bed3024a9b7a62f9}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
@@ -426,8 +458,8 @@
       \strng{authornamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhashraw}{e41d0523c45d34fc1a4630ae8dfa1b45}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{[Online]}
