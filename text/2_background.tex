@@ -79,12 +79,12 @@ Currently most modern languages support WASM as compilation target; for example,
 rustc, C/C++ through Emscripten.
 
 Practically, WebAssembly offers myriad of possibilities to developers.
-From Image-processing libraries in hidden behind C to desktop apps written in C\#, with WASM
+From Image-processing libraries hidden behind C to desktop apps written in C\#, with WASM
 , they can run on the web with near native-like performance. Notable examples
 of adoption of WASM are Figma \cite{figma_wasm}, Autodesk AutoCAD Web App \cite{autocad_wasm}, and Google Earth \cite{google_earth_wasm}.
 
 Moreover, for readability, WebAssembly also has so-called Web Assembly Text Format, in short WAT.
-It's a form where bytecode itself is more readable, with more syntactic sugars. Let's iterate over properties of WASM and how it's structured and written in WAT format. From personal, experience WAT format really eases development and debugging process by removing friction of using different tools to analyze the bytecode.
+It's a form where bytecode itself is more readable, with more syntactic sugars. From personal experience, WAT format really eases development and debugging process by removing friction of using different tools to analyze the bytecode.
 Moreover, WASM's ecosystem provides useful tools like \texttt{wasm2wat, wat2wasm, wasm-tools validate} etc, which makes development better.
 
 Let's talk about essential characteristics of WASM. First of all, WebAssembly code is organized into modules.
