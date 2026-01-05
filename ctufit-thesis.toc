@@ -29,54 +29,27 @@
 \contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{26}{subsection.3.5.4}%
 \contentsline {chapter}{\numberline {4}Compiler and Runtime}{27}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Compiler Architecture}{27}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Front-end}{27}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Middle-end}{27}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Back-end}{28}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Compiler source code}{28}{subsection.4.1.4}%
-\contentsline {subsubsection}{\numberline {4.1.4.1}Stage 1: Scanning}{28}{subsubsection.4.1.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.4.2}Stage 2: Syntactic Analysis}{29}{subsubsection.4.1.4.2}%
-\contentsline {subsubsection}{\numberline {4.1.4.3}Stage 3: Type Resolution and IR Construction}{29}{subsubsection.4.1.4.3}%
-\contentsline {subsubsection}{\numberline {4.1.4.4}Stage 4: IR Transformation Passes}{29}{subsubsection.4.1.4.4}%
-\contentsline {subsubsection}{\numberline {4.1.4.5}Stage 5: Code Generation}{29}{subsubsection.4.1.4.5}%
 \contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{29}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Type Mapping}{30}{subsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.1.1}Vector Representation}{30}{subsubsection.4.2.1.1}%
-\contentsline {subsubsection}{\numberline {4.2.1.2}Function References}{31}{subsubsection.4.2.1.2}%
-\contentsline {subsection}{\numberline {4.2.2}Expression Compilation}{31}{subsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.1}Literals}{31}{subsubsection.4.2.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2.2}Variables}{31}{subsubsection.4.2.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.3}Binary Operations}{32}{subsubsection.4.2.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.2.4}Function Calls}{33}{subsubsection.4.2.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.2.5}If}{33}{subsubsection.4.2.2.5}%
-\contentsline {subsection}{\numberline {4.2.3}Statement Compilation}{34}{subsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.3.1}Assignment}{34}{subsubsection.4.2.3.1}%
-\contentsline {subsubsection}{\numberline {4.2.3.2}Loops}{34}{subsubsection.4.2.3.2}%
-\contentsline {subsection}{\numberline {4.2.4}Function Compilation}{35}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Runtime System}{37}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Memory Management}{37}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Vector Operations}{37}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Built-in Function Implementations}{38}{subsection.4.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.3.1}Print Function}{38}{subsubsection.4.3.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.3.2}Sequence Generation}{38}{subsubsection.4.3.3.2}%
-\contentsline {subsection}{\numberline {4.3.4}WASI Integration}{38}{subsection.4.3.4}%
-\contentsline {section}{\numberline {4.4}Implementation Details}{39}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{39}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{39}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{40}{subsection.4.4.3}%
-\contentsline {chapter}{\numberline {5}Evaluation}{41}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Correctness}{41}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Unit Tests}{41}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Integration Tests}{41}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Validation Tests}{42}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Performance}{43}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Compilation Time}{43}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{43}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Discussion}{44}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Results}{44}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Limitations}{45}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Future Work}{45}{subsection.5.3.3}%
-\contentsline {chapter}{\numberline {6}Conclusion}{47}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Extra}{49}{appendix.A}%
+\contentsline {subsection}{\numberline {4.2.1}Function Compilation}{32}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Runtime System}{36}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Implementation Details}{37}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{37}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{37}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{38}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Evaluation}{40}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Correctness}{40}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Unit Tests}{40}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Integration Tests}{40}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Validation Tests}{41}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Performance}{42}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Compilation Time}{42}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{42}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Discussion}{43}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Results}{43}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Limitations}{44}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Future Work}{44}{subsection.5.3.3}%
+\contentsline {chapter}{\numberline {6}Conclusion}{46}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Extra}{48}{appendix.A}%
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
@@ -123,4 +96,4 @@
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{Contents of the attachment}{53}{appendix*.21}%
+\contentsline {chapter}{Contents of the attachment}{52}{appendix*.21}%

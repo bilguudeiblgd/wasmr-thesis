@@ -6,51 +6,25 @@
 \@writefile{lol}{\addvspace {10\p@ }}
 \newlabel{chapter:compiler}{{4}{27}{Compiler and Runtime}{chapter.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Compiler Architecture}{27}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Front-end}{27}{subsection.4.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Middle-end}{27}{subsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Back-end}{28}{subsection.4.1.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Compiler pipeline architecture showing front-end, middle-end, and back-end phases}}{28}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:compiler-pipeline}{{4.1}{28}{Compiler pipeline architecture showing front-end, middle-end, and back-end phases}{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Compiler source code}{28}{subsection.4.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4.1}Stage 1: Scanning}{28}{subsubsection.4.1.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4.2}Stage 2: Syntactic Analysis}{29}{subsubsection.4.1.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4.3}Stage 3: Type Resolution and IR Construction}{29}{subsubsection.4.1.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4.4}Stage 4: IR Transformation Passes}{29}{subsubsection.4.1.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4.5}Stage 5: Code Generation}{29}{subsubsection.4.1.4.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Typed R compiler pipeline showing the multi-pass architecture from source code through lexing, parsing, type resolution, IR transformation passes, to WebAssembly code generation}}{28}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:compiler-pipeline}{{4.1}{28}{Typed R compiler pipeline showing the multi-pass architecture from source code through lexing, parsing, type resolution, IR transformation passes, to WebAssembly code generation}{figure.caption.16}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{29}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Type Mapping}{30}{subsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1.1}Vector Representation}{30}{subsubsection.4.2.1.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{30}{lstlisting.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1.2}Function References}{31}{subsubsection.4.2.1.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{31}{lstlisting.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Expression Compilation}{31}{subsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.1}Literals}{31}{subsubsection.4.2.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.2}Variables}{31}{subsubsection.4.2.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.3}Binary Operations}{32}{subsubsection.4.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.4}Function Calls}{33}{subsubsection.4.2.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2.5}If}{33}{subsubsection.4.2.2.5}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{33}{lstlisting.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Statement Compilation}{34}{subsection.4.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3.1}Assignment}{34}{subsubsection.4.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3.2}Loops}{34}{subsubsection.4.2.3.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{34}{lstlisting.4.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{35}{lstlisting.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Function Compilation}{35}{subsection.4.2.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{36}{lstlisting.4.6}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{36}{lstlisting.4.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Runtime System}{37}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Memory Management}{37}{subsection.4.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Vector Operations}{37}{subsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Built-in Function Implementations}{38}{subsection.4.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3.1}Print Function}{38}{subsubsection.4.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3.2}Sequence Generation}{38}{subsubsection.4.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}WASI Integration}{38}{subsection.4.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Implementation Details}{39}{section.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{39}{subsection.4.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{39}{subsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{40}{subsection.4.4.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{29}{lstlisting.4.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{29}{lstlisting.4.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{31}{lstlisting.4.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{31}{lstlisting.4.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{32}{lstlisting.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Function Compilation}{32}{subsection.4.2.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Base and concrete environment types}}{34}{lstlisting.4.6}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure accessing captured variables}}{35}{lstlisting.4.7}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.8}{\ignorespaces Simple function without captures}}{35}{lstlisting.4.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Runtime System}{36}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Implementation Details}{37}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{37}{subsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{37}{subsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{38}{subsection.4.4.3}\protected@file@percent }
 \@setckpt{text/4_compiler_runtime}{
-\setcounter{page}{41}
+\setcounter{page}{40}
 \setcounter{equation}{0}
 \setcounter{enumi}{4}
 \setcounter{enumii}{0}
@@ -72,9 +46,9 @@
 \setcounter{parentequation}{0}
 \setcounter{theorem}{0}
 \setcounter{section@level}{0}
-\setcounter{Item}{49}
+\setcounter{Item}{4}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{61}
+\setcounter{bookmark@seq@number}{34}
 \setcounter{AM@survey}{0}
 \setcounter{tabx@nest}{0}
 \setcounter{listtotal}{0}
@@ -190,6 +164,6 @@
 \setcounter{biburlucpenalty}{200}
 \setcounter{biburllcpenalty}{100}
 \setcounter{smartand}{1}
-\setcounter{lstnumber}{14}
-\setcounter{lstlisting}{7}
+\setcounter{lstnumber}{6}
+\setcounter{lstlisting}{8}
 }
