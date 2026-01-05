@@ -52,6 +52,37 @@
       \verb https://craftinginterpreters.com/
       \endverb
     \endentry
+    \entry{rbytecodebook}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=d5d3468791632505690c1832f1c00e48}{%
+           family={Henderson},
+           familyi={H\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5d3468791632505690c1832f1c00e48}
+      \strng{fullhash}{d5d3468791632505690c1832f1c00e48}
+      \strng{fullhashraw}{d5d3468791632505690c1832f1c00e48}
+      \strng{bibnamehash}{d5d3468791632505690c1832f1c00e48}
+      \strng{authorbibnamehash}{d5d3468791632505690c1832f1c00e48}
+      \strng{authornamehash}{d5d3468791632505690c1832f1c00e48}
+      \strng{authorfullhash}{d5d3468791632505690c1832f1c00e48}
+      \strng{authorfullhashraw}{d5d3468791632505690c1832f1c00e48}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
+      \field{title}{R Bytecode Book}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://coolbutuseless.github.io/book/rbytecodebook/
+      \endverb
+      \verb{url}
+      \verb https://coolbutuseless.github.io/book/rbytecodebook/
+      \endverb
+    \endentry
     \entry{webR}{software}{}{}
       \name{author}{1}{}{%
         {{hash=15a342111fe4be774d071e43ad43a58a}{%
@@ -70,7 +101,8 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{webR}
       \field{version}{1.0}
       \field{year}{2023}
@@ -99,10 +131,16 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://we-data-ch.github.io/typr.github.io/}}
-      \field{note}{Accessed: 2025-12-30}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-30]}
       \field{title}{{TypR}: {R}'s Types for Data Sciences}
       \field{year}{2025}
+      \verb{urlraw}
+      \verb https://we-data-ch.github.io/typr.github.io/
+      \endverb
+      \verb{url}
+      \verb https://we-data-ch.github.io/typr.github.io/
+      \endverb
     \endentry
     \entry{R_towards_type_system}{inproceedings}{}{}
       \name{author}{2}{}{%
@@ -131,8 +169,8 @@
       \strng{authornamehash}{9f64a80954f8170a3a8afaa657e9268a}
       \strng{authorfullhash}{9f64a80954f8170a3a8afaa657e9268a}
       \strng{authorfullhashraw}{9f64a80954f8170a3a8afaa657e9268a}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{R is a fascinating language: It is dynamically typed, vectorized, both lazy and side-effecting, and it fosters an interactive style of programming. This unique combination of features makes it easy to use, but prone to errors and strange behaviour. R is the tool of choice for many data analysts, and our aim is to empower them with a language that is not simply easy to use, but easy to use well, so as to increase their confidence in the data analyses they undertake. To that end, we are developing a type system for R that is simple enough to be attractive to programmers while being expressive enough to capture existing programming paradigms. In this paper, we outline past, present, and future work as we build up to a type system for R.}
@@ -188,8 +226,8 @@
       \strng{authornamehash}{507513246dfbdbc99858bc7ec790d7a4}
       \strng{authorfullhash}{507513246dfbdbc99858bc7ec790d7a4}
       \strng{authorfullhashraw}{507513246dfbdbc99858bc7ec790d7a4}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The R programming language is widely used in a variety of domains. It was designed to favor an interactive style of programming with minimal syntactic and conceptual overhead. This design is well suited to data analysis, but a bad fit for tools such as compilers or program analyzers. In particular, R has no type annotations, and all operations are dynamically checked at run-time. The starting point for our work are the two questions: what expressive power is needed to accurately type R code? and which type system is the R community willing to adopt? Both questions are difficult to answer without actually experimenting with a type system. The goal of this paper is to provide data that can feed into that design process. To this end, we perform a large corpus analysis to gain insights in the degree of polymorphism exhibited by idiomatic R code and explore potential benefits that the R community could accrue from a simple type system. As a starting point, we infer type signatures for 25,215 functions from 412 packages among the most widely used open source R libraries. We then conduct an evaluation on 8,694 clients of these packages, as well as on end-user code from the Kaggle data science competition website.}
@@ -210,6 +248,43 @@
       \endverb
       \keyw{R,dynamic languages,type declarations}
     \endentry
+    \entry{r_paper}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ac7719f901654e5ae5281acf37563142}{%
+           family={Ihaka},
+           familyi={I\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8a97fae1ed0550968a6f77cd783776f5}{%
+           family={Gentleman},
+           familyi={G\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{fullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{fullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{bibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorbibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authornamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorfullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \strng{authorfullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1061-8600}
+      \field{journaltitle}{Journal of Computational and Graphical Statistics}
+      \field{number}{3}
+      \field{title}{R: A language for data analysis and graphics}
+      \field{volume}{5}
+      \field{year}{1996}
+      \field{pages}{299\bibrangedash 314}
+      \range{pages}{16}
+    \endentry
     \entry{mdn_webassembly}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=eace3534eb86e51f9a1db37427425ce9}{%
@@ -224,11 +299,12 @@
       \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
       \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{{WebAssembly}}
       \field{year}{2025}
       \verb{urlraw}
@@ -240,23 +316,26 @@
     \endentry
     \entry{figma_wasm}{misc}{}{}
       \name{author}{1}{}{%
-        {{hash=7ba078f119c9102e94e9bc9054acc26d}{%
-           family={{Evan Wallace}},
-           familyi={E\bibinitperiod}}}%
+        {{hash=f2a8c3d7362bf4e6a7dbc4d6ceae7a10}{%
+           family={Wallace},
+           familyi={W\bibinitperiod},
+           given={Evan},
+           giveni={E\bibinitperiod}}}%
       }
-      \strng{namehash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{fullhash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{fullhashraw}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{bibnamehash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{authorbibnamehash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{authornamehash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{authorfullhash}{7ba078f119c9102e94e9bc9054acc26d}
-      \strng{authorfullhashraw}{7ba078f119c9102e94e9bc9054acc26d}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \strng{namehash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{fullhash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{fullhashraw}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{bibnamehash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{authorbibnamehash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{authornamehash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{authorfullhash}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \strng{authorfullhashraw}{f2a8c3d7362bf4e6a7dbc4d6ceae7a10}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{{WebAssembly cut Figma's load time by 3x}}
       \field{year}{2017}
       \verb{urlraw}
@@ -268,23 +347,26 @@
     \endentry
     \entry{autocad_wasm}{misc}{}{}
       \name{author}{1}{}{%
-        {{hash=1eb00e82d93cd350720258e53c058802}{%
-           family={{Aaron Turner}},
-           familyi={A\bibinitperiod}}}%
+        {{hash=5db0a5e9d039c15d2eee8f30764a6b4e}{%
+           family={Turner},
+           familyi={T\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod}}}%
       }
-      \strng{namehash}{1eb00e82d93cd350720258e53c058802}
-      \strng{fullhash}{1eb00e82d93cd350720258e53c058802}
-      \strng{fullhashraw}{1eb00e82d93cd350720258e53c058802}
-      \strng{bibnamehash}{1eb00e82d93cd350720258e53c058802}
-      \strng{authorbibnamehash}{1eb00e82d93cd350720258e53c058802}
-      \strng{authornamehash}{1eb00e82d93cd350720258e53c058802}
-      \strng{authorfullhash}{1eb00e82d93cd350720258e53c058802}
-      \strng{authorfullhashraw}{1eb00e82d93cd350720258e53c058802}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \strng{namehash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{fullhash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{fullhashraw}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{bibnamehash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{authorbibnamehash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{authornamehash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{authorfullhash}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \strng{authorfullhashraw}{5db0a5e9d039c15d2eee8f30764a6b4e}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{{AutoCAD Web App}}
       \field{year}{2019}
       \verb{urlraw}
@@ -296,24 +378,28 @@
     \endentry
     \entry{google_earth_wasm}{misc}{}{}
       \name{author}{1}{}{%
-        {{hash=b7caa0d79fd51ecd5be406efe7b81e1a}{%
-           family={{Jordon Mears}},
-           familyi={J\bibinitperiod}}}%
+        {{hash=c5408b0e1fc370c8bed3024a9b7a62f9}{%
+           family={Mears},
+           familyi={M\bibinitperiod},
+           given={Jordon},
+           giveni={J\bibinitperiod}}}%
       }
-      \strng{namehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{fullhash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{fullhashraw}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{bibnamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{authorbibnamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{authornamehash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{authorfullhash}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \strng{authorfullhashraw}{b7caa0d79fd51ecd5be406efe7b81e1a}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \strng{namehash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{fullhash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{fullhashraw}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{bibnamehash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{authorbibnamehash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{authornamehash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{authorfullhash}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \strng{authorfullhashraw}{c5408b0e1fc370c8bed3024a9b7a62f9}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{{How we're bringing Google Earth to the web}}
+      \field{year}{2019}
       \verb{urlraw}
       \verb https://web.dev/case-studies/earth-webassembly/
       \endverb
@@ -340,58 +426,20 @@
       \strng{authornamehash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhash}{e41d0523c45d34fc1a4630ae8dfa1b45}
       \strng{authorfullhashraw}{e41d0523c45d34fc1a4630ae8dfa1b45}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{day}{5}
-      \field{langid}{english}
-      \field{month}{12}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{{{WebAssembly Core Specification}}}
       \field{year}{2019}
-      \field{dateera}{ce}
       \verb{urlraw}
       \verb https://www.w3.org/TR/wasm-core-1/
       \endverb
       \verb{url}
       \verb https://www.w3.org/TR/wasm-core-1/
       \endverb
-    \endentry
-    \entry{r_paper}{article}{}{}
-      \name{author}{2}{}{%
-        {{hash=ac7719f901654e5ae5281acf37563142}{%
-           family={Ihaka},
-           familyi={I\bibinitperiod},
-           given={Ross},
-           giveni={R\bibinitperiod}}}%
-        {{hash=8a97fae1ed0550968a6f77cd783776f5}{%
-           family={Gentleman},
-           familyi={G\bibinitperiod},
-           given={Robert},
-           giveni={R\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Taylor \& Francis}%
-      }
-      \strng{namehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{fullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{fullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{bibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{authorbibnamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{authornamehash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{authorfullhash}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \strng{authorfullhashraw}{d7f2c6c2f293831c8bf4a6a74e1d2020}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Journal of Computational and Graphical Statistics}
-      \field{number}{3}
-      \field{title}{R: A language for data analysis and graphics}
-      \field{volume}{5}
-      \field{year}{1996}
-      \field{pages}{299\bibrangedash 314}
-      \range{pages}{16}
     \endentry
     \entry{r_version_213_notes}{misc}{}{}
       \name{author}{1}{}{%
@@ -413,8 +461,10 @@
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2025-12-28}
+      \field{howpublished}{[Online]}
+      \field{note}{[Accessed: 2025-12-28]}
       \field{title}{The new R compiler package in R 2.13.0: Some first experiments}
+      \field{year}{2011}
       \verb{urlraw}
       \verb https://www.r-bloggers.com/2011/04/the-new-r-compiler-package-in-r-2-13-0-some-first-experiments/
       \endverb
@@ -454,29 +504,6 @@
       \verb{url}
       \verb https://homepage.divms.uiowa.edu/~luke/talks/Riot-2019.pdf
       \endverb
-    \endentry
-    \entry{rbytecodebook}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=293d1a9ce23b9c2d9a35c205643f4d72}{%
-           family={mikefc@coolbutuseless.com},
-           familyi={m\bibinitperiod}}}%
-      }
-      \strng{namehash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{fullhash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{fullhashraw}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{bibnamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{authorbibnamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{authornamehash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{authorfullhash}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \strng{authorfullhashraw}{293d1a9ce23b9c2d9a35c205643f4d72}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{https://coolbutuseless.github.io/book/rbytecodebook/}
-      \field{note}{Accessed: 2025-12-28}
-      \field{title}{R Bytecode Book}
-      \field{year}{2023}
     \endentry
     \entry{RJ-2017-1-ch}{article}{}{}
       \name{author}{1}{}{%
@@ -581,6 +608,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{isbn}{978-0-262-16209-8}
       \field{title}{Types and Programming Languages}
       \field{year}{2002}
     \endentry

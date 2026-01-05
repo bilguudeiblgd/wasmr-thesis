@@ -69,9 +69,14 @@ snižování, aby se generoval bajtkód WebAssembly, podporovaný běhovým syst
 poskytujícím vektorové operace a interoperabilitu hostitelského prostředí. Vyhodnocení
 reprezentativních statistických programů demonstruje životaschopnost kompilace
 jazyků podobných jazyku R do WebAssembly s využitím moderních návrhů.}
-\ctufitabstractENG{R is a widely-used dynamic language for statistical computing, but its dynamic nature prevents efficient ahead-of-time compilation. We present the design and implementation of a compiler for a statically-typed subset of R that targets WebAssembly. The defined language retains R's core characteristics, including first-class vector operations and lexical scoping, while introducing static typing to enable compilation. The compiler leverages the WebAssembly Garbage Collection proposal, which simplifies memory management and enables efficient representation of high-level language constructs. Source programs are transformed through parsing, type checking, and intermediate representation lowering to generate WebAssembly bytecode, supported by a runtime system providing vector operations and host environment interoperability. Evaluation on representative statistical programs demonstrates the viability of compiling R-like languages to WebAssembly using modern proposals.}
-\ctufitkeywordsCZE{WebAssembly, WASM GC, typovaný R, WASM bytecode, kompilátor založený na průchodech}
-\ctufitkeywordsENG{WebAssembly, WASM GC, typed R, WASM bytecode, pass-based Compiler}
+\ctufitabstractENG{R is a widely-used dynamic language for statistical computing, but its dynamic nature prevents
+efficient ahead-of-time compilation. This thesis presents the design and implementation of a compiler for a statically-typed subset of R, called Typed R, that targets WebAssembly. The defined language retains R's core characteristics,
+including first-class vector operations and lexical scoping, while introducing static typing to enable compilation.
+The compiler leverages the WebAssembly Garbage Collection proposal, which simplifies memory management and enables efficient representation of high-level language constructs.
+Source programs are transformed through parsing, type checking, and intermediate representation lowering to generate WebAssembly bytecode,
+supported by an easily extendable runtime system written in Typed R. Evaluation on representative statistical programs demonstrates the viability of compiling R-like languages to WebAssembly using modern proposals.}
+\ctufitkeywordsCZE{WebAssembly, WASM GC, Typovaný R, WASM bytecode, kompilátor založený na průchodech}
+\ctufitkeywordsENG{WebAssembly, WASM GC, Typed R, WASM bytecode, Pass-based Compiler}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END FILL IN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,7 +141,7 @@ jazyků podobných jazyku R do WebAssembly s využitím moderních návrhů.}
 
 \thispagestyle{empty}\maketitle\thispagestyle{empty}\cleardoublepage % do not remove these four commands
 
-\includepdf[pages={1-}]{example-assignment-include.pdf} % replace this file with your thesis assignment generated from ProjectsFIT
+\includepdf[pages={1-}]{baljibil-assignment.pdf} % replace this file with your thesis assignment generated from ProjectsFIT
 
 \imprintpage % do not remove this command
 \stopTOCentries
@@ -269,18 +274,18 @@ a school work pursuant of Section 60 (1) of the Act.
 \chapter{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
-	WASM   & Web Assembly                 \\
-	WAT    & Web Assembly Text                               \\
-	GC   & Garbage Collector                       \\
-	IR   & Intermediate Representation              \\
-	NSE  & Non Standard Evaluation (R) \\
   AST  & Abstract Syntax Tree \\
   CRAN  & The Comprehensive R Archive Network \\
+  FFI & Foreign function interface \\
+  GC   & Garbage Collector \\
+  I/O & Input, Output \\
+  IR   & Intermediate Representation \\
+  NSE  & Non Standard Evaluation (R) \\
   OOP  & Object Oriented Programming \\
   SIMD  & Single Instruction, Multiple Data \\
   WASI  & WebAssembly System Interface \\
-  FFI & Foreign function interface \\
-  I/O & Input, Output \\
+  WASM   & Web Assembly \\
+  WAT    & Web Assembly Text \\
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%
 % ABBREVIATIONS END
