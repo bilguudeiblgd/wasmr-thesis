@@ -17,15 +17,15 @@
 \contentsline {lstlisting}{\numberline {3.5}{\ignorespaces Loop examples}}{14}{lstlisting.3.5}%
 \contentsline {lstlisting}{\numberline {3.6}{\ignorespaces Block with tail expression}}{15}{lstlisting.3.6}%
 \contentsline {lstlisting}{\numberline {3.7}{\ignorespaces Closure example}}{15}{lstlisting.3.7}%
-\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{18}{lstlisting.3.8}%
+\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{17}{lstlisting.3.8}%
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{32}{lstlisting.4.1}%
-\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{33}{lstlisting.4.2}%
-\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{35}{lstlisting.4.3}%
-\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{36}{lstlisting.4.4}%
-\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{37}{lstlisting.4.5}%
-\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{38}{lstlisting.4.6}%
-\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{38}{lstlisting.4.7}%
+\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{30}{lstlisting.4.1}%
+\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{31}{lstlisting.4.2}%
+\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{33}{lstlisting.4.3}%
+\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{34}{lstlisting.4.4}%
+\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{35}{lstlisting.4.5}%
+\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Simple function}}{36}{lstlisting.4.6}%
+\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure function}}{36}{lstlisting.4.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -23,51 +23,20 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Abstract Grammar}{16}{subsection.3.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{16}{subsection.3.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Type System}{17}{section.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Primitive Types}{17}{subsection.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Logical}{17}{subsection.3.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Composite Types}{18}{subsection.3.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.3.1}Vector Types}{18}{subsubsection.3.4.3.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{18}{lstlisting.3.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.4}Function Types}{18}{subsection.3.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.5}Subtyping and Type Promotion}{18}{subsection.3.4.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt  {logical} $<:$ \texttt  {int} $<:$ \texttt  {double}) and covariant vector subtyping (\texttt  {vector<logical>} $<:$ \texttt  {vector<int>} $<:$ \texttt  {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{19}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:subtyping-hierarchy}{{3.1}{19}{Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts}{figure.caption.13}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.6}Type Checking}{20}{subsection.3.4.6}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{17}{lstlisting.3.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt  {logical} $<:$ \texttt  {int} $<:$ \texttt  {double}) and covariant vector subtyping (\texttt  {vector<logical>} $<:$ \texttt  {vector<int>} $<:$ \texttt  {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{18}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:subtyping-hierarchy}{{3.1}{18}{Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts}{figure.caption.13}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Bidirectional type checking for variable assignment. The type annotation \texttt  {double} provides the expected type (top-down), while the literal \texttt  {3.5} has its type inferred as \texttt  {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}}{20}{figure.caption.14}\protected@file@percent }
 \newlabel{fig:type-checking-simple}{{3.2}{20}{Bidirectional type checking for variable assignment. The type annotation \texttt {double} provides the expected type (top-down), while the literal \texttt {3.5} has its type inferred as \texttt {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed}{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.7}Typing Rules}{21}{subsection.3.4.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.8}Typing Contexts}{21}{subsection.3.4.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.9}Subtyping}{21}{subsection.3.4.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.1}Reflexivity and Base Cases}{21}{subsubsection.3.4.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.2}Transitivity}{22}{subsubsection.3.4.9.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.3}Vector Covariance}{22}{subsubsection.3.4.9.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.4}Subsumption}{22}{subsubsection.3.4.9.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.5}Literals and Variables}{23}{subsubsection.3.4.9.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.6}Arithmetic Operators}{23}{subsubsection.3.4.9.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.7}Comparison Operators}{23}{subsubsection.3.4.9.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.8}Logical Operators}{24}{subsubsection.3.4.9.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.9}Vector Construction}{24}{subsubsection.3.4.9.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.10}Range Construction}{24}{subsubsection.3.4.9.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.11}Vector Indexing}{25}{subsubsection.3.4.9.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.12}Vector Arithmetic}{25}{subsubsection.3.4.9.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.13}Scalar-Vector Operations}{25}{subsubsection.3.4.9.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.14}Function Definition}{25}{subsubsection.3.4.9.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.15}Function Application}{26}{subsubsection.3.4.9.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.16}Conditional Expressions}{26}{subsubsection.3.4.9.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.17}Assignment}{26}{subsubsection.3.4.9.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.18}Super-Assignment}{26}{subsubsection.3.4.9.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.19}Blocks}{27}{subsubsection.3.4.9.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.9.20}Return Statement}{27}{subsubsection.3.4.9.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Evaluation Model}{27}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{27}{subsection.3.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{27}{subsection.3.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Scalar Broadcasting}{28}{subsection.3.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Function Evaluation and Closures}{28}{subsection.3.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.5}Built-in Functions}{28}{subsection.3.5.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Built-in functions and their types}}{28}{table.caption.15}\protected@file@percent }
-\newlabel{tab:builtins}{{3.3}{28}{Built-in functions and their types}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Evaluation Model}{25}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{25}{subsection.3.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{25}{subsection.3.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Function Evaluation and Closures}{26}{subsection.3.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{26}{subsection.3.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Built-in functions and their types}}{26}{table.caption.15}\protected@file@percent }
+\newlabel{tab:builtins}{{3.3}{26}{Built-in functions and their types}{table.caption.15}{}}
 \@setckpt{text/3_language_design}{
-\setcounter{page}{29}
+\setcounter{page}{27}
 \setcounter{equation}{0}
 \setcounter{enumi}{4}
 \setcounter{enumii}{0}
@@ -78,7 +47,7 @@
 \setcounter{part}{0}
 \setcounter{chapter}{3}
 \setcounter{section}{5}
-\setcounter{subsection}{5}
+\setcounter{subsection}{4}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
@@ -91,7 +60,7 @@
 \setcounter{section@level}{0}
 \setcounter{Item}{4}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{56}
+\setcounter{bookmark@seq@number}{25}
 \setcounter{AM@survey}{0}
 \setcounter{tabx@nest}{0}
 \setcounter{listtotal}{0}

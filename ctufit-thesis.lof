@@ -9,12 +9,12 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Tree representation}}{6}{figure.caption.10}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{19}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{18}{figure.caption.13}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Bidirectional type checking for variable assignment. The type annotation \texttt {double} provides the expected type (top-down), while the literal \texttt {3.5} has its type inferred as \texttt {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}}{20}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Compiler pipeline architecture showing front-end, middle-end, and back-end phases}}{30}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Compiler pipeline architecture showing front-end, middle-end, and back-end phases}}{28}{figure.caption.16}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces End-to-end validation test architecture. Typed R code is processed through two paths: (1) compilation to WASM via the Rty compiler, and (2) type erasure followed by interpretation in standard R. Outputs are compared to ensure semantic equivalence.}}{44}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces End-to-end validation test architecture. Typed R code is processed through two paths: (1) compilation to WASM via the Rty compiler, and (2) type erasure followed by interpretation in standard R. Outputs are compared to ensure semantic equivalence.}}{42}{figure.caption.17}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {english}{}\relax 
