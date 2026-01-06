@@ -134,6 +134,10 @@ Compilation is fast enough for interactive development workflows.
 
 \subsection{Runtime Performance}
 
+We evaluate Rty performance through two complementary comparisons: against native R using command-line execution, and against webR, a WebAssembly-based R implementation for web environments.
+
+\subsubsection{Comparison Against Native R}
+
 We compare Rty (compiled to WASM, run via Wasmtime) against native R for micro-benchmarks:
 
 \textbf{Methodology:}
@@ -177,6 +181,69 @@ Closure creation (10k) & 154 & 59 & 2.61$\times$ \\
     \item Large vector allocations may be slower due to WASM GC
     \item No SIMD vectorization yet (future work)
 \end{itemize}
+
+\subsubsection{Comparison Against WebR}
+
+To evaluate performance in WebAssembly-native environments, we compare wasmR against webR, an interpreter-based R implementation running in WebAssembly. This comparison is particularly relevant for web-based data science applications where both systems operate under the same WebAssembly constraints.
+
+\textbf{Methodology:}
+
+The benchmark suite was executed in Node.js rather than a browser environment because Node.js v24.12.0+ provides full support for the WebAssembly GC proposal and function references, features essential for our compiler implementation. Node.js also offers more consistent performance characteristics without browser-specific optimizations or limitations, making it suitable for controlled benchmarking.
+
+The comparison architecture differs fundamentally between the two systems:
+\begin{itemize}
+    \item \textbf{wasmR}: The Rty compiler itself is compiled to WebAssembly (from Rust). This WASM-based compiler takes typed R code as input, performs compilation to WebAssembly, and immediately executes the resulting WASM code. This represents a compile-then-execute workflow entirely within WebAssembly.
+    \item \textbf{webR}: Initialized as an npm package, webR runs R code through its interpreter implementation. The interpreter itself is compiled to WebAssembly, but the R code is interpreted rather than compiled.
+\end{itemize}
+
+Both systems were measured using the tinybench library with 1-second measurement windows per benchmark. Each benchmark was executed after proper initialization, and we report the median latency to minimize the impact of outliers.
+
+Test environment:
+\begin{itemize}
+    \item Node.js version: 24.12.0 (npm 11.6.2)
+    \item webR version: 0.5.8
+    \item Hardware: Apple M1 (8-core, 16GB RAM)
+    \item Benchmarking library: tinybench 6.0.0
+\end{itemize}
+
+Table \ref{tab:webr-comparison} presents the performance comparison across five computational patterns that stress different aspects of the language runtime: vector operations, recursive computation, nested iteration, and closure management.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Benchmark} & \textbf{webR (ms)} & \textbf{wasmR (ms)} & \textbf{Speedup} \\
+\midrule
+Double sum (10k elements) & 4.42 & 1.08 & 4.15$\times$ \\
+Vector addition (10k) & 6.41 & 1.17 & 5.57$\times$ \\
+Fibonacci(25) (recursive) & 178.50 & 1.31 & 136.44$\times$ \\
+Nested loops (1M iterations) & 397.54 & 1.70 & 231.25$\times$ \\
+Closure creation (10k) & 18.86 & 1.16 & 16.10$\times$ \\
+\midrule
+\textbf{Initialization time} & 527--558 & 0.5--18 & \textbf{29--1116$\times$} \\
+\bottomrule
+\end{tabular}
+\caption{Runtime performance comparison between webR (interpreter) and wasmR (compiler). Median latencies reported from 1-second benchmark windows.}
+\label{tab:webr-comparison}
+\end{table}
+
+\textbf{Analysis:}
+
+The results demonstrate substantial performance advantages for the compilation-based approach:
+
+\begin{itemize}
+    \item \textbf{Vector operations}: wasmR achieves 4--6$\times$ speedups on vector sum and addition operations. Static type information enables direct manipulation of typed arrays without runtime type checking overhead.
+
+    \item \textbf{Control flow intensive workloads}: Recursive Fibonacci and nested loops show dramatic speedups of 136$\times$ and 231$\times$ respectively. These benchmarks highlight the fundamental performance difference between interpreted and compiled execution---webR must decode and interpret each operation at runtime, while wasmR's compiled code executes directly as optimized WASM instructions.
+
+    \item \textbf{Closure creation}: The 16$\times$ speedup demonstrates efficient closure compilation. wasmR generates specialized WASM structures using the GC proposal's structural types, avoiding the dynamic allocation and environment lookup overhead inherent in interpreter implementations.
+
+    \item \textbf{Initialization performance}: wasmR's initialization is dramatically faster (0.5--18ms vs 527--558ms), making it practical for short-lived scripts and interactive workflows where startup latency matters.
+\end{itemize}
+
+The performance gap is most pronounced for control-flow and computation-heavy workloads where interpretation overhead dominates. For simple vector operations where both systems can leverage WASM's native numeric types, the gap narrows but remains significant due to webR's need for runtime type checks and dispatch logic.
+
+It's important to note that webR is a full-featured R implementation supporting dynamic typing, S3/S4 object systems, non-standard evaluation, lazy evaluation, and thousands of built-in functions. wasmR trades this generality for performance by requiring static types and supporting a restricted feature set. This comparison illustrates the performance potential of ahead-of-time compilation for R-like languages when dynamic features can be constrained.
 
 \section{Discussion}
 The performance boost, compared to standard R environment and WebR, should be taken with a grain of salt.
