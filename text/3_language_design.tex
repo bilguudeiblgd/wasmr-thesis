@@ -136,281 +136,13 @@ implementation of those features take a lot of engineering time and effort. Ther
 what I see as essential and most used for demonstrating the point of this thesis.
 \clearpage
 \section{Syntax}
-The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. This section describes the core syntactic constructs.
 
-Let's start with examples before diving into formalities of the language. Starting with variables, they are declared using the left-assignment operator with optional type annotations:
-
-\begin{lstlisting}[language=R, caption={Variable assignment examples}]
-# Simple assignment with type inference
-x <- 10
-
-# Assignment with explicit type annotation
-y: int <- 20
-
-# Vector assignment
-vec <- c(1, 2, 3)
-\end{lstlisting}
-
-% \begin{lstlisting}[caption={Variable assignment in WAT}]
-% (module
-%   ;; Define array type for vectors
-%   (type $vec_i32 (array (mut i32)))
-  
-%   (func $main
-%     (local $x i32)
-%     (local $y i32)
-%     (local $vec (ref null $vec_i32))
-    
-%     ;; x <- 10
-%     i32.const 10
-%     local.set $x
-    
-%     ;; y: int <- 20
-%     i32.const 20
-%     local.set $y
-    
-%     ;; vec <- c(1, 2, 3)
-%     i32.const 1
-%     i32.const 2
-%     i32.const 3
-%     i32.const 3
-%     array.new_fixed $vec_i32 3
-%     local.set $vec
-%   )
-  
-%   (start $main)
-% )
-% \end{lstlisting}
-After variable assignment, we have very interesting syntax for 
-super assignment. R distinguishes between assigning a variable
-in the scope or outside the scope with different syntax, unlike
-other popular dynamic languages like Python or Javascript. In Typed R,
-we'll do the same. 
-
-\begin{lstlisting}[language=R, caption={Super-assignment example}, label={r_superassignment}]
-outer <- function() {
-    x <- 0
-    inner <- function() {
-        x <<- 10  # Modifies x in outer scope
-    }
-    inner()
-    return(x)  # Returns 10
-}
-\end{lstlisting}
-I should also note that on Code fragment~\ref{r_superassignment} above, Typed R looks
-exactly same as R. For trivial cases like this, type inference can help a lot, which we will talk in next chapter.
-
-Moving onto functions, they are first-class values defined using the \texttt{function} keyword:
-
-\begin{lstlisting}[language=R, caption={Function definition examples in typed R}]
-# Simple function with type annotations
-add <- function(a: int, b: int): int {
-    return(a + b)
-}
-
-# Function returning a vector
-create_vector <- function(): vector<double> {
-    return(c(1.0, 2.0, 3.0))
-}
-
-# Higher-order function
-apply_twice <- function(f: int -> int, x: int): int {
-    return(f(f(x)))
-}
-
-\end{lstlisting}
-First-class value mean they are essentially same as objects like vectors. They can be passed as parameter,
-saved to variable, can be returned from function.
-
-% \begin{lstlisting}[caption={Function definition examples in WAT}]
-% (module
-%   ;; Define array type for double vectors
-%   (type $vec_f64 (array (mut f64)))
-  
-%   ;; add <- function(a: int, b: int): int
-%   (func $add (param $a i32) (param $b i32) (result i32)
-%     local.get $a
-%     local.get $b
-%     i32.add
-%   )
-  
-%   ;; create_vector <- function(): vector<double>
-%   (func $create_vector (result (ref $vec_f64))
-%     f64.const 1.0
-%     f64.const 2.0
-%     f64.const 3.0
-%     i32.const 3
-%     array.new_fixed $vec_f64 3
-%   )
-%   ;; apply_twice is not shown here.
-  
-% )
-% \end{lstlisting}
-In terms of control-flow, I attempted to support everything similar as R. Starting with 
-\text{if-else}:
-
-\begin{lstlisting}[language=R, caption={Conditional examples in typed R}]
-# If statement
-if (x > 0) {
-    print(x)
-}
-
-# If-else statement
-if (x > 0) {
-    y <- 1
-} else {
-    y <- -1
-}
-
-# If expression (returns value)
-result <- if (x > 0) { 1 } else { -1 }
-\end{lstlisting}
-However, in R there's syntactic sugar where \texttt{if} that
-return expression can be written as 
-\texttt{if (expr) 1 else 0}, without brackets. It's not implemented
-in our compiler.
-
-
-% \begin{lstlisting}[caption={Conditional examples in WAT}]
-% (module
-%   ;; Import print function from host environment
-%   (import "env" "print" (func $print (param i32)))
-  
-%   (func $main
-%     (local $x i32)
-%     (local $y i32)
-    
-%     ;; Set x to some value for demonstration
-%     i32.const 5
-%     local.set $x
-    
-%     ;; if (x > 0) { print(x) }
-%     local.get $x
-%     i32.const 0
-%     i32.gt_s              ;; x > 0 (signed comparison)
-%     if
-%       local.get $x
-%       call $print
-%     end
-    
-%     ;; if (x > 0) { y <- 1 } else { y <- -1 }
-%     local.get $x
-%     i32.const 0
-%     i32.gt_s              ;; x > 0
-%     if
-%       i32.const 1
-%       local.set $y
-%     else
-%       i32.const -1
-%       local.set $y
-%     end
-%   )
-  
-%   (start $main)
-% )
-% \end{lstlisting}
-
-Moreover, like in R, two loop constructs are provided: \texttt{for} and \texttt{while}.
-
-\begin{lstlisting}[language=R, caption={Loop examples}]
-# For loop iterating over range
-for (i in 1:10) {
-    print(i)
-}
-
-# For loop iterating over vector
-vec <- c(1, 2, 3, 4, 5)
-for (x in vec) {
-    print(x)
-}
-
-# While loop
-i <- 1
-sum <- 0
-while (i <= 5) {
-    sum <- sum + i
-    i <- i + 1
-}
-\end{lstlisting}
-
-% \begin{lstlisting}[caption={While loop examples in WAT}]
-% (module
-%   (func $main
-%     (local $i i32)
-%     (local $sum i32)
-    
-%     ;; i <- 1
-%     i32.const 1
-%     local.set $i
-    
-%     ;; sum <- 0
-%     i32.const 0
-%     local.set $sum
-    
-%     ;; while (i <= 5) { ... }
-%     (block $break
-%       (loop $continue
-%         ;; Check condition: i <= 5
-%         local.get $i
-%         i32.const 5
-%         i32.le_s            ;; i <= 5 (signed comparison)
-%         i32.eqz             ;; negate: if NOT (i <= 5)
-%         br_if $break        ;; break if condition is false
-        
-%         ;; sum <- sum + i
-%         local.get $sum
-%         local.get $i
-%         i32.add
-%         local.set $sum
-        
-%         ;; i <- i + 1
-%         local.get $i
-%         i32.const 1
-%         i32.add
-%         local.set $i
-        
-%         ;; Continue loop
-%         br $continue
-%       )
-%     )
-%   )
-  
-%   (start $main)
-% )
-% \end{lstlisting}
-
-
-
-Blocks consist of zero or more statements followed by an optional tail expression. The tail expression (final expression without semicolon) determines the block's value:
-
-\begin{lstlisting}[language=R, caption={Block with tail expression}]
-f <- function(x: int): int {
-    y <- x * 2
-    z <- y + 1
-    z  # Tail expression - returned automatically
-}
-\end{lstlisting}
-
-Only functions create new scopes; blocks, if-statements, and loops share their enclosing function's scope. A \textbf{closure} is a function that captures variables from its defining environment. When a function references a variable from an outer function scope, that variable remains accessible even after the outer function returns. Super-assignment (\texttt{<<-}) modifies captured variables by searching enclosing function scopes.
-
-Example demonstrating closure:
-\begin{lstlisting}[language=R, caption={Closure example}]
-make_counter <- function(start: int): () -> int {
-    count <- start
-    function(): int {
-        count <<- count + 1
-        return(count)
-    }
-}
-
-counter <- make_counter(0)
-print(counter())  # Prints 1
-print(counter())  # Prints 2
-\end{lstlisting}
-
-
+\subsection{Overview}
+The syntax of the Typed R-like Language closely follows R conventions with extensions for explicit type annotations. The language retains R's characteristic left-assignment operator (\texttt{<-}), first-class functions, and vector-oriented syntax. Type annotations are introduced where needed for static typing, using a colon notation (e.g., \texttt{x: int}). This section presents the abstract grammar, lexical elements, and illustrative examples of core syntactic constructs.
 
 \subsection{Abstract Grammar}
+
+The abstract grammar uses the following notation: $e$ denotes expressions (computations that produce values), $s$ denotes statements (computations that perform actions and may bind variables), and $p$ denotes function parameters. Binary operations are represented by $\oplus$ (arithmetic: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%\%}; comparison: \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}; logical: \texttt{\&}, \texttt{|}), and unary operations by $\ominus$ (negation: \texttt{-}, logical not: \texttt{!}). Type annotations are denoted by $\tau$, variables by $x$, integer literals by $n$, and floating-point literals by $d$.
 
 \begin{align*}
 e ::= &\ x \quad \text{(variable)} \\
@@ -460,6 +192,140 @@ The language uses the following lexical tokens:
     \item \textbf{Identifiers:} Alphanumeric sequences starting with a letter or underscore
     \item \textbf{Special:} \texttt{...} (varargs placeholder)
 \end{itemize}
+
+\subsection{Illustrative Examples}
+
+This subsection demonstrates the syntax through concrete examples, organized by language construct.
+
+\paragraph{Variable Assignment}
+
+Variables are declared using the left-assignment operator with optional type annotations:
+
+\begin{lstlisting}[language=R, caption={Variable assignment examples}]
+# Simple assignment with type inference
+x <- 10
+
+# Assignment with explicit type annotation
+y: int <- 20
+
+# Vector assignment
+vec <- c(1, 2, 3)
+\end{lstlisting}
+
+\paragraph{Super-assignment}
+
+R distinguishes between assigning a variable in the current scope versus an outer scope with different syntax, unlike other popular dynamic languages like Python or Javascript. Typed R retains this distinction. 
+
+\begin{lstlisting}[language=R, caption={Super-assignment example}, label={r_superassignment}]
+outer <- function() {
+    x <- 0
+    inner <- function() {
+        x <<- 10  # Modifies x in outer scope
+    }
+    inner()
+    return(x)  # Returns 10
+}
+\end{lstlisting}
+Note that in Code fragment~\ref{r_superassignment}, Typed R syntax is identical to R. For trivial cases like this, type inference can help significantly, as discussed in the type system section.
+
+\paragraph{Functions}
+
+Functions are first-class values defined using the \texttt{function} keyword:
+
+\begin{lstlisting}[language=R, caption={Function definition examples in typed R}]
+# Simple function with type annotations
+add <- function(a: int, b: int): int {
+    return(a + b)
+}
+
+# Function returning a vector
+create_vector <- function(): vector<double> {
+    return(c(1.0, 2.0, 3.0))
+}
+
+# Higher-order function
+apply_twice <- function(f: int -> int, x: int): int {
+    return(f(f(x)))
+}
+
+\end{lstlisting}
+First-class values mean they are essentially the same as objects like vectors. They can be passed as parameters, saved to variables, and returned from functions.
+
+\paragraph{Control Flow}
+
+Conditional expressions use \texttt{if-else} syntax similar to R:
+
+\begin{lstlisting}[language=R, caption={Conditional examples in typed R}]
+# If statement
+if (x > 0) {
+    print(x)
+}
+
+# If-else statement
+if (x > 0) {
+    y <- 1
+} else {
+    y <- -1
+}
+
+# If expression (returns value)
+result <- if (x > 0) { 1 } else { -1 }
+\end{lstlisting}
+Note that R's syntactic sugar for single-expression conditionals (\texttt{if (expr) 1 else 0} without brackets) is not implemented in our compiler.
+
+\paragraph{Loops}
+
+Two loop constructs are provided: \texttt{for} and \texttt{while}.
+
+\begin{lstlisting}[language=R, caption={Loop examples}]
+# For loop iterating over range
+for (i in 1:10) {
+    print(i)
+}
+
+# For loop iterating over vector
+vec <- c(1, 2, 3, 4, 5)
+for (x in vec) {
+    print(x)
+}
+
+# While loop
+i <- 1
+sum <- 0
+while (i <= 5) {
+    sum <- sum + i
+    i <- i + 1
+}
+\end{lstlisting}
+
+\paragraph{Blocks and Closures}
+
+Blocks consist of zero or more statements followed by an optional tail expression. The tail expression (final expression without semicolon) determines the block's value:
+
+\begin{lstlisting}[language=R, caption={Block with tail expression}]
+f <- function(x: int): int {
+    y <- x * 2
+    z <- y + 1
+    z  # Tail expression - returned automatically
+}
+\end{lstlisting}
+
+Only functions create new scopes; blocks, if-statements, and loops share their enclosing function's scope. A \textbf{closure} is a function that captures variables from its defining environment. When a function references a variable from an outer function scope, that variable remains accessible even after the outer function returns. Super-assignment (\texttt{<<-}) modifies captured variables by searching enclosing function scopes.
+
+Example demonstrating closure:
+\begin{lstlisting}[language=R, caption={Closure example}]
+make_counter <- function(start: int): () -> int {
+    count <- start
+    function(): int {
+        count <<- count + 1
+        return(count)
+    }
+}
+
+counter <- make_counter(0)
+print(counter())  # Prints 1
+print(counter())  # Prints 2
+\end{lstlisting}
 
 \section{Type System}
 The type system ensures type safety through static analysis while supporting type inference to maintain concise syntax and ease of development. Type inference fails for programs lacking sufficient type information, requiring explicit annotations in those cases. The type grammar defines three major categories:

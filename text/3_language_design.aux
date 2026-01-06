@@ -12,31 +12,39 @@
 \@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Comparison of language types supported by R and Typed R}}{13}{table.caption.12}\protected@file@percent }
 \newlabel{tab:r-typed-r-comparison1}{{3.2}{13}{Comparison of language types supported by R and Typed R}{table.caption.12}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Syntax}{14}{section.3.3}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}{\ignorespaces Variable assignment examples}}{14}{lstlisting.3.1}\protected@file@percent }
-\newlabel{r_superassignment}{{3.2}{14}{Super-assignment example}{lstlisting.3.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}{\ignorespaces Super-assignment example}}{14}{lstlisting.3.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.3}{\ignorespaces Function definition examples in typed R}}{14}{lstlisting.3.3}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.4}{\ignorespaces Conditional examples in typed R}}{15}{lstlisting.3.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.5}{\ignorespaces Loop examples}}{15}{lstlisting.3.5}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.6}{\ignorespaces Block with tail expression}}{16}{lstlisting.3.6}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.7}{\ignorespaces Closure example}}{16}{lstlisting.3.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Abstract Grammar}{17}{subsection.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{17}{subsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Type System}{18}{section.3.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{18}{lstlisting.3.8}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt  {logical} $<:$ \texttt  {int} $<:$ \texttt  {double}) and covariant vector subtyping (\texttt  {vector<logical>} $<:$ \texttt  {vector<int>} $<:$ \texttt  {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{19}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:subtyping-hierarchy}{{3.1}{19}{Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Bidirectional type checking for variable assignment. The type annotation \texttt  {double} provides the expected type (top-down), while the literal \texttt  {3.5} has its type inferred as \texttt  {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}}{21}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:type-checking-simple}{{3.2}{21}{Bidirectional type checking for variable assignment. The type annotation \texttt {double} provides the expected type (top-down), while the literal \texttt {3.5} has its type inferred as \texttt {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed}{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Evaluation Model}{26}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{26}{subsection.3.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{26}{subsection.3.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Function Evaluation and Closures}{27}{subsection.3.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{27}{subsection.3.5.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Built-in functions and their types}}{27}{table.caption.15}\protected@file@percent }
-\newlabel{tab:builtins}{{3.3}{27}{Built-in functions and their types}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Overview}{14}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Abstract Grammar}{14}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Lexical Elements}{15}{subsection.3.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}Illustrative Examples}{16}{subsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Variable Assignment}{16}{paragraph*.13}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}{\ignorespaces Variable assignment examples}}{16}{lstlisting.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Super-assignment}{16}{paragraph*.14}\protected@file@percent }
+\newlabel{r_superassignment}{{3.2}{16}{Super-assignment example}{lstlisting.3.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.2}{\ignorespaces Super-assignment example}}{16}{lstlisting.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Functions}{17}{paragraph*.15}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.3}{\ignorespaces Function definition examples in typed R}}{17}{lstlisting.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Control Flow}{17}{paragraph*.16}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.4}{\ignorespaces Conditional examples in typed R}}{17}{lstlisting.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Loops}{18}{paragraph*.17}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.5}{\ignorespaces Loop examples}}{18}{lstlisting.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Blocks and Closures}{18}{paragraph*.18}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.6}{\ignorespaces Block with tail expression}}{18}{lstlisting.3.6}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.7}{\ignorespaces Closure example}}{19}{lstlisting.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Type System}{19}{section.3.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{19}{lstlisting.3.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Subtyping hierarchy showing scalar type promotion (\texttt  {logical} $<:$ \texttt  {int} $<:$ \texttt  {double}) and covariant vector subtyping (\texttt  {vector<logical>} $<:$ \texttt  {vector<int>} $<:$ \texttt  {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts.}}{21}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:subtyping-hierarchy}{{3.1}{21}{Subtyping hierarchy showing scalar type promotion (\texttt {logical} $<:$ \texttt {int} $<:$ \texttt {double}) and covariant vector subtyping (\texttt {vector<logical>} $<:$ \texttt {vector<int>} $<:$ \texttt {vector<double>}). Scalar-to-vector conversions preserve the subtyping relationship, allowing implicit promotion in both scalar and vector contexts}{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Bidirectional type checking for variable assignment. The type annotation \texttt  {double} provides the expected type (top-down), while the literal \texttt  {3.5} has its type inferred as \texttt  {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed.}}{22}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:type-checking-simple}{{3.2}{22}{Bidirectional type checking for variable assignment. The type annotation \texttt {double} provides the expected type (top-down), while the literal \texttt {3.5} has its type inferred as \texttt {double} (bottom-up). The unification step verifies that both types match, allowing the assignment to proceed}{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Evaluation Model}{27}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{27}{subsection.3.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{27}{subsection.3.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Function Evaluation and Closures}{28}{subsection.3.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{28}{subsection.3.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Built-in functions and their types}}{28}{table.caption.21}\protected@file@percent }
+\newlabel{tab:builtins}{{3.3}{28}{Built-in functions and their types}{table.caption.21}{}}
 \@setckpt{text/3_language_design}{
-\setcounter{page}{28}
+\setcounter{page}{29}
 \setcounter{equation}{0}
 \setcounter{enumi}{4}
 \setcounter{enumii}{0}
@@ -60,7 +68,7 @@
 \setcounter{section@level}{0}
 \setcounter{Item}{7}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{25}
+\setcounter{bookmark@seq@number}{27}
 \setcounter{AM@survey}{0}
 \setcounter{tabx@nest}{0}
 \setcounter{listtotal}{0}
