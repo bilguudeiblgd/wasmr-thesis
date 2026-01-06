@@ -567,6 +567,57 @@
       \field{pages}{509\bibrangedash 521}
       \range{pages}{13}
     \endentry
+    \entry{rasm}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=f11a6948ca6fecf03a6917deece1e80a}{%
+           family={Matejka},
+           familyi={M\bibinitperiod},
+           given={Grant},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {California Polytechnic State University}%
+      }
+      \strng{namehash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{fullhash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{fullhashraw}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{bibnamehash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{authorbibnamehash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{authornamehash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{authorfullhash}{f11a6948ca6fecf03a6917deece1e80a}
+      \strng{authorfullhashraw}{f11a6948ca6fecf03a6917deece1e80a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Rasm: Compiling Racket to WebAssembly}
+      \field{type}{mathesis}
+      \field{year}{2022}
+    \endentry
+    \entry{fallin_aot_js}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=9d3f717381cc3f1c9e8f6a9056bd5d42}{%
+           family={Fallin},
+           familyi={F\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{fullhash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{fullhashraw}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{bibnamehash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{authorbibnamehash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{authornamehash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{authorfullhash}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \strng{authorfullhashraw}{9d3f717381cc3f1c9e8f6a9056bd5d42}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Unpublished research notes and talks}
+      \field{title}{Ahead-of-Time Compilation of JavaScript via Interpreter Specialization}
+      \field{year}{2024}
+    \endentry
     \entry{bidirectional_typing}{article}{}{}
       \name{author}{2}{}{%
         {{hash=60889da679127853753f4585e316703b}{%

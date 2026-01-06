@@ -11,45 +11,45 @@
 \contentsline {section}{\numberline {1.1}Aim and Research Questions}{2}{section.1.1}%
 \contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}The R Programming Language}{3}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Type System}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.1}Type System}{4}{subsection.2.1.1}%
 \contentsline {section}{\numberline {2.2}WebAssembly}{5}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}WebAssembly Garbage Collection proposal}{8}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}Previous works}{8}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Language Design and Type System}{9}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Design Goals}{9}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Typed R-like Language}{10}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Syntax}{13}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Abstract Grammar}{16}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{16}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Type System}{17}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Evaluation Model}{25}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{25}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{25}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Function Evaluation and Closures}{26}{subsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{26}{subsection.3.5.4}%
-\contentsline {chapter}{\numberline {4}Compiler and Runtime}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Compiler Architecture}{27}{section.4.1}%
-\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{29}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Function Compilation}{32}{subsection.4.2.1}%
-\contentsline {section}{\numberline {4.3}Runtime System}{36}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Implementation Details}{37}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{37}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{37}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{38}{subsection.4.4.3}%
-\contentsline {chapter}{\numberline {5}Evaluation}{40}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Correctness}{40}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Unit Tests}{40}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Integration Tests}{40}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Validation Tests}{41}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Performance}{42}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Compilation Time}{42}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{42}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Discussion}{43}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Results}{43}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Limitations}{44}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Future Work}{44}{subsection.5.3.3}%
-\contentsline {chapter}{\numberline {6}Conclusion}{46}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Extra}{48}{appendix.A}%
+\contentsline {section}{\numberline {2.3}Previous works}{9}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Language Design and Type System}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Design Goals}{10}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Typed R-like Language}{11}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Syntax}{14}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Abstract Grammar}{17}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Lexical Elements}{17}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Type System}{18}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Evaluation Model}{26}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Evaluation Order and Type Promotion}{26}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Vector Operations}{26}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Function Evaluation and Closures}{27}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Built-in Functions}{27}{subsection.3.5.4}%
+\contentsline {chapter}{\numberline {4}Compiler and Runtime}{28}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Compiler Architecture}{28}{section.4.1}%
+\contentsline {section}{\numberline {4.2}WebAssembly Code Generation}{30}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Function Compilation}{33}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Runtime System}{37}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Implementation Details}{38}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Compilation Limitations}{38}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Design Decisions}{38}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Performance Considerations}{39}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Evaluation}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Correctness}{41}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Unit Tests}{41}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Integration Tests}{41}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Validation Tests}{42}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Performance}{43}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Compilation Time}{43}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Runtime Performance}{43}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Discussion}{44}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Results}{44}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Limitations}{45}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Future Work}{45}{subsection.5.3.3}%
+\contentsline {chapter}{\numberline {6}Conclusion}{47}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Extra}{49}{appendix.A}%
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
@@ -98,4 +98,6 @@
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{Contents of the attachment}{52}{appendix*.21}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Contents of the attachment}{54}{appendix*.21}%

@@ -2,7 +2,7 @@
 
 \section{The R Programming Language}
 
-\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language \cite{r_paper}. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
+\textbf{R} is a domain-specific language designed for statistical computing and graphics, originally developed by Ross Ihaka and Robert Gentleman in the early 1990s as an open-source implementation of the \textbf{S} language \cite{r_paper}, which was an experimental language developed for the same purpose by Bell Labs. With its CRAN package manager providing more than 20000 packages, it's a widely programming language used by industries where experimenting with data is involved, such as data analytics, data mining and bio-informatics. 
 
 R is fundamentally designed around vector operations, where everything, even scalar values, is represented as a vector. 
 This design manifests in the language's support for \textbf{vectorization}, enabling operations to apply element-wise across data structures without explicit loops, as seen in expressions like \texttt{c(1,2,3) + c(4,5,6)} $\Rightarrow$ \texttt{c(5,7,9)}. The language employs \textbf{dynamic typing} with types determined at runtime rather than through variable declarations, facilitating rapid prototyping and interactive data exploration at the cost of static verification. Combined with \textbf{lexical scoping} and closures, where functions capture their defining environment, R supports functional programming patterns that enable higher-order abstractions and metaprogramming capabilities essential for statistical computing. The language's \textbf{lazy evaluation} strategy delays argument evaluation until values are required, allowing non-standard evaluation mechanisms that support domain-specific sublanguages. To preserve referential transparency, R implements \textbf{copy-on-modify semantics}, implicitly copying objects upon modification to prevent unexpected side effects, though this approach can introduce performance overhead in memory-intensive workloads.
@@ -195,11 +195,28 @@ There's still more to discuss about features and characteristics of of WASM.
 We can take a look at instructions, traps, data segment, element segment, tables but they are not of 
 utmost importance for reading this thesis. The reader may look explore more in details in WASM specs\cite{wasm_specs}.
 \subsection{WebAssembly Garbage Collection proposal}
-WASM Garbage collection proposal, in short GC, is a new proposal that tries to provide efficient support
+WASM Garbage collection proposal, in short GC, is a new proposal that provides efficient support
 for high-level languages. Since WASM announcement, community were coming up with their own 
 GC as a way to compile high-level languages to WASM. With GC proposal, it helps to take load off of developers
-who are porting their languages to WASM. In this proposal, they introduced structs and arrays, which we'll heavily 
-use in the implementation of this thesis. 
+who are porting their languages to WASM. For example, if one wants to compile an array in WASM, one has to find
+a slot from the linear memory that WASM provides, bookkeep the pointer and the size, calculate the amount to allocate,
+then allocate the array. It's non-trivial work and the code like this for low-level environment leads to unnecessary pain, where bugs are easy to make, but 
+hard to debug due to readability issues of low-level codes even with formats like WAT. Fortunately, they introduced high-level constructs such as structs and arrays with the proposal, which we'll heavily 
+use in the implementation of this thesis. It's another layer of abstraction that'
+ll helps me to write less code and support more feature. To hint on the key features, and how it's going to help us:
+
+\begin{itemize}
+  \item Struct Types: Define record-like structures for representing vectors and closures
+  \item Array Types: Efficiently store vector element data
+  \item Subtyping: Enable polymorphic closure environments (crucial for Chapter 4)
+\end{itemize}
+\begin{lstlisting}[language=wat, caption={Example: A vector of doubles can be represented}]
+(type $vec_f64 (struct
+  (field $data (ref (array (mut f64))))
+  (field $length (mut i32))
+))
+\end{lstlisting}
+We will dive deep into these in Chapter 4.
 
 \section{Previous works}
 Work related to R about compilers and interpreter has been nothing but inspiring. The R
@@ -215,7 +232,10 @@ WebR \cite{webR}, most notably, is a recent work that compiles the R interpreter
 to run R code on the web. Though as hinted at introduction, compiling the interpreter to WASM
 has its tradeoffs.
 
-In terms of type system and type annotations around the R, there has been a discussion around type system in R as well \cite{R_towards_type_system}.
-There are even implementations for type system for R \cite{typr2025}, although it's not adopted by R community. However, the purpose of the thesis
-is exploring the compilation of R to WASM. In that we use type annotations, but it's important to note that
-we won't dig deep into type systems at all.
+Although there's not much work other than WebR that tries to exactly compile R to WASM, there are
+some interesting works that tries to compile other dynamic languages to WASM. Rasm,\cite{rasm} a prototype compiler for a subset of Racket, demonstrates that programs from a lexically scoped, functional language can be translated directly 
+to WebAssembly without embedding an interpreter, though only for a
+restricted language fragment and without any GC, so memory used is limited. Research on ahead-of-time compilation of JavaScript\cite{fallin_aot_js} to WebAssembly similarly explores alternatives to interpreter compilation, often relying on partial 
+evaluation or specialization of an interpreter to preserve dynamic semantics. These approaches tend to retain significant runtime complexity in the generated code, limiting their practicality. 
+The present thesis differs from interpreter-based and specialization-based techniques by adopting a statically typed subset of R, using type annotations to enable more direct compilation. Rather than aiming for full compatibility, this work focuses on feasibility and expressiveness, particularly with respect to R’s vectorized operations and lexical scoping. As such, it positions itself as a complementary exploration of direct compilation, rather than a replacement for existing R execution environments.
+
