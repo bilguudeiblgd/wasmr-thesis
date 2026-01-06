@@ -14,7 +14,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Typed R compiler pipeline showing the multi-pass architecture from source code through lexing, parsing, type resolution, IR transformation passes, to WebAssembly code generation}}{27}{figure.caption.22}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces End-to-end validation test architecture. Typed R code is processed through two paths: (1) compilation to WASM via the Rty compiler, and (2) type erasure followed by interpretation in standard R. Outputs are compared to ensure semantic equivalence.}}{40}{figure.caption.23}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces End-to-end validation test architecture. Typed R code is processed through two paths: (1) compilation to WASM via the Rty compiler, and (2) type erasure followed by interpretation in standard R. Outputs are compared to ensure semantic equivalence.}}{39}{figure.caption.23}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {english}{}\relax 
