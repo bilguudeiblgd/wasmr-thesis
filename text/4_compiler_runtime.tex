@@ -335,14 +335,53 @@ For simple functions that capture no variables, compilation is more straightforw
 The complete function compilation process integrates type registration, closure analysis, environment struct generation, and code emission into a cohesive pipeline. For each function, the compiler identifies whether it captures variables from outer scopes through static analysis. If captures exist, it generates an appropriate environment struct type and modifies the function signature to accept the environment as its first parameter. The function body is then emitted with additional instructions to downcast the environment and access captured variables through struct field accesses. When a function is returned as a closure value, the compiler generates code to construct the environment struct at the return site, populate it with the current values of captured variables, store the function pointer in the first field, and return the struct reference representing the closure.
 
 \section{Runtime System}
+Runtime is divided into two parts. One is being standard-like functions written in Typed R. The other is functions built with help of
+the compiler. For example, a function \texttt{print}, is impossible to write as an R program without any knowledge of what is it in compiler. First, let's talk
+about runtimes ported as R, one can say, it's a standard library. It's easier to write Typed R code than WASM. For mathematical and statistics operations,
+coding them as Typed R, and compiling it together is convenient and also helps to find bugs. Below Figure~\ref{fig:runtime-compilation} shows the diagram of such process.
+\pagebreak
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=1cm and 1.8cm,
+    box/.style={rectangle, draw, fill=blue!10, minimum width=2.5cm, minimum height=0.8cm, align=center, rounded corners, font=\small},
+    inputbox/.style={rectangle, draw, fill=cyan!20, minimum width=2.5cm, minimum height=0.8cm, align=center, rounded corners, font=\small},
+    mergebox/.style={rectangle, draw, fill=orange!20, minimum width=2.5cm, minimum height=0.8cm, align=center, rounded corners, font=\small},
+    arrow/.style={->, >=stealth, thick}
+]
 
-The runtime leverages WebAssembly GC for automatic memory management, treating vectors, and closures as GC-managed heap objects. This eliminates the need for explicit deallocation, as WebAssembly GC handles reference counting and garbage collection automatically. Linear memory is reserved for WASI I/O buffers and string serialization. The memory layout reserves address 0 for null pointer checks, allocates addresses from 8 onward for WASI I/O buffers used by \texttt{fd\_write}, and maintains a dynamic region managed by the compiler for temporary string buffers.
+% Left path - User source
+\node[inputbox] (user_input) {User R\\Source Code};
+\node[box, below=of user_input] (user_ast) {AST};
 
-WASI integration provides I/O capabilities through the WebAssembly System Interface. The runtime imports \texttt{fd\_write} from \texttt{wasi\_snapshot\_preview1} with signature \texttt{(i32, i32, i32, i32) -> i32}, accepting parameters for file descriptor, iovs pointer, iovs length, and nwritten pointer. This enables output to stdout and stderr. The exported \texttt{\_start} function serves as the entry point, maintaining compatibility with WASI runtimes like Wasmtime.
+% Right path - Runtime
+\node[inputbox, right=of user_input] (runtime_input) {Runtime R\\Files};
+\node[box, below=of runtime_input] (runtime_ast) {AST};
 
-Moreover, we have two ways to extend our runtime. Either add inline WASM code in the source code, like how \texttt{print} works, or
-write Typed R program, which will be compiled and embedded into the top of the generated WASM code. The latter simplifies the implementation and 
-makes it easy to extend our runtime. For mathematicals, and library functions, we can just write Typed R program and they'll be compiled to WASM as runtime.
+% Merge and pipeline
+\node[mergebox, below=1.2cm of user_ast, xshift=2.1cm] (merge) {AST Merge};
+\node[box, below=of merge] (ir) {Typed IR};
+\node[box, below=of ir] (codegen) {Code Generator};
+\node[font=\small\bfseries, below=of codegen] (output) {Single WASM};
+
+% Arrows
+\draw[arrow] (user_input) -- (user_ast);
+\draw[arrow] (runtime_input) -- (runtime_ast);
+\draw[arrow] (user_ast) -- (merge);
+\draw[arrow] (runtime_ast) -- (merge);
+\draw[arrow] (merge) -- (ir);
+\draw[arrow] (ir) -- (codegen);
+\draw[arrow] (codegen) -- (output);
+
+\end{tikzpicture}
+\caption{Simplified compilation pipeline: user source code and runtime files are parsed into separate ASTs, merged, type-resolved into IR, and compiled to a single WebAssembly module.}
+\label{fig:runtime-compilation}
+\end{figure}
+
+However, there's inherent limitation to write a runtime with Typed R. It won't be able to express low-level details. Therefore, we also have built-in functions which serves as runtime. A good example is \texttt{print}. It's provided by WASI integration, which provides I/O capabilities through the WebAssembly System Interface. The runtime imports \texttt{fd\_write} from \texttt{wasi\_snapshot\_preview1} with signature \texttt{(i32, i32, i32, i32) -> i32}, accepting parameters for file descriptor, iovs pointer, iovs length, and nwritten pointer. This enables output to stdout and stderr.
+
+Moreover, the runtime uses WebAssembly GC for automatic memory management, treating vectors, and closures as GC-managed heap objects. This eliminates the need for explicit deallocation, as WebAssembly GC handles reference counting and garbage collection automatically. Linear memory is reserved for WASI I/O buffers and string serialization. The memory layout reserves address 0 for null pointer checks, allocates addresses from 8 onward for WASI I/O buffers used by \texttt{fd\_write}, and maintains a dynamic region managed by the compiler for temporary string buffers.
+
 \section{Implementation Details}
 
 \subsection{Compilation Limitations}
@@ -350,14 +389,18 @@ makes it easy to extend our runtime. For mathematicals, and library functions, w
 The current implementation represents a proof-of-concept compiler with several deliberate limitations. Most notably, the compiler lacks any exception or error handling mechanism, meaning runtime errors simply terminate execution without graceful recovery. The standard library remains minimal, providing only essential built-in functions like \texttt{print}, \texttt{length}, \texttt{sum}, and vector construction. I/O capabilities are restricted to print output via WASI; file operations and user input are not supported. Type coercion is limited compared to R's flexible type system, supporting only the basic numeric promotion hierarchy (logical $<:$ int $<:$ double). Vector operations cover common arithmetic and indexing but lack many of R's specialized functions like \texttt{apply}, \texttt{sapply}, or statistical operations. 
 
 \subsection{Design Decisions}
+Several architectural decisions shaped the compiler's implementation, each involving trade-offs between performance, simplicity, and compatibility with R semantics. The choice of static typing fundamentally enables efficient ahead-of-time compilation and early error detection, though at the cost of R's dynamic flexibility. 
 
-Several architectural decisions shaped the compiler's implementation, each involving trade-offs between performance, simplicity, and compatibility with R semantics. The choice of static typing fundamentally enables efficient ahead-of-time compilation and early error detection, though at the cost of R's dynamic flexibility. This trade-off aligns with the thesis goal of exploring compilation rather than interpretation.
+One of the most important design principle was to only emit single WASM file. It's choice between single WASM file or module WASM files, where one could represent the runtime and other 
+user module compilation. Then these multiple modules would talk to each other through imports and such. This seems well enough but practically, linking of WASM is not that simple. It needs an 
+environment and some language, which has or connected to some WASM runtime and its SDK so where they can be linked together. This brings a lot of friction when it comes to using our compiler.
+Therefore, for sake of convenience when executing we only emit single WASM file. It allows runtimes to easily execute the generated WASM code from Typed R. Although it's biggest trade-off is that,
+every WASM file we generate contains the runtime. So runtime functions explode, the file size can explode as well. Moreover, it makes debugging very hard. It's hard for users to find their function, swimming through
+big chunk of code generated for runtime. With all said, it's still the simplest and effective way. 
 
 Memory management leverages the WebAssembly GC proposal, which simplifies object lifecycle management and enables efficient heap object representation without manual deallocation. This choice requires newer WebAssembly runtimes but eliminates the complexity of implementing a custom garbage collector or reference counting system. The scoping model follows R's semantics where only functions create scopes while blocks, if-statements, and loops share their enclosing function's scope. This design simplifies closure implementation by avoiding the need to track block-level environments.
 
 For function calls, the compiler uses typed function references rather than function tables. Typed funcrefs enable type-safe indirect calls and eliminate table management overhead, though this feature requires WebAssembly reference types support. Closures are represented as structs containing a function reference and captured environment, providing cleaner semantics than stack manipulation approaches. Variables captured with super-assignment semantics use reference cells (GC structs wrapping mutable values), enabling efficient updates through multiple closure layers.
-
-Vector operations are inlined as loops rather than compiled to runtime function calls. While this increases code size, it improves performance for common element-wise operations by avoiding function call overhead and enabling better optimization by the WebAssembly runtime.
 
 The implementation relies on two key tools: wasm-encoder for code generation and Wasmtime for execution. The wasm-encoder library (part of the wasm-tools project) provides a programmatic API for constructing WebAssembly modules in Rust. Unlike alternatives such as writing WebAssembly Text Format (WAT) and assembling with wat2wasm, or using the older parity-wasm library, wasm-encoder offers type-safe module construction with strong guarantees about validity, making it easier to generate correct bytecode. The library's design matches naturally with Rust's type system, reducing the likelihood of encoding errors.
 
@@ -367,5 +410,6 @@ For runtime execution and testing, Wasmtime serves as the WebAssembly runtime en
 
 The compiler employs several optimization strategies to generate efficient WebAssembly code. Type specialization creates separate vector struct types for i32, f64, and anyref element types, avoiding runtime type checks and enabling more efficient memory layouts. When function call targets are known at compile time, the compiler generates direct \texttt{call} instructions rather than slower indirect \texttt{call\_ref} instructions, reducing call overhead significantly.
 
-Local variable allocation reuses slots for temporary variables when their lifetimes don't overlap, minimizing the function's local declaration section and potentially improving WebAssembly JIT compilation. As discussed earlier, component-wise vector operations are inlined as loops rather than calling runtime functions, trading code size for execution speed. The compiler also caches function signature type indices to avoid recreating identical types in the WebAssembly type section, reducing module size and improving instantiation time. These optimizations focus on low-hanging fruit that provide measurable benefits without requiring complex analysis passes.
+Local variable allocation reuses slots for temporary variables when their lifetimes don't overlap, minimizing the function's local declaration section and potentially improving WebAssembly JIT compilation. 
+The compiler also caches function signature type indices to avoid recreating identical types in the WebAssembly type section, reducing module size and improving instantiation time. These optimizations focus on low-hanging fruit that provide measurable benefits without requiring complex analysis passes.
 
