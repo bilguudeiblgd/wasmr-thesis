@@ -670,7 +670,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmtt9.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT ./text/4_compiler_runtime.tex
 INPUT ./text/4_compiler_runtime.tex
 OUTPUT text/4_compiler_runtime.aux
@@ -693,6 +692,7 @@ OUTPUT text/appendix.aux
 INPUT ./text/appendix.tex
 INPUT ./text/appendix.tex
 INPUT text/appendix.tex
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT ./text/medium.tex
 INPUT ./text/medium.tex
 OUTPUT text/medium.aux
@@ -746,7 +746,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb
