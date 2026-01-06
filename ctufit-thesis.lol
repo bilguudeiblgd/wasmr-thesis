@@ -18,16 +18,16 @@
 \contentsline {lstlisting}{\numberline {3.5}{\ignorespaces Loop examples}}{18}{lstlisting.3.5}%
 \contentsline {lstlisting}{\numberline {3.6}{\ignorespaces Block with tail expression}}{18}{lstlisting.3.6}%
 \contentsline {lstlisting}{\numberline {3.7}{\ignorespaces Closure example}}{19}{lstlisting.3.7}%
-\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{19}{lstlisting.3.8}%
+\contentsline {lstlisting}{\numberline {3.8}{\ignorespaces Vector type examples}}{21}{lstlisting.3.8}%
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{31}{lstlisting.4.1}%
-\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{31}{lstlisting.4.2}%
-\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{33}{lstlisting.4.3}%
-\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{33}{lstlisting.4.4}%
-\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{34}{lstlisting.4.5}%
-\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Base and concrete environment types}}{36}{lstlisting.4.6}%
-\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure accessing captured variables}}{37}{lstlisting.4.7}%
-\contentsline {lstlisting}{\numberline {4.8}{\ignorespaces Simple function without captures}}{37}{lstlisting.4.8}%
+\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Vector struct type}}{28}{lstlisting.4.1}%
+\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Closure struct type}}{28}{lstlisting.4.2}%
+\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces If-else compilation}}{30}{lstlisting.4.3}%
+\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces While loop compilation}}{30}{lstlisting.4.4}%
+\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces For loop compilation}}{31}{lstlisting.4.5}%
+\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Base and concrete environment types}}{33}{lstlisting.4.6}%
+\contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Closure accessing captured variables}}{34}{lstlisting.4.7}%
+\contentsline {lstlisting}{\numberline {4.8}{\ignorespaces Simple function without captures}}{34}{lstlisting.4.8}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

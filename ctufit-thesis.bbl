@@ -668,33 +668,6 @@
       \endverb
       \keyw{Type checking,type inference}
     \endentry
-    \entry{types_and_pl}{book}{}{}
-      \name{author}{1}{}{%
-        {{hash=7365a4e827c2dfa2c5af0c0ec4c18c27}{%
-           family={Pierce},
-           familyi={P\bibinitperiod},
-           given={Benjamin\bibnamedelima C.},
-           giveni={B\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {MIT Press}%
-      }
-      \strng{namehash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{fullhash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{fullhashraw}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{bibnamehash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{authorbibnamehash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{authornamehash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{authorfullhash}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \strng{authorfullhashraw}{7365a4e827c2dfa2c5af0c0ec4c18c27}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{978-0-262-16209-8}
-      \field{title}{Types and Programming Languages}
-      \field{year}{2002}
-    \endentry
     \entry{recursive-descent-parser}{inbook}{}{}
       \name{author}{1}{}{%
         {{hash=c36d2b7d10c76534f7e9ccd63ea907c4}{%
